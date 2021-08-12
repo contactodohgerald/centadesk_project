@@ -49,6 +49,11 @@
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
+                            @if (session('email'))
+                                <span class="text-danger" role="alert">
+                                    <strong>{{session('email')}}</strong>
+                                </span>
+                            @endif
                         </div>
 
                         <div class="ui search focus mt-15">

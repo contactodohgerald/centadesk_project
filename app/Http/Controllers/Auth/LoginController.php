@@ -66,10 +66,11 @@ class LoginController extends Controller
         ]);
 
         if (Auth::attempt($credentials)) {
+           
             $request->session()->regenerate();
 
             $users = Auth::user();
-
+            
             if($users->email_verified_at === null){//check for unactivated account
                 //send the user an email for activation of account and redirect the user to the page where they will enter code
                 $createConfirmationCode = $this->confirmationCodes->createActivationCode($users, $type = "account-activation");
@@ -100,6 +101,8 @@ class LoginController extends Controller
 
             return redirect()->intended($this->redirectPath());
         }
+
+        return redirect()->back()->with('email', 'These credentials do not match our records.'); 
 
     }
 }
