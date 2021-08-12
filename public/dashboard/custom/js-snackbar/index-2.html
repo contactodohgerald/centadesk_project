@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JS-SnackBar - A simple snackbar/toast tool</title>
+    <meta name="description" content="">
+    <meta name="author" content="Michael Mickelson">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link rel="stylesheet" href="dist/js-snackbar.css?v=1.3" />
+    <link rel="stylesheet" href="dist/site.css?v=1.2" />
+</head>
+
+<body>
+    <button class="btn">Click me</button>
+    <script src="dist/jquery_3_3_1.js"></script>
+    <script src="dist/js-snackbar.js?v=1.3"></script>
+    <script src="dist/site.js?v=1.0.0"></script>
+    <script>
+        $(document).ready(function () {
+            $('.btn').click(function (e) {
+                e.preventDefault();
+                console.log('me!');
+
+                SnackBar({
+                    message:"Error! Bitcoin Wallet Address already exist.",
+                    width:"600px",
+                    fixed:true,
+                    status:"warning", // success | warning | danger | info
+                    timeout: 5000, // ms
+                    dismissible: true, // can be configured to hide its close button
+                    position: "br", // "tl","tc","tr","bl", "bc", "br"
+                })
+
+            });
+        });
+
+    </script>
+</body>
+
+</html>

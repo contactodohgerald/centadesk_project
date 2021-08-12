@@ -1,0 +1,263 @@
+body {
+    font-family: 'Poppins', sans-serif;
+}
+/* .view_img_right {
+    margin-left: 0px;
+} */
+
+div.view_img_right .srch_explore{
+    border-radius: 20px;
+}
+.hidden{
+    display: none;
+}
+
+h1, h2, h3, h4, h5{
+    font-family: 'Poppins', sans-serif;
+}
+.lbel25 label{
+    font-family: 'Poppins', sans-serif;
+}
+.ui[class*="left icon"].swdh19.input>input{
+    font-family: 'Poppins', sans-serif;
+}
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video{
+    font-family: 'Poppins', sans-serif;
+}
+.steps_btn{
+    font-family: 'Poppins', sans-serif !important;
+}
+.st_title{
+    font-family: 'Poppins', sans-serif !important;
+}
+.night-mode .upload_btn{
+    font-family: 'Poppins', sans-serif !important;
+}
+.ui[class*="left icon"].swdh10.input>input{
+    font-family: 'Poppins', sans-serif !important;
+}
+.dp_link_12{
+    font-family: 'Poppins', sans-serif !important;
+}
+.night-mode .ui.dropdown .menu>.channel_item{
+    font-family: 'Poppins', sans-serif !important;
+}
+.ui.dropdown .menu>.channel_item{
+    font-family: 'Poppins', sans-serif !important;
+}
+.upload_btn{
+    font-family: 'Poppins', sans-serif !important;
+}
+.view_img_right h4{
+    font-family: 'Poppins', sans-serif !important;
+}
+.view_img_right p{
+    font-family: 'Poppins', sans-serif !important;
+}
+.create_btn_dash{
+    font-family: 'Poppins', sans-serif !important;
+}
+.ucp-table tbody tr td{
+    font-family: 'Poppins', sans-serif !important;
+}
+.card_dash_left1 h1{
+    font-family: 'Poppins', sans-serif !important;
+}
+.my_courses_tabs .nav-link{
+    font-family: 'Poppins', sans-serif !important;
+}
+.nav-link{
+    font-family: 'Poppins', sans-serif !important;
+}
+.account_setting h4{
+    font-family: 'Poppins', sans-serif !important;
+}
+.account_setting p{
+    font-family: 'Poppins', sans-serif !important;
+}
+.help-block{
+    font-family: 'Poppins', sans-serif !important;
+}
+button, input, optgroup, select, textarea{
+    font-family: 'Poppins', sans-serif !important;
+}
+.fotb_left p{
+    font-family: 'Poppins', sans-serif !important;
+}
+.prfledt1 h2{
+    font-family: 'Poppins', sans-serif !important;
+}
+.prfledt1 span{
+    font-family: 'Poppins', sans-serif !important;
+}
+._htg452 p{
+    font-family: 'Poppins', sans-serif !important;
+}
+.tab_crse .nav-link{
+    font-family: 'Poppins', sans-serif !important;
+}
+._htg452 h3{
+    font-family: 'Poppins', sans-serif !important;
+}
+._df7852{
+    font-family: 'Poppins', sans-serif !important;
+}
+.font-poppins{
+    font-family: 'Poppins', sans-serif !important;
+}
+.badge_seller{
+    font-family: 'Poppins', sans-serif !important;
+}
+.group-form label{
+    font-family: 'Poppins', sans-serif !important;
+}
+.message-inner-dt > p{
+    font-family: 'Poppins', sans-serif !important;
+    width:61%;
+}
+.message-dt > span{
+    font-family: 'Poppins', sans-serif !important;
+}
+.sign_form h2{
+    font-family: 'Poppins', sans-serif !important;
+}
+.sign_form p{
+    font-family: 'Poppins', sans-serif !important;
+}
+.ui.checkbox.mncheck .box, .ui.checkbox.mncheck label{
+    font-family: 'Poppins', sans-serif !important;
+}
+.cursor-pointer{
+    cursor: pointer;
+}
+.vdtodt .vdt14::after{
+    display: none;
+}
+
+/* file upload css */
+.img-span {
+    color: white;
+    background: #333 !important;
+    border-color: none;
+    font-weight: 500;
+    padding: 10px 30px;
+  }
+  .upload-img-form {
+    /* background-color: transparent !important;
+    width: 20%;
+    height: 53px;
+    margin-left: -135px;
+    position: absolute;
+    opacity: 0;
+    float: left;
+    cursor: pointer;
+    margin-top: -10px; */
+    background-color: transparent !important;
+    width: 35%;
+    height: 53px;
+    position: absolute;
+    opacity: 0;
+    float: left;
+    cursor: pointer;
+    margin-left: -165px;
+    margin-top: 5px;
+  }
+  /* file upload css */
+
+  .upload_img_btn{
+    margin-top: 10px;
+  }
+  .round_img{
+      border-radius: 100% !important;
+  }
+  .clamp{
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+ }
+.chat-date{
+    color: #afafaf;
+    font-size: 12px;
+    float: right;
+    width: 100%;
+    margin-top: 7px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+}
+.float-right{
+    float: right;
+}
+.empty-star:before{
+    cursor: pointer;
+}
+
+button:disabled {
+    color: internal-light-dark(rgba(16, 16, 16, 0.3), white);
+    background-color: internal-light-dark(rgba(239, 239, 239, 0.3), rgba(19, 1, 1, 0.3));
+    border-color: internal-light-dark(rgba(118, 118, 118, 0.3), rgba(195, 195, 195, 0.3));
+}
+.night-mode .night-text{
+    /* color: #fff !important; */
+    color: #c7c7c7 !important;
+}
+.form-label{
+    display: inline-block;
+    padding-left: 5px;
+}
+.no-border-radius{
+    border-radius: 0 !important;
+}
+.rotate {
+    animation: rotation 1s infinite linear;
+  }
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(359deg);
+    }
+}
+
+.night-mode .exp{
+    color:white !important;
+  }
+  .value_content p{
+      font-size: 18px;
+  }
+  .stream-pad{
+    padding: 20px 30px;
+  }
+  .ig{
+      background: #E1306C;
+  }
+  .wapp{
+      background: #455A64;
+  }
+
+.over-flow{
+    text-overflow: ellipsis;
+
+    /* Required for text-overflow to do anything */
+    /* white-space: nowrap; */
+    /* Wrap text in a <p> tag */
+
+
+    display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.stream_bg_p{
+    /* font-family: 'Roboto', sans-serif; */
+    font-weight: 400;
+    /* color: #686f7a; */
+    display: inline-block;
+    text-align: center;
+    position: relative;
+}
+.img-size{
+    width:360px;
+    height: 200px;;
+}
