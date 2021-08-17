@@ -188,28 +188,26 @@
 
     //generate the course rating html
     function courseRatingHtml(btnGrey = 'empty-star', btnWarning = 'full-star', rating = 0, course_id) {
-            return `
-            <span class="row">
-            <div class="col-sm-12" >
-                <form method="POST">
-                     <span class="form-group">
-                        <span data-rating-number="1" onclick="rateCourseFunction(this)" onmouseenter="addAnime(this)" onmouseout="removeAnime(this)" title="rate this course" class="rating-star main-star  ${(parseFloat(rating) >= parseFloat(1)) ? btnWarning: btnGrey} " aria-hidden="true"></span>
-                        <span data-rating-number="2" onclick="rateCourseFunction(this)" onmouseenter="addAnime(this)" onmouseout="removeAnime(this)" title="rate this course" class="rating-star main-star  ${parseFloat(rating) >= parseFloat(2) ? btnWarning: btnGrey}" aria-hidden="true"></span>
+        return `<span class="row">
+                    <div class="col-sm-12" >
+                        <form method="POST">
+                            <span class="form-group">
+                                <span data-rating-number="1" onclick="rateCourseFunction(this)" onmouseenter="addAnime(this)" onmouseout="removeAnime(this)" title="rate this course" class="rating-star main-star  ${(parseFloat(rating) >= parseFloat(1)) ? btnWarning: btnGrey} " aria-hidden="true"></span>
+                                <span data-rating-number="2" onclick="rateCourseFunction(this)" onmouseenter="addAnime(this)" onmouseout="removeAnime(this)" title="rate this course" class="rating-star main-star  ${parseFloat(rating) >= parseFloat(2) ? btnWarning: btnGrey}" aria-hidden="true"></span>
 
-                        <span data-rating-number="3" onclick="rateCourseFunction(this)" onmouseenter="addAnime(this)" onmouseout="removeAnime(this)" title="rate this course"  class="rating-star main-star ${parseFloat(rating) >= parseFloat(3) ? btnWarning: btnGrey}" aria-hidden="true"></span>
+                                <span data-rating-number="3" onclick="rateCourseFunction(this)" onmouseenter="addAnime(this)" onmouseout="removeAnime(this)" title="rate this course"  class="rating-star main-star ${parseFloat(rating) >= parseFloat(3) ? btnWarning: btnGrey}" aria-hidden="true"></span>
 
-                        <span data-rating-number="4" onclick="rateCourseFunction(this)" onmouseenter="addAnime(this)" onmouseout="removeAnime(this)" title="rate this course" class="rating-star main-star ${parseFloat(rating) >= parseFloat(4) ? btnWarning: btnGrey}" aria-hidden="true"></span>
+                                <span data-rating-number="4" onclick="rateCourseFunction(this)" onmouseenter="addAnime(this)" onmouseout="removeAnime(this)" title="rate this course" class="rating-star main-star ${parseFloat(rating) >= parseFloat(4) ? btnWarning: btnGrey}" aria-hidden="true"></span>
 
-                        <span data-rating-number="5" onclick="rateCourseFunction(this)" onmouseenter="addAnime(this)" onmouseout="removeAnime(this)" title="rate this course" class="rating-star main-star ${parseFloat(rating) >= parseFloat(5) ? btnWarning: btnGrey}" aria-hidden="true"></span>
+                                <span data-rating-number="5" onclick="rateCourseFunction(this)" onmouseenter="addAnime(this)" onmouseout="removeAnime(this)" title="rate this course" class="rating-star main-star ${parseFloat(rating) >= parseFloat(5) ? btnWarning: btnGrey}" aria-hidden="true"></span>
 
-                        <input type="hidden" class="form-control rating" name="rating" value="${rating === 0 ? 0 : rating}">
-                        <input type="hidden" class="form-control courseUniqueId" name="itemId" value="${course_id}">
-                        </span>
-                </form>
-            </span>
-        </span>
-         `
-        }
+                                <input type="hidden" class="form-control rating" name="rating" value="${rating === 0 ? 0 : rating}">
+                                <input type="hidden" class="form-control courseUniqueId" name="itemId" value="${course_id}">
+                                </span>
+                        </form>
+                    </span>
+                </span>`
+    }
 
     //generate the course rating html
     function courseRatingHtmlForView(btnGrey = 'empty-star', btnWarning = 'full-star', rating = 0) {
