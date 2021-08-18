@@ -327,33 +327,37 @@ class courseController extends Controller
         $course->courseEnrollment;
         $arrays = [];
         foreach ($course->courseEnrollment as $each_enrollment) {
-            array_push($arrays, $each_enrollment->user_enrolling);
+            $user_object = $this->user->getSingleUser([
+                ['unique_id', $each_enrollment->user_enrolling]
+            ]);
+            array_push($arrays, $user_object);
         }
         $course->array_of_enrolled_users = $arrays;
 
-        $conditions = [
+        $enrolls = $this->courseEnrollment->getAllEnrolls([
             ['course_id', $course->unique_id],
-        ];
-        $enrolls = $this->courseEnrollment->getAllEnrolls($conditions);
-        foreach ($enrolls as $j) {
-            $conditions = [
-                ['user_id', $j->user_enroll->unique_id],
-            ];
-            $course_model = $this->course_model->getAllCourse($conditions);
-            $j->user_enroll->count_course = $course_model->count();
-
-            $enrolled = $this->courseEnrollment->getAllEnrolls([
-                ['course_creator', '=', $j->user_enroll->unique_id]
-            ]);
-            $j->user_enroll->enrolled_users = $enrolled->count();
-        };
+        ]);
+      
+        if(count($arrays) > 0){
+            foreach ($arrays as $j) {
+                $course_model = $this->course_model->getAllCourse([
+                    ['user_id', $j->unique_id],
+                ]);
+                $j->count_course = $course_model->count();
+    
+                $enrolled = $this->courseEnrollment->getAllEnrolls([
+                    ['course_creator', '=', $j->unique_id]
+                ]);
+                $j->enrolled_users = $enrolled->count();
+            };
+        }
 
         // check if user is enrolled
-        $condition = [
+        $check_user_enrolled = $this->courseEnrollment->getSingleEnrolls([
             ['user_enrolling', $logged_user->unique_id],
-        ];
-        $check_user_enrolled = $this->courseEnrollment->getSingleEnrolls($condition);
+        ]);
         $user_is_enrolled = ($check_user_enrolled) ? true : false;
+     
         $view = [
             'course' => $course,
             'enrolls' => $enrolls,

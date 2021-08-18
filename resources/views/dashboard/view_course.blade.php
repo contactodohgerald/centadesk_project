@@ -228,36 +228,35 @@ $disLikeColor = '';
                                             <div class="_htg452">
                                                 <h3>People enrolled to your course</h3>
                                                 <div class="row">
-                                                    @if(count($enrolls) > 0)
-                                                    @foreach($enrolls as $e)
-
+                                                    @if(count($course->array_of_enrolled_users) > 0)
+                                                    @foreach($course->array_of_enrolled_users as $e)
                                                     <div class="col-lg-3 col-md-4">
                                                         <div class="fcrse_1 mt-30">
                                                             <div class="tutor_img">
-                                                                <a href="{{route('view_profile', $e->user_enroll->unique_id )}}">
-                                                                    <img src="{{asset($link.'/profile/'.$e->user_enroll->profile_image)}}" alt="">
+                                                                <a href="{{route('view_profile', $e->unique_id )}}">
+                                                                    <img src="{{asset($link.'/profile/'.$e->profile_image)}}" alt="">
                                                                 </a>
                                                             </div>
                                                             <div class="tutor_content_dt">
                                                                 <div class="tutor150">
-                                                                    <a href="{{route('view_profile', $e->user_enroll->unique_id )}}" class="tutor_name">{{ucfirst($e->user_enroll->name)}} {{ucfirst($e->user_enroll->last_name)}}</a>
+                                                                    <a href="{{route('view_profile', $e->unique_id )}}" class="tutor_name">{{ucfirst($e->name)}} {{ucfirst($e->last_name)}}</a>
                                                                     <div class="mef78" title="Verified">
                                                                         <i class="uil uil-check-circle"></i>
                                                                     </div>
                                                                 </div>
-                                                                @if($e->user_enroll->user_type != 'student')
-                                                                <div class="tutor_cate">{{$e->user_enroll->professonal_heading}}</div>
+                                                                @if($e->user_type != 'student')
+                                                                <div class="tutor_cate">{{$e->professonal_heading}}</div>
                                                                 <ul class="tutor_social_links">
                                                                     @if (in_array(auth()->user()->unique_id, $course->array_of_subscribers))
                                                                     <?php $subscribe_text = 'Subscribed'; ?>
                                                                     @else
                                                                     <?php $subscribe_text = 'Subscribe'; ?>
                                                                     @endif
-                                                                    <li> <button class="sbbc145" onclick="subscribeTOTeacher(this, '{{auth()->user()->unique_id}}', '{{$e->user_enroll->unique_id}}')">{{$subscribe_text}} <i class="uil uil-{{($subscribe_text === 'Subscribed')?'check-circle':''}}"></i></button></li>
+                                                                    <li> <button class="sbbc145" onclick="subscribeTOTeacher(this, '{{auth()->user()->unique_id}}', '{{$e->unique_id}}')">{{$subscribe_text}} <i class="uil uil-{{($subscribe_text === 'Subscribed')?'check-circle':''}}"></i></button></li>
                                                                 </ul>
                                                                 <div class="tut1250">
-                                                                    <span class="vdt15">{{$e->user_enroll->enrolled_users}} Students</span>
-                                                                    <span class="vdt15">{{$e->user_enroll->count_course}} Courses</span>
+                                                                    <span class="vdt15">{{$e->enrolled_users}} Students</span>
+                                                                    <span class="vdt15">{{$e->count_course}} Courses</span>
                                                                 </div>
                                                                 @endif
                                                             </div>

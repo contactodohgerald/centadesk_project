@@ -24,19 +24,17 @@ class ComplainHandleController extends Controller
 
     public function complainListForAdmin(){
 
-        $condition = [
+        $complains = $this->accountResolve->getAllOfComplain([
             ['status', 'pending'],
             ['ignore_status', 'no'],
-        ];
-
-        $complains = $this->accountResolve->getAllOfComplain($condition);
+        ]);
 
         foreach ($complains as $each_complains){
 
             $each_complains->users;
 
         }
-
+      
         return view('dashboard.all_compalins', ['complains'=>$complains]);
 
     }

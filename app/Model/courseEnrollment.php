@@ -13,7 +13,7 @@ class courseEnrollment extends Model
 
     protected $table = 'course_enrollments_tb';
     protected $primaryKey = 'unique_id';
-    protected $keyType = 'unique_id';
+    protected $keyType = 'string';
 
     /**
      * Indicates if the model should be timestamped.
