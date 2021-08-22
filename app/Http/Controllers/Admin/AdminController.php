@@ -143,4 +143,32 @@ class AdminController extends Controller
             return response()->json(["errors" => $error, 'status' => false]);
         }
     }
+
+    public function switch_user_role($id, $new_role)
+    {
+        try {
+            $condition = [
+                ['unique_id', $id]
+            ];
+            $user = $this->user->getSingleUser($condition);
+
+            if (count($user) < 1) {
+                $error = 'Error! User does not exist';
+                throw new Exception($error);
+            }
+
+            $user->user_type = $new_role;
+            if ($user->save()) {
+                $message = 'User role changed successfully!';
+                return response()->json(["message" => $message, 'status' => true]);
+            }
+        } catch (Exception $e) {
+
+            $error = $e->getMessage();
+            $error = [
+                'errors' => [$error],
+            ];
+            return response()->json(["errors" => $error, 'status' => false]);
+        }
+    }
 }

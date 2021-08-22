@@ -51,9 +51,10 @@ $Users = 'active';
 														<input onclick="checkAll()" type="checkbox" class="mainCheckBox" />
 													</th>
 													@endif
-                                                    <th class="text-center" scope="col">User's Name</th>
-                                                    <th class="text-center" scope="col">User's Email</th>
-                                                    <th class="text-center" scope="col">User's Balance ({{auth()->user()->getBalanceForView()['data']['currency']}})</th>
+                                                    <th class="text-center" scope="col">Name</th>
+                                                    <th class="text-center" scope="col">Email</th>
+                                                    <th class="text-center" scope="col">User Type</th>
+                                                    <th class="text-center" scope="col">Balance ({{auth()->user()->getBalanceForView()['data']['currency']}})</th>
                                                     <th class="text-center" scope="col">Status</th>
                                                     <th class="text-center" scope="col">Verification Badge</th>
                                                     <th class="text-center" scope="col">Action</th>
@@ -70,8 +71,9 @@ $Users = 'active';
 														<input type="checkbox" class="smallCheckBox" value="{{$e->unique_id}}">
 													</td>
 													@endif
-                                                    <td class="text-center cell-ta">{{$e->name}} {{$e->last_name}}</td>
+                                                    <td class="text-center cell-ta text-capitalize">{{$e->name}} {{$e->last_name}}</td>
                                                     <td class="text-center cell-ta">{{$e->email}}</td>
+                                                    <td class="text-center cell-ta text-capitalize">{{$e->user_type}}</td>
                                                     <td class="text-center cell-ta">{{number_format($e->balance)}} </td>
                                                     <td class="text-center">
                                                         <button class="btn btn-{{($e->status === 'active')?'success':'primary'}}">{{$e->status}}</button>
@@ -87,6 +89,7 @@ $Users = 'active';
                                                         <a href="{{route('view_profile', $e->unique_id )}}" title="Profile" class="gray-s"><i class="uil uil-adjust"></i></a>
                                                         <a id="{{ $e->unique_id }}" title="Delete" class="cursor-pointer gray-s deleteCourseModal"><i class="uil uil-trash-alt"></i></a>
                                                         <a id="{{ $e->unique_id }}" title="Set Verification Badge" class="gray-s cursor-pointer verify_badge_modal"><i class="uil uil-thumbs-up"></i></a>
+                                                        <a id="{{ $e->unique_id }}" title="Change User Role" class="gray-s cursor-pointer switch_role_modal"><i class="uil uil-adjust-circle"></i></a>
                                                     </td>
                                                 </tr>
                                                 @php $count++ @endphp
@@ -311,6 +314,60 @@ $Users = 'active';
         </div>
         <!-- Body End -->
 
+
+
+        <div class="modal switch_role_modal" id="switch_role_modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Switch Role</h4>
+                        <button
+                            type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            onclick="removeModalMains('.switch_role_modal')"
+                        >
+                            &times;
+                        </button>
+                    </div>
+
+                    <form class="switch_role_form">
+                        @csrf
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    {{-- <h4 class="text-dark night-text">
+                                    </h4> --}}
+                                        <form action="">
+                                            {{-- <label class="text-dark night-text" for="">Switch Role*</label> --}}
+                                            <select name="role" id="" class="form-control">
+                                                <option value="">--Select New Role--</option>
+                                                <option value="teacher">Teacher</option>
+                                                <option value="student">Student</option>
+                                            </select>
+                                        </form>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button
+                            class="btn btn-danger"
+                            onclick="removeModalMains('.switch_role_modal')"
+                        >
+                            Close
+                        </button>
+                        <button class="btn btn-primary switch_role_btn">
+                            Proceed
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- The Modal -->
         <div class="modal delete_course_modal" id="delete_course_modal">
             <div class="modal-dialog">
@@ -351,6 +408,11 @@ $Users = 'active';
                     e.preventDefault();
                     append_id('verify_badge_id', '.verify_badge_form', '#verify_badge_modal', this)
                     $('#verify_badge_modal').modal('toggle');
+                });
+                $('.switch_role_modal').click(function(e) {
+                    e.preventDefault();
+                    append_id('switch_role_id', '.switch_role_form', '#switch_role_modal', this)
+                    $('#switch_role_modal').modal('toggle');
                 });
 
 
