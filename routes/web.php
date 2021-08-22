@@ -55,8 +55,10 @@ use App\Http\Controllers\Users\GeneralUserController;
 
 Auth::routes();
 
-Route::get('/show-csrf', 'HomeController@showToken');
-Route::get('/clear-cache', 'HomeController@clear_cache');
+Route::get('/show-csrf', [HomeController::class, 'showToken']);
+Route::get('/clear-cache', [HomeController::class, 'clear_cache']);
+// Route::get('/show-csrf', 'HomeController@showToken');
+// Route::get('/clear-cache', 'HomeController@clear_cache');
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
@@ -68,7 +70,7 @@ Route::get('/account_activation/{userId}', [AccountActivationController::class, 
 Route::post('/activate_account/{typeOfCode}/{userId}', [AccountActivationController::class, 'verifyAndActivateAccount'])->name('activate_account');
 Route::get('/send_account_activation_code/{userId}/{type_of_code}', [AccountActivationController::class, 'sendActivationCode'])->name('send_account_activation_code');
 
-//password reset link page 
+//password reset link page
 Route::get('/forgot-password', [PasswordController::class, 'index'])->middleware(['guest'])->name('forgot-password');
 //send email fpr password reset
 Route::post('/send-reset-code', [PasswordController::class, 'initiatePasswordReset'])->middleware(['guest'])->name('send-reset-code');
@@ -76,7 +78,7 @@ Route::get('/re-send-reset-code/{username}', [PasswordController::class, 'resend
 //verify reset password token
 Route::get('/reset-password-area/{username}/{option?}', [PasswordController::class, 'showResetPasswordPage'])->middleware(['guest'])->name('reset-password-area');
 
-//RESET THE PASSWORD 
+//RESET THE PASSWORD
 Route::post('/reset-password', [ResetPasswordController::class, 'resetThePassword'])->middleware(['guest'])->name('password.update');
 
 //logged in fpr everythg category
@@ -139,7 +141,7 @@ Route::group(['middleware'=>['web', 'auth']], function(){
     //create Price For Course
     Route::get('/create_price', [priceController::class, 'create'])->name('create_price');
     Route::post('/store_price', [priceController::class, 'store'])->name('store_price');
-    Route::get('/view_price', [priceController::class, 'index'])->name('view_price'); 
+    Route::get('/view_price', [priceController::class, 'index'])->name('view_price');
     Route::get('/edit_price/{id}', [priceController::class, 'show_edit'])->name('edit_price');
     Route::post('/update_price/{id}', [priceController::class, 'edit'])->name('update_price');
     Route::post('/delete_price/{id}', [priceController::class, 'soft_delete'])->name('delete_price');
@@ -278,4 +280,4 @@ Route::post('/set_badge/{id}', [AdminController::class, 'set_user_verify_badge']
 
 
 
-   
+

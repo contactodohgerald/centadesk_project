@@ -4,7 +4,6 @@ $pageTitle = 'Home Area';
 $home = 'active';
 @endphp
 @include('layouts.head')
-
 <style>
     ul.example {
     list-style: none;
@@ -33,22 +32,19 @@ $home = 'active';
     font-size: 18px;
     }
 </style>
-
 <body>
     <!-- Header Start -->
     @include('layouts.header')
     <!-- Header End -->
-
     <!-- Left Sidebar Start -->
     @include('layouts.sidebar')
     <!-- Left Sidebar End -->
     @php $link = auth()->user()->returnLink() @endphp
-
     <!-- Body Start -->
-    <div class="wrapper">
-        <div class="sa4d25">
-            <div class="container-fluid">
-                <div class="row">
+	<div class="wrapper">
+		<div class="sa4d25">
+			<div class="container-fluid">
+				<div class="row">
                     @if(auth()->user()->cac_verification_status === 'no' && auth()->user()->user_type === 'teacher')
                     <div class="col-xl-6 col-lg-6">
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -110,7 +106,75 @@ $home = 'active';
                             @endif
                             @if($users->privilegeChecker('view_restricted_roles'))
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
+                                        <div class="value_props">
+                                            <div class="row">
+                                                <div class="col-xl-4 col-lg-4 col-md-4">
+                                                    <div class="value_icon mt-20">
+                                                        <i class='uil uil-history'></i>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-8 col-lg-8 col-md-8">
+                                                    <div class="value_content">
+                                                        <h3><b>{{$app_overview[0]}} </b></h3>
+                                                        <p class="font-poppins">Confirmed Courses</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="value_props">
+                                            <div class="row">
+                                                <div class="col-xl-4 col-lg-4 col-md-4">
+                                                    <div class="value_icon mt-20">
+                                                        <i class='uil uil-history'></i>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-8 col-lg-8 col-md-8">
+                                                    <div class="value_content">
+                                                        <h3><b>{{$app_overview[2]}} </b></h3>
+                                                        <p class="font-poppins">Instructors</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="value_props">
+                                            <div class="row">
+                                                <div class="col-xl-4 col-lg-4 col-md-4">
+                                                    <div class="value_icon mt-20">
+                                                        <i class='uil uil-history'></i>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-8 col-lg-8 col-md-8">
+                                                    <div class="value_content">
+                                                        <h3><b>{{$app_overview[1]}} </b></h3>
+                                                        <p class="font-poppins">Students</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="value_props">
+                                            <div class="row">
+                                                <div class="col-xl-4 col-lg-4 col-md-4">
+                                                    <div class="value_icon mt-20">
+                                                        <i class='uil uil-history'></i>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-8 col-lg-8 col-md-8">
+                                                    <div class="value_content">
+                                                        <h3><b>{{$app_overview[3]}} </b></h3>
+                                                        <p class="font-poppins">Pending Tickets</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
                                         <div class="value_props">
                                             <div class="row">
                                                 <div class="col-xl-4 col-lg-4 col-md-4">
@@ -121,13 +185,13 @@ $home = 'active';
                                                 <div class="col-xl-8 col-lg-8 col-md-8">
                                                     <div class="value_content">
                                                         <h3><b>{{number_format($users->calculateTotalAmount('top_up', 'confirmed'))}} ({{$users->getBalanceForView()['data']['currency']}})</b></h3>
-                                                        <p class="font-poppins">Total Confirmed Topup Balance</p>
+                                                        <p class="font-poppins">Confirmed Topup Balance</p>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="value_props">
                                             <div class="row">
                                                 <div class="col-xl-4 col-lg-4 col-md-4">
@@ -138,7 +202,7 @@ $home = 'active';
                                                 <div class="col-xl-8 col-lg-8 col-md-8">
                                                     <div class="value_content">
                                                         <h3><b>{{number_format($users->calculateTotalAmount('withdrawal', 'processing'))}} ({{$users->getBalanceForView()['data']['currency']}})</b></h3>
-                                                        <p class="font-poppins">Total Pending Withdraw Balance</p>
+                                                        <p class="font-poppins">Pending Withdraw Balance</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -344,7 +408,7 @@ $home = 'active';
                                 <div class="live_icon"><i class="uil uil-kayak"></i></div>
                                 <div class="live-content">
                                     <p class="font-poppins">Set up your channel and stream live to your students</p>
-                                    <button class="live_link" onclick="window.location.href = '{{ route('create-course') }}';">Get Started</button>
+                                    <button class="live_link" onclick="window.location.href ='{{ route('create-course') }}'">Get Started</button>
                                     <span class="livinfo font-poppins">Info : This feature only for 'Instructors'.</span>
                                 </div>
                             </div>

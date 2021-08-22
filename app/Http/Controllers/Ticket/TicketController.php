@@ -214,4 +214,33 @@ class TicketController extends Controller
             return response()->json(["errors" => $error, 'status' => false]);
         }
     }
+
+    public function count_pending_ticket()
+    {
+        $pending_tickets = 0;
+
+        // get all main tickets without their replies
+        $condition = [
+            ['main', '1']
+        ];
+        $main_tickets = $this->ticket->get_all($condition);
+        if ($main_tickets->count() < 1) {
+            return $pending_tickets;
+        }
+        // print_r($main_tickets->all());
+        // check if each main ticket has been replied to, by an admin
+        foreach ($main_tickets as $e) {
+            print_r($e->toArray());die();
+            $condition = [
+                ['main_id', $e->unique_id],
+                [$e->user->user_type, 'super_admin']
+            ];
+            $replies = $this->ticket->get_all($condition);
+            if (count($replies) > 0) {
+                $pending_tickets++;
+            }
+        }
+
+        // return $pending_tickets;
+    }
 }

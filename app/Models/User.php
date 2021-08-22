@@ -148,7 +148,7 @@ class User extends Authenticatable
         $total = $this->getAllTransactionAmount([
             ['action_type', $value],
             ['status', $action],
-        ]);   
+        ]);
 
         return $total;
     }
@@ -213,5 +213,31 @@ class User extends Authenticatable
         ];
         return $surfixArray[$lastChar];
 
+    }
+
+
+    public function count_students()
+    {
+        $condition = [
+            ['user_type', 'student']
+        ];
+        $student = $this->getAllUsers($condition);
+        if (count($student) > 0) {
+            return count($student);
+        } else {
+            return 0;
+        }
+    }
+    public function count_teachers()
+    {
+        $condition = [
+            ['user_type', 'teacher']
+        ];
+        $teacher = $this->getAllUsers($condition);
+        if (count($teacher) > 0) {
+            return count($teacher);
+        } else {
+            return 0;
+        }
     }
 }

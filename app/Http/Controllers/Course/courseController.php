@@ -337,14 +337,14 @@ class courseController extends Controller
         $enrolls = $this->courseEnrollment->getAllEnrolls([
             ['course_id', $course->unique_id],
         ]);
-      
-        if(count($arrays) > 0){
+
+        if (count($arrays) > 0) {
             foreach ($arrays as $j) {
                 $course_model = $this->course_model->getAllCourse([
                     ['user_id', $j->unique_id],
                 ]);
                 $j->count_course = $course_model->count();
-    
+
                 $enrolled = $this->courseEnrollment->getAllEnrolls([
                     ['course_creator', '=', $j->unique_id]
                 ]);
@@ -357,11 +357,11 @@ class courseController extends Controller
             ['user_enrolling', $logged_user->unique_id],
         ]);
         $user_is_enrolled = ($check_user_enrolled) ? true : false;
-     
+
         $view = [
             'course' => $course,
             'enrolls' => $enrolls,
-            'user_is_enrolled'=> $user_is_enrolled,
+            'user_is_enrolled' => $user_is_enrolled,
         ];
 
         return view('dashboard.view_course', $view);
@@ -658,6 +658,19 @@ class courseController extends Controller
                 'errors' => [$error],
             ];
             return response()->json(["errors" => $error, 'status' => false]);
+        }
+    }
+
+    public function count_confirmed_courses()
+    {
+        $condition = [
+            ['status', 'confirmed']
+        ];
+        $course = $this->course_model->getAllCourse($condition);
+        if (count($course) > 0) {
+            return count($course);
+        } else {
+            return 0;
         }
     }
 }
