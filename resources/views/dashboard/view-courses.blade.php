@@ -42,7 +42,7 @@
                         <br />
                         <h4 class="text-danger">
                             @if(auth()->user()->privilegeChecker('view_restricted_roles'))
-                            <div class="pull-right fix-at-point">
+                            <div class="pull-right fix-at-point"  style="position: fixed; bottom: 20px; right: 30px; z-index: 200">
                                 <a
                                     class="btn btn-danger"
                                     onclick="activateCoursesStatus(this)"
@@ -362,7 +362,8 @@
                                                         @endif
                                                     </td>
                                                 </tr>
-                                                @endforeach @else
+                                                @endforeach
+                                                @else
                                                 <tr>
                                                     <td
                                                         colspan="8"
@@ -374,6 +375,9 @@
                                                 @endif
                                             </tbody>
                                         </table>
+                                    </div>
+                                    <div class="d-flex justify-content-center">
+                                        {!! $courses->links() !!}
                                     </div>
                                 </div>
                             </div>

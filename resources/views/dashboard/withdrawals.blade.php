@@ -53,7 +53,7 @@
 											</button>
 										</div>
 									@endif
-									
+
 									<form action="{{route('make_withdrawal')}}" method="post">
 										@csrf
 										<div class="ui search focus mt-30">
@@ -203,6 +203,9 @@
 											</tbody>
 										</table>
 									</div>
+                                    <div class="d-flex justify-content-center">
+                                        {!! $transaction->links() !!}
+                                    </div>
 								</div>
 								<div class="tab-pane fade" id="pills-my-purchases" role="tabpanel">
 									<div class="table-responsive mt-30">
@@ -275,6 +278,9 @@
 											</tbody>
 										</table>
 									</div>
+                                    <div class="d-flex justify-content-center">
+                                        {!! $pending_transaction->links() !!}
+                                    </div>
 								</div>
 								<div class="tab-pane fade" id="pills-upcoming-courses" role="tabpanel">
 									<div class="table-responsive mt-30">
@@ -347,6 +353,9 @@
 											</tbody>
 										</table>
 									</div>
+                                    <div class="d-flex justify-content-center">
+                                        {!! $successful_transaction->links() !!}
+                                    </div>
 								</div>
 							</div>
 							<div style="position: fixed; bottom: 20px; right: 30px; z-index: 200">

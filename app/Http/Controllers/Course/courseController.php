@@ -234,13 +234,14 @@ class courseController extends Controller
             $condition = [
                 ['deleted_at', null]
             ];
-            $courses = $this->course_model->getAllCourse($condition);
+            $courses = course_model::where($condition)->orderBy('id', 'desc')->paginate(5);
+            // $courses = $this->course_model->getAllCourse($condition)->paginate(15);
         } else {
 
             $condition = [
                 ['user_id', $user->unique_id]
             ];
-            $courses = $this->course_model->getAllCourse($condition);
+            $courses = course_model::where($condition)->orderBy('id', 'desc')->paginate(5);
         }
 
         foreach ($courses as $each_courses) {

@@ -95,6 +95,9 @@ $Users = 'active';
                                             </tbody>
                                         </table>
                                     </div>
+                                    <div class="d-flex justify-content-center">
+                                        {!! $all->links() !!}
+                                    </div>
                                 </div>
                                 <div class="tab-pane fade" id="pills-active-students" role="tabpanel">
                                     <div class="table-responsive mt-30">
@@ -151,6 +154,9 @@ $Users = 'active';
                                             </tbody>
                                         </table>
                                     </div>
+                                    <div class="d-flex justify-content-center">
+                                        {!! $teacher->links() !!}
+                                    </div>
                                 </div>
                                 <div class="tab-pane fade" id="pills-inactive-students" role="tabpanel">
                                     <div class="table-responsive mt-30">
@@ -206,6 +212,9 @@ $Users = 'active';
                                                 @endif
                                             </tbody>
                                         </table>
+                                    </div>
+                                    <div class="d-flex justify-content-center">
+                                        {!! $student->links() !!}
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="pills-admin" role="tabpanel">
@@ -264,10 +273,13 @@ $Users = 'active';
                                             </tbody>
                                         </table>
                                     </div>
+                                    <div class="d-flex justify-content-center">
+                                        {!! $admin->links() !!}
+                                    </div>
                                 </div>
                             </div>
                             <div style="position: fixed; bottom: 20px; right: 30px; z-index: 200">
-								<button type="button" class="btn btn-danger" id="comfirmUser" title="Select User(s) to be comfirmed by ticking the checkbox on each row and then click this button to delete">Comfirm User(s)</button>
+								<button type="button" class="btn btn-danger" id="comfirmUser" title="Select User(s) to be comfirmed by ticking the checkbox on each row and then click this button to delete">Confirm User(s)</button>
 							</div>
                         </div>
                     </div>

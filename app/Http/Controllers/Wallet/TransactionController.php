@@ -35,53 +35,59 @@ class TransactionController extends Controller
             $condition = [
                 ['action_type', 'top_up'],
             ];
-            $transaction = $this->transactionModel->getAllTransaction($condition);
+            $transaction = TransactionModel::where($condition)->orderBy('id', 'desc')->paginate(5);
+            // $transaction = $this->transactionModel->getAllTransaction($condition);
 
             $conditions = [
                 ['action_type', 'top_up'],
                 ['status', 'failed'],
             ];
-            $pending_transaction = $this->transactionModel->getAllTransaction($conditions);
+            $pending_transaction = TransactionModel::where($conditions)->orderBy('id', 'desc')->paginate(5);
+            // $pending_transaction = $this->transactionModel->getAllTransaction($conditions);
 
             $conditionss = [
                 ['action_type', 'top_up'],
                 ['status', 'confirmed'],
             ];
-            $successful_transaction = $this->transactionModel->getAllTransaction($conditionss);
+            $successful_transaction = TransactionModel::where($conditionss)->orderBy('id', 'desc')->paginate(5);
+            // $successful_transaction = $this->transactionModel->getAllTransaction($conditionss);
         } else {
             $condition = [
                 ['user_unique_id', $userDetails->unique_id],
                 ['action_type', 'top_up'],
             ];
-            $transaction = $this->transactionModel->getAllTransaction($condition);
+            $transaction = TransactionModel::where($condition)->orderBy('id', 'desc')->paginate(5);
+            // $transaction = $this->transactionModel->getAllTransaction($condition);
 
             $conditions = [
                 ['user_unique_id', $userDetails->unique_id],
                 ['action_type', 'top_up'],
                 ['status', 'failed'],
             ];
-            $pending_transaction = $this->transactionModel->getAllTransaction($conditions);
+            $pending_transaction = TransactionModel::where($conditions)->orderBy('id', 'desc')->paginate(5);
+            // $pending_transaction = $this->transactionModel->getAllTransaction($conditions);
 
             $conditionss = [
                 ['user_unique_id', $userDetails->unique_id],
                 ['action_type', 'top_up'],
                 ['status', 'confirmed'],
             ];
-            $successful_transaction = $this->transactionModel->getAllTransaction($conditionss);
+            $successful_transaction = TransactionModel::where($conditionss)->orderBy('id', 'desc')->paginate(5);
+            // $successful_transaction = $this->transactionModel->getAllTransaction($conditionss);
         }
 
-        foreach ($transaction as $each_transaction){
+        foreach ($transaction as $each_transaction) {
             $each_transaction->users;
         }
-        foreach ($pending_transaction as $each_pending_transaction){
+        foreach ($pending_transaction as $each_pending_transaction) {
             $each_pending_transaction->users;
         }
-        foreach ($successful_transaction as $each_successful_transaction){
+        foreach ($successful_transaction as $each_successful_transaction) {
             $each_successful_transaction->users;
         }
 
         $data = ['transaction' => $transaction, 'pending_transaction' => $pending_transaction, 'successful_transaction' => $successful_transaction, 'userDetails' => $userDetails, 'dates' => 'ALL'];
-        
+
         return view('dashboard.my_wallet', $data);
     }
 
@@ -182,9 +188,9 @@ class TransactionController extends Controller
             $user_full_name = $user_details->name . ' ' . $user_details->last_name;
 
             $user_preferred_currency = $user_details->getBalanceForView()['data']['currency'];
-            
+
             $inputed_amount = $request->topUpAmount;
-           
+
             $unique_id = $this->createUniqueId('transaction_models', 'unique_id');
             $request = $user_details;
             $request->unique_id = $unique_id;
@@ -206,8 +212,8 @@ class TransactionController extends Controller
             if ($newTransactionDetails) {
 
                 $ipaddress = $this->get_client_ip();
-              
-                $pay_with_flutterwave = $this->pay_with_flutterwave($this->base_url. "/confirm_top_up", $inputed_amount, $user_details->email, $user_details->phone, $user_full_name, $unique_id, $user_preferred_currency, $user_details->id, $ipaddress);
+
+                $pay_with_flutterwave = $this->pay_with_flutterwave($this->base_url . "/confirm_top_up", $inputed_amount, $user_details->email, $user_details->phone, $user_full_name, $unique_id, $user_preferred_currency, $user_details->id, $ipaddress);
 
                 return redirect()->to($pay_with_flutterwave);
             } else {
@@ -591,7 +597,6 @@ class TransactionController extends Controller
                 $withdrawalDetails->delete();
             }
             return response()->json(['error_code' => 0, 'success_statement' => 'Selected transaction was deleted successfully']);
-
         } catch (Exception $exception) {
 
             $error = $exception->getMessage();

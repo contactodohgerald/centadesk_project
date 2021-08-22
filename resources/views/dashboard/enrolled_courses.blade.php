@@ -43,7 +43,7 @@ $users = auth()->user();
 							<div class="row">
 								<div class="col-md-12">
                                     <h3 class=" font-poppins text-capitalize">Courses i enrolled in</h3>
-                                   
+
                                     @if(count($enrollments) > 0)
                                         @foreach($enrollments as $each_enrollment)
                                             <input type="hidden" class="batch_delete" value="{{ $each_enrollment->unique_id }}">
@@ -80,7 +80,7 @@ $users = auth()->user();
                                                     <a href="{{route('view_course', $each_enrollment->enroll_course->unique_id )}}" class="crse-cate font-poppins">{{$each_enrollment->enroll_course->short_caption}}</a>
                                                     <div class="auth1lnkprce">
                                                         <p class="cr1fot">By <a href="{{route('view_profile', $each_enrollment->creator->unique_id )}}">{{$each_enrollment->creator->name}} {{$each_enrollment->creator->last_name}}</a></p>
-                                                        {{-- <div class="prce142 font-poppins">{{auth()->user()->getAmountForView($e->enroll_course->price->amount)['data']['currency'] }}  {{$e->enroll_course->price->amount}}</div> --}}
+                                                        <div class="prce142 font-poppins">{{auth()->user()->getAmountForView($each_enrollment->enroll_course->price->amount)['data']['currency'] }}  {{$each_enrollment->enroll_course->price->amount}}</div>
                                                     </div>
                                                 </div>
                                             </div>

@@ -84,19 +84,23 @@ class AdminController extends Controller
     public function show_all_users()
     {
 
-        $all = $this->user->getAllUsers([]);
+        $all =  User::orderBy('id', 'desc')->paginate(5);
+        // $all = $this->user->getAllUsers([]);
         $condition = [
             ['user_type', 'teacher']
         ];
-        $teacher = $this->user->getAllUsers($condition);
-        $condition = [
+        $teacher =  User::where($condition)->orderBy('id', 'desc')->paginate(5);
+        // $teacher = $this->user->getAllUsers($condition);
+        $condition2 = [
             ['user_type', 'student']
         ];
-        $student = $this->user->getAllUsers($condition);
-        $condition = [
+        $student =  User::where($condition2)->orderBy('id', 'desc')->paginate(5);
+        // $student = $this->user->getAllUsers($condition);
+        $condition3 = [
             ['user_type', 'super_admin']
         ];
-        $admin = $this->user->getAllUsers($condition);
+        $admin =  User::where($condition3)->orderBy('id', 'desc')->paginate(5);
+        // $admin = $this->user->getAllUsers($condition);
 
         $view = [
             'all' => $all,
@@ -119,11 +123,9 @@ class AdminController extends Controller
             if ($User->verified_badge == 'yes') {
                 $User->verified_badge = 'no';
                 $error = 'User Verification Badge Removed!';
-
             } elseif ($User->verified_badge == 'no') {
                 $User->verified_badge = 'yes';
                 $error = 'User Verification Badge Set!';
-
             }
 
             $updated = $User->save();
