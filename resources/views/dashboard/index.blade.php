@@ -168,7 +168,7 @@ $home = 'active';
                                                 <div class="col-xl-8 col-lg-8 col-md-8">
                                                     <div class="value_content">
                                                         <h3><b>{{$app_overview[3]}} </b></h3>
-                                                        <p class="font-poppins">Pending Tickets</p>
+                                                        <p class="font-poppins">Unreplied Tickets</p>
                                                     </div>
                                                 </div>
                                             </div>

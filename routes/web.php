@@ -83,7 +83,7 @@ Route::get('/reset-password-area/{username}/{option?}', [PasswordController::cla
 Route::post('/reset-password', [ResetPasswordController::class, 'resetThePassword'])->middleware(['guest'])->name('password.update');
 
 //logged in fpr everythg category
-Route::group(['middleware'=>['web', 'auth']], function(){
+Route::group(['middleware' => ['web', 'auth']], function () {
     // Course
     Route::get('/create-course',  [courseController::class, 'index'])->name('create-course');
     Route::get('/test',  [courseController::class, 'testEvent'])->name('test');
@@ -178,7 +178,6 @@ Route::group(['middleware'=>['web', 'auth']], function(){
     Route::post('/live/create', [live_stream_controller::class, 'create']);
     Route::post('/live/edit', [live_stream_controller::class, 'update']);
     Route::post('/delete-live/{id}', [live_stream_controller::class, 'soft_delete']);
-
 });
 
 //front end section
@@ -278,7 +277,3 @@ Route::get('/referral_earnings/{userId?}', [ReferralController::class, 'index'])
 Route::get('/referral_details/{mainUserId?}/{referredUserId?}', [ReferralController::class, 'referralDetails'])->name('referral_details');
 
 Route::post('/set_badge/{id}', [AdminController::class, 'set_user_verify_badge']);
-
-
-
-

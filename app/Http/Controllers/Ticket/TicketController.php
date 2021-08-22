@@ -219,31 +219,39 @@ class TicketController extends Controller
     {
         $pending_tickets = 0;
 
-        // get all main tickets without their replies
+        // get all the main tickets without their replies
         $condition = [
             ['main', '1']
         ];
-        // $main_tickets = $this->ticket->get_all($condition);
-        $main_tickets = Ticket::where('main', 1)
-               ->orderBy('id')
-               ->get();
+        $main_tickets = $this->ticket->get_all($condition);
         if ($main_tickets->count() < 1) {
             return $pending_tickets;
         }
-        // print_r($main_tickets->all());
+
+
         // check if each main ticket has been replied to, by an admin
         foreach ($main_tickets as $e) {
-            // print_r($e->toArray());die();
             $condition = [
                 ['main_id', $e->unique_id],
-                [$e->user->user_type, 'super_admin']
             ];
             $replies = $this->ticket->get_all($condition);
+
             if (count($replies) > 0) {
-                $pending_tickets++;
+
+                $replies_from_admin = 0;    // count if any replies was sent by an admin
+
+                foreach ($replies as $each) {
+                    if ($each->user->user_type == 'super_admin') {
+                        $replies_from_admin++;
+                    }
+                }
+
+                // if no reply was from an admin, mark the ticket as still pending
+                if ($replies_from_admin < 1) {
+                    $pending_tickets++;
+                }
             }
         }
-
-        // return $pending_tickets;
+        return $pending_tickets;
     }
 }
