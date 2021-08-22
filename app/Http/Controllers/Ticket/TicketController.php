@@ -223,14 +223,17 @@ class TicketController extends Controller
         $condition = [
             ['main', '1']
         ];
-        $main_tickets = $this->ticket->get_all($condition);
+        // $main_tickets = $this->ticket->get_all($condition);
+        $main_tickets = Ticket::where('main', 1)
+               ->orderBy('id')
+               ->get();
         if ($main_tickets->count() < 1) {
             return $pending_tickets;
         }
         // print_r($main_tickets->all());
         // check if each main ticket has been replied to, by an admin
         foreach ($main_tickets as $e) {
-            print_r($e->toArray());die();
+            // print_r($e->toArray());die();
             $condition = [
                 ['main_id', $e->unique_id],
                 [$e->user->user_type, 'super_admin']

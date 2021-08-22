@@ -1,44 +1,45 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use \App\Http\Controllers\Auth\AccountActivationController;
-use App\Http\Controllers\Passwords\PasswordController;
-use App\Http\Controllers\Auth\RegistrationController;
-
-use App\Http\Controllers\Course\CoursesHandlerController;
-use App\Http\Controllers\Search\SearchResultController;
-use App\Http\Controllers\Route\RouteController;
-use App\Http\Controllers\VerifyKYC\KYCVerificationController;
-use App\Http\Controllers\Testmony\TestimoniesController;
-use App\Http\Controllers\Enrollment\CourseEnrollmentController;
-use App\Http\Controllers\Users\InstructorsControllers;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\priceController;
 
-use App\Http\Controllers\Course\courseController;
-use App\Http\Controllers\Roles\AddRolesController;
-use App\Http\Controllers\Roles\UserTypeController;
-use App\Http\Controllers\Notification\NotificationController;
+use App\Http\Controllers\Blog\BlogController;
 use App\Http\Controllers\Users\UserController;
-use App\Http\Controllers\AppSettings\AppSettingsController;
-use App\Http\Controllers\SaveCourse\SaveCourseController;
-use App\Http\Controllers\LiveStream\live_stream_controller;
-use App\Http\Controllers\Subscribe\SubscribeController;
-use App\Http\Controllers\Wallet\WithdrawalController;
-use App\Http\Controllers\Wallet\TransactionController;
-use App\Http\Controllers\Verifications\VerifyBankController;
-use App\Http\Controllers\Complain\ComplainController;
-use App\Http\Controllers\Complain\ComplainHandleController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Roles\RolesController;
-use App\Http\Controllers\Blog\BlogController;
-use App\Http\Controllers\priceController;
-use App\Http\Controllers\Gallery\GalleryController;
-use App\Http\Controllers\CourseCategoryModelController;
-use App\Http\Controllers\CurrencyRate\CurrencyRateController;
-use App\Http\Controllers\Cryptocurrency\cryptocurrencyController;
-use App\Http\Controllers\Referrals\ReferralController;
+use App\Http\Controllers\Route\RouteController;
+use App\Http\Controllers\Course\courseController;
 use App\Http\Controllers\Ticket\TicketController;
+use App\Http\Controllers\Roles\AddRolesController;
+
+use App\Http\Controllers\Roles\UserTypeController;
+use App\Http\Controllers\Gallery\GalleryController;
+use App\Http\Controllers\Auth\RegistrationController;
+use App\Http\Controllers\Complain\ComplainController;
 use App\Http\Controllers\Users\GeneralUserController;
+use App\Http\Controllers\Wallet\WithdrawalController;
+use App\Http\Controllers\Passwords\PasswordController;
+use App\Http\Controllers\Referrals\ReferralController;
+use App\Http\Controllers\Users\InstructorsControllers;
+use App\Http\Controllers\Wallet\TransactionController;
+use App\Http\Controllers\CourseCategoryModelController;
+use App\Http\Controllers\Search\SearchResultController;
+use App\Http\Controllers\Subscribe\SubscribeController;
+use App\Http\Controllers\Testmony\TestimoniesController;
+use App\Http\Controllers\Course\CoursesHandlerController;
+use App\Http\Controllers\SaveCourse\SaveCourseController;
+use \App\Http\Controllers\Auth\AccountActivationController;
+use App\Http\Controllers\AppSettings\AppSettingsController;
+use App\Http\Controllers\Complain\ComplainHandleController;
+use App\Http\Controllers\LiveStream\live_stream_controller;
+use App\Http\Controllers\Verifications\VerifyBankController;
+use App\Http\Controllers\CurrencyRate\CurrencyRateController;
+use App\Http\Controllers\Notification\NotificationController;
+use App\Http\Controllers\VerifyKYC\KYCVerificationController;
+use App\Http\Controllers\Enrollment\CourseEnrollmentController;
+use App\Http\Controllers\Cryptocurrency\cryptocurrencyController;
 //use App\Http\Controllers\PaymentAddress\PaymentAddressController;
 
 
