@@ -167,6 +167,7 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::get('/all_students', [AdminController::class, 'showAllStudents'])->name('all_students');
     Route::get('/all_instructor', [AdminController::class, 'showAllInstructor'])->name('all_instructor');
     Route::get('/all_users', [AdminController::class, 'show_all_users'])->name('all_users');
+    Route::post('/switch_role', [AdminController::class, 'switch_user_role']);
 
     // Live stream
     Route::get('/live_stream/create', [live_stream_controller::class, 'create_live'])->name('create_live');

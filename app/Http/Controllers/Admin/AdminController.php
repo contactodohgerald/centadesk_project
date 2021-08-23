@@ -6,9 +6,11 @@ use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Traits\appFunction;
 
 class AdminController extends Controller
 {
+    use appFunction;
     //
     function __construct(User $user)
     {
@@ -144,15 +146,25 @@ class AdminController extends Controller
         }
     }
 
-    public function switch_user_role($id, $new_role)
+    public function switch_user_role(Request $request)
     {
         try {
+            $id = $request->input('switch_role_id');
+            $new_role = $request->input('role');
+
+            if (!$id) {
+                throw new Exception($this->errorMsgs(15)['msg']);
+            }
+            if (!$new_role) {
+                throw new Exception($this->errorMsgs(17)['msg']);
+            }
+
             $condition = [
                 ['unique_id', $id]
             ];
             $user = $this->user->getSingleUser($condition);
 
-            if (count($user) < 1) {
+            if (!$user) {
                 $error = 'Error! User does not exist';
                 throw new Exception($error);
             }
