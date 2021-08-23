@@ -15,6 +15,12 @@ class Ticket extends Model
     protected $table = 'tickets_tb';
     protected $primaryKey = 'unique_id';
     protected $keyType = 'unique_id';
+    /**
+     * Indicates if the model's ID is auto-incrementing.
+     *
+     * @var bool
+     */
+    public $incrementing = false;
 
     /**
      * Indicates if the model should be timestamped.
@@ -37,17 +43,17 @@ class Ticket extends Model
 
     public function get_all($condition, $id = 'id', $sort = 'desc'){
 
-        $course = Ticket::where($condition)->orderBy($id,$sort)->get();
+        $tickets = Ticket::where($condition)->orderBy($id,$sort)->get();
 
-        return $course;
+        return $tickets;
 
     }
 
     function get_single($condition){
 
-        $categories = Ticket::where($condition)->first();
+        $ticket = Ticket::where($condition)->first();
 
-        return $categories;
+        return $ticket;
 
     }
 }

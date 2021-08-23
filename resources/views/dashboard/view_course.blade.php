@@ -197,7 +197,7 @@ $disLikeColor = '';
                                     </div>
                                     <div class="tab-pane fade" id="nav-courses" role="tabpanel">
                                         <div class="crse_content">
-                                            <h3>Course Download Links</h3>
+                                            <h3 class="font-poppins">Course Download Links</h3>
                                             <div class="_112456">
                                                 <ul class="accordion-expand-holder">
                                                     <li><span class="_fgr123"> {{count($course->course_download_links)}} links</span></li>
@@ -211,7 +211,7 @@ $disLikeColor = '';
                                                         <div class="section-header-left">
                                                             <span class="section-title-wrapper">
                                                                 <i class='uil uil-presentation-play crse_icon'></i>
-                                                                <span class="section-title-text">{{$each_course_link}}</span>
+                                                                <span class="section-title-text font-poppins">{{$each_course_link}}</span>
                                                             </span>
                                                         </div>
                                                     </a>
@@ -219,7 +219,7 @@ $disLikeColor = '';
                                                 </div>
                                                 @endif
                                             @else
-                                            <div class="alert alert-info text-center">Course download url's for this course will be displayed when you enroll.</div>
+                                            <div class="alert alert-info text-center font-poppins">Course download url's for this course will be displayed when you enroll.</div>
                                             @endif
                                         </div>
                                     </div>
@@ -273,7 +273,7 @@ $disLikeColor = '';
                                             <div class="row">
                                                 <div class="col-lg-5">
                                                     <div class="reviews_left">
-                                                        <h3>Student Feedback</h3>
+                                                        <h3 class="font-poppins">Student Feedback</h3>
                                                         <div class="total_rating">
                                                             <div class="rating-box">
                                                                 <span class="rating-star full-star"></span>

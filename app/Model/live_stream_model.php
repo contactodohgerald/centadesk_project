@@ -13,6 +13,7 @@ class live_stream_model extends Model
     use SoftDeletes;
 
     protected $table = 'live_streams_tb';
+    public $incrementing = false;
     protected $primaryKey = 'unique_id';
     protected $keyType = 'unique_id';
 

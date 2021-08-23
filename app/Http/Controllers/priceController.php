@@ -150,7 +150,7 @@ class priceController extends Controller
             $delete_price = priceModel::find($id)->delete();
 
             $condition = [
-                ['pricing',$id],
+                ['pricing', $id],
             ];
             $delete_all_course = $this->course_model->getAllCourse($condition);
 

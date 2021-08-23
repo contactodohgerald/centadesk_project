@@ -1,44 +1,45 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use \App\Http\Controllers\Auth\AccountActivationController;
-use App\Http\Controllers\Passwords\PasswordController;
-use App\Http\Controllers\Auth\RegistrationController;
-
-use App\Http\Controllers\Course\CoursesHandlerController;
-use App\Http\Controllers\Search\SearchResultController;
-use App\Http\Controllers\Route\RouteController;
-use App\Http\Controllers\VerifyKYC\KYCVerificationController;
-use App\Http\Controllers\Testmony\TestimoniesController;
-use App\Http\Controllers\Enrollment\CourseEnrollmentController;
-use App\Http\Controllers\Users\InstructorsControllers;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\priceController;
 
-use App\Http\Controllers\Course\courseController;
-use App\Http\Controllers\Roles\AddRolesController;
-use App\Http\Controllers\Roles\UserTypeController;
-use App\Http\Controllers\Notification\NotificationController;
+use App\Http\Controllers\Blog\BlogController;
 use App\Http\Controllers\Users\UserController;
-use App\Http\Controllers\AppSettings\AppSettingsController;
-use App\Http\Controllers\SaveCourse\SaveCourseController;
-use App\Http\Controllers\LiveStream\live_stream_controller;
-use App\Http\Controllers\Subscribe\SubscribeController;
-use App\Http\Controllers\Wallet\WithdrawalController;
-use App\Http\Controllers\Wallet\TransactionController;
-use App\Http\Controllers\Verifications\VerifyBankController;
-use App\Http\Controllers\Complain\ComplainController;
-use App\Http\Controllers\Complain\ComplainHandleController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Roles\RolesController;
-use App\Http\Controllers\Blog\BlogController;
-use App\Http\Controllers\priceController;
-use App\Http\Controllers\Gallery\GalleryController;
-use App\Http\Controllers\CourseCategoryModelController;
-use App\Http\Controllers\CurrencyRate\CurrencyRateController;
-use App\Http\Controllers\Cryptocurrency\cryptocurrencyController;
-use App\Http\Controllers\Referrals\ReferralController;
+use App\Http\Controllers\Route\RouteController;
+use App\Http\Controllers\Course\courseController;
 use App\Http\Controllers\Ticket\TicketController;
+use App\Http\Controllers\Roles\AddRolesController;
+
+use App\Http\Controllers\Roles\UserTypeController;
+use App\Http\Controllers\Gallery\GalleryController;
+use App\Http\Controllers\Auth\RegistrationController;
+use App\Http\Controllers\Complain\ComplainController;
 use App\Http\Controllers\Users\GeneralUserController;
+use App\Http\Controllers\Wallet\WithdrawalController;
+use App\Http\Controllers\Passwords\PasswordController;
+use App\Http\Controllers\Referrals\ReferralController;
+use App\Http\Controllers\Users\InstructorsControllers;
+use App\Http\Controllers\Wallet\TransactionController;
+use App\Http\Controllers\CourseCategoryModelController;
+use App\Http\Controllers\Search\SearchResultController;
+use App\Http\Controllers\Subscribe\SubscribeController;
+use App\Http\Controllers\Testmony\TestimoniesController;
+use App\Http\Controllers\Course\CoursesHandlerController;
+use App\Http\Controllers\SaveCourse\SaveCourseController;
+use \App\Http\Controllers\Auth\AccountActivationController;
+use App\Http\Controllers\AppSettings\AppSettingsController;
+use App\Http\Controllers\Complain\ComplainHandleController;
+use App\Http\Controllers\LiveStream\live_stream_controller;
+use App\Http\Controllers\Verifications\VerifyBankController;
+use App\Http\Controllers\CurrencyRate\CurrencyRateController;
+use App\Http\Controllers\Notification\NotificationController;
+use App\Http\Controllers\VerifyKYC\KYCVerificationController;
+use App\Http\Controllers\Enrollment\CourseEnrollmentController;
+use App\Http\Controllers\Cryptocurrency\cryptocurrencyController;
 //use App\Http\Controllers\PaymentAddress\PaymentAddressController;
 
 
@@ -55,8 +56,10 @@ use App\Http\Controllers\Users\GeneralUserController;
 
 Auth::routes();
 
-Route::get('/show-csrf', 'HomeController@showToken');
-Route::get('/clear-cache', 'HomeController@clear_cache');
+Route::get('/show-csrf', [HomeController::class, 'showToken']);
+Route::get('/clear-cache', [HomeController::class, 'clear_cache']);
+// Route::get('/show-csrf', 'HomeController@showToken');
+// Route::get('/clear-cache', 'HomeController@clear_cache');
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
@@ -68,7 +71,7 @@ Route::get('/account_activation/{userId}', [AccountActivationController::class, 
 Route::post('/activate_account/{typeOfCode}/{userId}', [AccountActivationController::class, 'verifyAndActivateAccount'])->name('activate_account');
 Route::get('/send_account_activation_code/{userId}/{type_of_code}', [AccountActivationController::class, 'sendActivationCode'])->name('send_account_activation_code');
 
-//password reset link page 
+//password reset link page
 Route::get('/forgot-password', [PasswordController::class, 'index'])->middleware(['guest'])->name('forgot-password');
 //send email fpr password reset
 Route::post('/send-reset-code', [PasswordController::class, 'initiatePasswordReset'])->middleware(['guest'])->name('send-reset-code');
@@ -76,11 +79,11 @@ Route::get('/re-send-reset-code/{username}', [PasswordController::class, 'resend
 //verify reset password token
 Route::get('/reset-password-area/{username}/{option?}', [PasswordController::class, 'showResetPasswordPage'])->middleware(['guest'])->name('reset-password-area');
 
-//RESET THE PASSWORD 
+//RESET THE PASSWORD
 Route::post('/reset-password', [ResetPasswordController::class, 'resetThePassword'])->middleware(['guest'])->name('password.update');
 
 //logged in fpr everythg category
-Route::group(['middleware'=>['web', 'auth']], function(){
+Route::group(['middleware' => ['web', 'auth']], function () {
     // Course
     Route::get('/create-course',  [courseController::class, 'index'])->name('create-course');
     Route::get('/test',  [courseController::class, 'testEvent'])->name('test');
@@ -139,7 +142,7 @@ Route::group(['middleware'=>['web', 'auth']], function(){
     //create Price For Course
     Route::get('/create_price', [priceController::class, 'create'])->name('create_price');
     Route::post('/store_price', [priceController::class, 'store'])->name('store_price');
-    Route::get('/view_price', [priceController::class, 'index'])->name('view_price'); 
+    Route::get('/view_price', [priceController::class, 'index'])->name('view_price');
     Route::get('/edit_price/{id}', [priceController::class, 'show_edit'])->name('edit_price');
     Route::post('/update_price/{id}', [priceController::class, 'edit'])->name('update_price');
     Route::post('/delete_price/{id}', [priceController::class, 'soft_delete'])->name('delete_price');
@@ -164,6 +167,7 @@ Route::group(['middleware'=>['web', 'auth']], function(){
     Route::get('/all_students', [AdminController::class, 'showAllStudents'])->name('all_students');
     Route::get('/all_instructor', [AdminController::class, 'showAllInstructor'])->name('all_instructor');
     Route::get('/all_users', [AdminController::class, 'show_all_users'])->name('all_users');
+    Route::post('/switch_role', [AdminController::class, 'switch_user_role']);
 
     // Live stream
     Route::get('/live_stream/create', [live_stream_controller::class, 'create_live'])->name('create_live');
@@ -175,7 +179,6 @@ Route::group(['middleware'=>['web', 'auth']], function(){
     Route::post('/live/create', [live_stream_controller::class, 'create']);
     Route::post('/live/edit', [live_stream_controller::class, 'update']);
     Route::post('/delete-live/{id}', [live_stream_controller::class, 'soft_delete']);
-
 });
 
 //front end section
@@ -275,7 +278,3 @@ Route::get('/referral_earnings/{userId?}', [ReferralController::class, 'index'])
 Route::get('/referral_details/{mainUserId?}/{referredUserId?}', [ReferralController::class, 'referralDetails'])->name('referral_details');
 
 Route::post('/set_badge/{id}', [AdminController::class, 'set_user_verify_badge']);
-
-
-
-   

@@ -130,7 +130,7 @@ $title = 'Centadesk | Teach, Learn and Earn';
                    <div class="col-lg-12">
                        <div class="yl-section-title yl-headline">
                            <span>Courses</span>
-                           <h2>Subscribe to any of our courses and get a one year free lincence to earn with {{ env('APP_NAME') }}. </h2>
+                           <h2>Subscribe to any of our courses and get a one year free license to earn with {{ env('APP_NAME') }}. </h2>
                        </div>
                    </div>
 
@@ -154,6 +154,8 @@ $title = 'Centadesk | Teach, Learn and Earn';
                            <div class="yl-course-img-text">
                               <div class="yl-course-img position-relative">
                                  <span class="c-price-tag">$ {{number_format($each_courses->course_price)}}</span>
+                                 <span style="left: 10px;
+                                 right: 120px;" class="c-price-tag" {{ ($each_courses->is_bestseller == 'no')?'hidden':'' }}>Bestseller</span>
                                  <img src="{{asset('storage/course-img/'.$each_courses->cover_image)}}" alt="{{ $each_courses->name }}" class="img-size">
                                  <span class="c-hover-icon"><a href="{{ route('course-details', $each_courses->unique_id) }}"><i class="fas fa-plus"></i></a></span>
                               </div>
@@ -177,7 +179,7 @@ $title = 'Centadesk | Teach, Learn and Earn';
                                     </div>
                                     <div class="yl-c-mentor-text">
                                           <h4><a href="{{ route('instructor-profile', $each_courses->user->unique_id) }}">{{ ucfirst($each_courses->user->name) }} {{ ucfirst($each_courses->user->last_name) }}</a></h4>
-                                          <span class="btn btn-success btn-sm" {{ ($each_courses->is_bestseller == 'no')?'hidden':'' }}>Bestseller</span>
+                                          {{-- <span class="btn btn-success btn-sm" {{ ($each_courses->is_bestseller == 'no')?'hidden':'' }}>Bestseller</span> --}}
                                     </div>
                                  </div>
                               </div>

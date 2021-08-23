@@ -33,6 +33,8 @@ $title = 'Courses | Choose course categories. Make money while learning, teachin
                                 <div class="yl-course-img-text">
                                     <div class="yl-course-img position-relative">
                                         <span class="c-price-tag">$ {{number_format($each_course_list->course_price)}}</span>
+                                        <span style="left: 10px;
+                                        right: 225px;" class="c-price-tag" {{ ($each_course_list->is_bestseller == 'no')?'hidden':'' }}>Bestseller</span>
                                         <img src="{{asset('storage/course-img/'.$each_course_list->cover_image)}}" alt="{{ $each_course_list->name }}" class="img-size2">
                                     <span class="c-hover-icon"><a href="{{ route('course-details', $each_course_list->unique_id) }}"><i class="fas fa-plus"></i></a></span>
                                     </div>
@@ -61,7 +63,7 @@ $title = 'Courses | Choose course categories. Make money while learning, teachin
                                             </div>
                                             <div class="yl-c-mentor-text">
                                                 <h4><a href="{{ route('instructor-profile', $each_course_list->user->unique_id) }}">{{ ucfirst($each_course_list->user->name) }} {{ ucfirst($each_course_list->user->last_name) }}</a></h4>
-                                                <span class="btn btn-success btn-sm" {{ ($each_course_list->is_bestseller == 'no')?'hidden':'' }}>Bestseller</span>
+                                                {{-- <span class="btn btn-success btn-sm" {{ ($each_course_list->is_bestseller == 'no')?'hidden':'' }}>Bestseller</span> --}}
                                             </div>
                                         </div>
                                     </div>
@@ -102,6 +104,8 @@ $title = 'Courses | Choose course categories. Make money while learning, teachin
                                 <div class="yl-course-img-text">
                                     <div class="yl-course-img position-relative">
                                         <span class="c-price-tag">$ {{number_format($each_course->course_price)}}</span>
+                                        <span style="left: 10px;
+                                        right: 120px;" class="c-price-tag" {{ ($each_course->is_bestseller == 'no')?'hidden':'' }}>Bestseller</span>
                                         <img src="{{asset('storage/course-img/'.$each_course->cover_image)}}" alt="{{ $each_course->name }}"  class="img-size2">
                                         <span class="c-hover-icon"><a href="{{ route('course-details', $each_course->unique_id) }}"><i class="fas fa-plus"></i></a></span>
                                     </div>
@@ -111,7 +115,7 @@ $title = 'Courses | Choose course categories. Make money while learning, teachin
                                             <a href="{{ route('course-details', $each_course->unique_id) }}"><i class="fas fa-user"></i> {{ count($each_course->courseEnrollment) }} Students</a>
                                         </div>
                                         <div class="yl-course-tilte-head yl-headline ul-li">
-                                            <h3><a href="{{ route('course-details', $each_course->unique_id) }}">{{substr(ucfirst($each_course->name), 0, 40)}} {{ (strlen($each_course->name) > 40 )?'...':''}}</a></h3>
+                                            <h3 style="height: 56px;"><a href="{{ route('course-details', $each_course->unique_id) }}">{{substr(ucfirst($each_course->name), 0, 40)}} {{ (strlen($each_course->name) > 40 )?'...':''}}</a></h3>
                                             <ul>{{ $each_course->count_reviews }}
                                                 @for ($i = 1; $i <= $each_course->count_reviews; $i++)
                                                     <li><i class="fas fa-star"></i></li>
@@ -125,7 +129,7 @@ $title = 'Courses | Choose course categories. Make money while learning, teachin
                                             </div>
                                             <div class="yl-c-mentor-text">
                                                 <h4><a href="{{ route('instructor-profile', $each_course->user->unique_id) }}">{{ ucfirst($each_course->user->name) }} {{ ucfirst($each_course->user->last_name) }}</a></h4>
-                                                <span class="btn btn-success btn-sm" {{ ($each_course->is_bestseller == 'no')?'hidden':'' }}>Bestseller</span>
+                                                {{-- <span class="btn btn-success btn-sm" {{ ($each_course->is_bestseller == 'no')?'hidden':'' }}>Bestseller</span> --}}
                                             </div>
                                         </div>
                                     </div>
