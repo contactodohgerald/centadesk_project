@@ -113,6 +113,7 @@ $site_logo = $appSettings->getSingleModel();
         $("#all_msg_bg").html(dataHold);
 
     }
+    
 </script>
 
 <!-- The Modal -->
@@ -263,5 +264,4 @@ $site_logo = $appSettings->getSingleModel();
 </div>
 
 </body>
-
 </html>

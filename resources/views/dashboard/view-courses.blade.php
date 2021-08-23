@@ -83,10 +83,10 @@ $users = auth()->user();
 													<th class="text-center" scope="col">Views</th>
 													<th class="text-center" scope="col">Likes</th>
                                                     <th class="text-center" scope="col">Best Seller</th>
-													@if(auth()->user()->privilegeChecker('view_restricted_roles'))
+													{{-- @if(auth()->user()->privilegeChecker('view_restricted_roles'))
 													<th class="text-center" scope="col">User's Name</th>
 													<th class="text-center" scope="col">User's Email</th>
-													@endif
+													@endif --}}
 													<th class="text-center" scope="col">Status</th>
 													<th class="text-center" scope="col">Action</th>
 												</tr>
@@ -113,10 +113,10 @@ $users = auth()->user();
 														<p class="text-danger">No</p>
                                                         @endif
 													</td>
-													@if(auth()->user()->privilegeChecker('view_restricted_roles'))
+													{{-- @if(auth()->user()->privilegeChecker('view_restricted_roles'))
 													<td class="text-center">{{ $e->user->name }} {{ $e->user->last_name }}</td>
 													<td class="text-center">{{ $e->user->email }}</td>
-													@endif
+													@endif --}}
 													<td class="text-center text-capitalize"><b class="course_active">{{ $e->status }}</b></td>
 													<td class="text-center">
                                                         <a href="/view_course/{{ $e->unique_id }}" title="View" class="cursor-pointer gray-s"><i class="uil uil-adjust"></i></a>
