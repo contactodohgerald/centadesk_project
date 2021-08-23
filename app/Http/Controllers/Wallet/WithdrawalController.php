@@ -33,39 +33,45 @@ class WithdrawalController extends Controller
             $condition = [
                 ['action_type', 'withdrawal'],
             ];
-            $transaction = $this->transactionModel->getAllTransaction($condition);
+            $transaction = TransactionModel::where($condition)->orderBy('id', 'desc')->paginate(5);
+            // $transaction = $this->transactionModel->getAllTransaction($condition);
 
             $conditions = [
                 ['action_type', 'withdrawal'],
                 ['status', 'pending'],
             ];
-            $pending_transaction = $this->transactionModel->getAllTransaction($conditions);
+            $pending_transaction = TransactionModel::where($conditions)->orderBy('id', 'desc')->paginate(5);
+            // $pending_transaction = $this->transactionModel->getAllTransaction($conditions);
 
             $conditionss = [
                 ['action_type', 'withdrawal'],
                 ['status', 'confirmed'],
             ];
-            $successful_transaction = $this->transactionModel->getAllTransaction($conditionss);
+            $successful_transaction = TransactionModel::where($conditionss)->orderBy('id', 'desc')->paginate(5);
+            // $successful_transaction = $this->transactionModel->getAllTransaction($conditionss);
         }else{
             $condition = [
                 ['user_unique_id', $userDetails->unique_id],
                 ['action_type', 'withdrawal'],
             ];
-            $transaction = $this->transactionModel->getAllTransaction($condition);
+            $transaction = TransactionModel::where($condition)->orderBy('id', 'desc')->paginate(5);
+            // $transaction = $this->transactionModel->getAllTransaction($condition);
 
             $conditions = [
                 ['user_unique_id', $userDetails->unique_id],
                 ['action_type', 'withdrawal'],
                 ['status', 'pending'],
             ];
-            $pending_transaction = $this->transactionModel->getAllTransaction($conditions);
+            $pending_transaction = TransactionModel::where($conditions)->orderBy('id', 'desc')->paginate(5);
+            // $pending_transaction = $this->transactionModel->getAllTransaction($conditions);
 
             $conditionss = [
                 ['user_unique_id', $userDetails->unique_id],
                 ['action_type', 'withdrawal'],
                 ['status', 'confirmed'],
             ];
-            $successful_transaction = $this->transactionModel->getAllTransaction($conditionss);
+            $successful_transaction = TransactionModel::where($conditionss)->orderBy('id', 'desc')->paginate(5);
+            // $successful_transaction = $this->transactionModel->getAllTransaction($conditionss);
         }
 
         foreach ($transaction as $each_transaction){
@@ -77,7 +83,7 @@ class WithdrawalController extends Controller
         foreach ($successful_transaction as $each_successful_transaction){
             $each_successful_transaction->users;
         }
-    
+
         $data = ['transaction'=>$transaction, 'pending_transaction'=>$pending_transaction, 'successful_transaction'=>$successful_transaction, 'userDetails'=>$userDetails, 'dates'=>'ALL'];
 
         return view('dashboard.withdrawals', $data);
@@ -263,7 +269,7 @@ class WithdrawalController extends Controller
         ];
 
         $transactions = $this->transactionModel->getSingleTransaction($condition);
-      
+
         $view = [
             'userDetails'=>$userDetails,
             'transactions'=>$transactions,

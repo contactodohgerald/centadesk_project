@@ -39,8 +39,11 @@ class courseEnrollment extends Model
      *
      * @return array
      */
- 
+
     public function course(){
+        return $this->belongsTo('App\course_model', 'course_id');
+    }
+    public function enroll_course(){
         return $this->belongsTo('App\course_model', 'course_id');
     }
 
@@ -48,9 +51,9 @@ class courseEnrollment extends Model
         return $this->belongsTo('App\Models\User', 'course_creator');
     }
 
-    public function price(){
-        return $this->belongsTo('App\priceModel', 'pricing');
-    }
+    // public function price(){
+    //     return $this->belongsTo('App\priceModel', 'pricing');
+    // }
 
     public function getAllEnrolls($condition, $id = 'id', $desc = 'desc'){
 

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\course_model;
+use App\Http\Controllers\Course\courseController;
+use App\Http\Controllers\Ticket\TicketController;
 use App\Model\Review;
 use App\Model\courseEnrollment;
 use App\Models\User;
@@ -18,7 +20,7 @@ class HomeController extends Controller
      * @return void
      */
     public function __construct(
-        live_stream_model $live_stream, course_model $course_model, Review $review, User $user, courseEnrollment $courseEnrollment
+        live_stream_model $live_stream, course_model $course_model, Review $review, User $user, courseEnrollment $courseEnrollment, courseController $courseController, TicketController $ticketController
     ){
         $this->middleware('auth',  ['except' => ['clear_cache']]);
         $this->live_stream = $live_stream;
@@ -26,6 +28,8 @@ class HomeController extends Controller
         $this->review = $review;
         $this->user = $user;
         $this->courseEnrollment = $courseEnrollment;
+        $this->courseController = $courseController;
+        $this->ticketController = $ticketController;
     }
 
     /**
@@ -36,16 +40,17 @@ class HomeController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $condition = [
-            ['deleted_at', null],
-            ['status', 'live'],
-        ];
-        $live_streams = $this->live_stream->get_all($condition);
 
         $condition = [
             ['status', 'confirmed']
         ];
         $course = $this->course_model->getAllCourse($condition);
+        $condition = [
+            ['deleted_at', null],
+            ['status', 'live'],
+        ];
+        // return 'null';
+        $live_streams = $this->live_stream->get_all($condition);
 
         foreach ($course as $each_course){
 
@@ -91,12 +96,21 @@ class HomeController extends Controller
         $user->enroll_students;
 
         //return $user;
+        $confirmed_courses = $this->courseController->count_confirmed_courses();
+        $total_students = $this->user->count_students();
+        $total_teachers = $this->user->count_teachers();
+        $pending_tickets = $this->ticketController->count_pending_ticket();
+        $overview = [
+            $confirmed_courses, $total_students, $total_teachers,
+            $pending_tickets
+        ];
 
         $view = [
             'live_streams' => $live_streams,
             'user' => $user,
             'course' => $course,
             'instructors' => $instructors,
+            'app_overview' => $overview,
         ];
 
         return view('dashboard.index',$view);

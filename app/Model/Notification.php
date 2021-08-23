@@ -13,7 +13,7 @@ class Notification extends Model
     public $incrementing = false;
     protected $keyType = 'string';
 
-    
+
     public function users(){
         return $this->belongsTo('App\Models\User', 'user_unique_id');
     }

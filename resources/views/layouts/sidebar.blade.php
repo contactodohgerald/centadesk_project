@@ -98,6 +98,7 @@ $verifications_count = $verifications->getAllKycVerification($conditions);
                         <span class="menu--label">Explore</span>
                     </a>
                 </li>
+                @if(auth()->user()->privilegeChecker('view_restricted_roles'))
                 <li class="menu--item menu--item__has_sub_menu">
                     <label class="menu--link <?php print @$live_stream;?> text-dark night-text" title="Live Stream">
                         <i class='uil uil-kayak menu--icon text-dark night-text'></i>
@@ -111,6 +112,7 @@ $verifications_count = $verifications->getAllKycVerification($conditions);
                             <a href="{{route('show_live_stream')}}" class="sub_menu--link">View All</a>
                         </li>
                     </ul>
+                    @endif
                 <li class="menu--item">
                     <a href="{{route('browse_instructor')}}" class="menu--link <?php print @$instructor?>" title="Browse Instructors">
                         <i class='uil uil-asterisk menu--icon'></i>

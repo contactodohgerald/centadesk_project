@@ -164,17 +164,17 @@
 															<div class="eps_dots more_dropdown">
 																<a href="#"><i class="uil uil-ellipsis-v"></i></a>
 																<div class="dropdown-content">
-                                                                    <span onclick="saveCourse('{{$e->unique_id}}', '{{auth()->user()->unique_id}}') "><i class="uil uil-heart"></i>Save</span>
+                                                                    <span class="font-poppins" onclick="saveCourse('{{$e->unique_id}}', '{{auth()->user()->unique_id}}') "><i class="uil uil-heart"></i>Save</span>
 																</div>
 															</div>
 															<div class="vdtodt">
 																<span class="vdt14">{{$e->views}} views</span>&nbsp;
 																<span class="vdt14">{{$e->created_at->diffForHumans()}}</span>
 															</div>
-															<a href="{{route('view_course', $e->unique_id )}}" class="crse14s">{{ $e->name}}</a>
+															<a href="{{route('view_course', $e->unique_id )}}" class="crse14s  font-poppins">{{ $e->name}}</a>
                                                             <a href="javascript:;" class="crse-cate font-poppins">{{$e->category->name}}</a>
 															<div class="auth1lnkprce">
-																<p class="cr1fot text-capitalize">By <a href="#">{{ $e->user->name }} {{ $e->user->last_name }}</a></p>
+																<p class="cr1fot text-capitalize font-poppins">By <a href="#">{{ $e->user->name }} {{ $e->user->last_name }}</a></p>
 																<div class="prce142">{{auth()->user()->getAmountForView($e->price->amount)['data']['currency'] }} {{number_format($e->price->amount)}}</div>
 																<button class="shrt-cart-btn" title="cart"><i class="uil uil-shopping-cart-alt"></i></button>
 															</div>
@@ -345,6 +345,7 @@
     <!-- Body End -->
 
     @include('layouts.e_script')
+    @include('js_by_page.course_js')
 
     <script>
         $(document).ready(function () {
