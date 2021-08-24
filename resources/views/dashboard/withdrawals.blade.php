@@ -110,12 +110,6 @@
 						<br>
 						<h4 class="text-danger">
 							<b>Withdrawal(s) ({{$dates}})</b>
-							@if($users->privilegeChecker('view_restricted_roles'))
-							<div class="pull-right">
-								<a class="btn btn-danger" onclick="makeTransferPayments(this)" href="javascript:;">Make Payment With Flutter Wave</a>
-								<a class="btn btn-danger" onclick="markAsPayed(this)" href="javascript:;">Confirm Withdrawals</a>
-							</div>
-							@endif
 						</h4>
 					</div>
 					<div class="col-md-12">
@@ -359,6 +353,10 @@
 								</div>
 							</div>
 							<div style="position: fixed; bottom: 20px; right: 30px; z-index: 200">
+								@if($users->privilegeChecker('view_restricted_roles'))
+								<button type="button" class="btn btn-danger" onclick="makeTransferPayments(this)">Make Payment With Flutter Wave</button>
+								<button type="button" class="btn btn-danger" onclick="markAsPayed(this)">Confirm Withdrawals</button>
+								@endif
 								<button type="button" class="btn btn-danger" id="deleteWithdrawBtn" title="Select Withdraw(s) to be deleted by ticking the checkbox on each row and then click this button to delete">Delete Withdraw(s)</button>
 							</div>
 						</div>

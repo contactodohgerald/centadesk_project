@@ -250,7 +250,6 @@ $home = 'active';
                         </div>
                     </div>
                     <div class="col-xl-9 col-lg-8">
-
                         <div class="section3125">
                             <h3 class="item_title font-poppins">Live Streams </h3>
                             <a href="/explore/live_streams" class="see150 font-poppins">See all</a>
@@ -303,7 +302,7 @@ $home = 'active';
                                                 <span class="vdt14">{{$each_course->views}} views</span>
                                                 <span class="vdt14">{{$each_course->created_at->diffForHumans()}}</span>
                                             </div>
-                                            <a href="{{route('view_course', $each_course->unique_id )}}" class="crse14s font-poppins">{{$each_course->name}}3</a>
+                                            <a style="height: 50px" href="{{route('view_course', $each_course->unique_id )}}" class="crse14s font-poppins">{{substr(ucfirst($each_course->name), 0, 40)}} {{ (strlen($each_course->name) > 40 )?'...':''}}</a>
                                             <a href="javascript:;" class="crse-cate font-poppins">{{$each_course->category->name}}</a>
                                             <div class="auth1lnkprce">
                                                 <p class="cr1fot text-capitalize">By <a href="{{route('view_profile', $each_course->user->unique_id )}}">{{$each_course->user->name}} {{$each_course->user->last_name}}</a></p>
@@ -441,7 +440,6 @@ $home = 'active';
         </script>
 
     @else
-
         <script>
 
             $("#subscription_date_counter").show();
@@ -454,5 +452,4 @@ $home = 'active';
             });
 
         </script>
-
     @endif

@@ -1,7 +1,7 @@
 @php
 $users = auth()->user();
 	$pageTitle = 'Enrolled Courses';
-	$enrolledCourse = 'active';
+	$Course = 'active';
 @endphp
 @include('layouts.head')
 
@@ -76,11 +76,13 @@ $users = auth()->user();
                                                     </div>
                                                     <input type="hidden" class="saved_course_id" value="{{$each_enrollment->enroll_course->unique_id}}">
                                                     <input type="hidden" class="user_unique_id" value="{{auth()->user()->unique_id}}">
-                                                    <a href="{{route('view_course', $each_enrollment->enroll_course->unique_id )}}" class="crse14s title900 font-poppins"><b>{{$each_enrollment->enroll_course->name}}</b></a>
+                                                    <a href="{{route('view_course', $each_enrollment->enroll_course->unique_id )}}" class="crse14s title900 font-poppins">
+                                                        <b>{{substr(ucfirst($each_enrollment->enroll_course->name), 0, 40)}} {{ (strlen($each_enrollment->enroll_course->name) > 40 )?'...':''}}</b>
+                                                    </a>
                                                     <a href="{{route('view_course', $each_enrollment->enroll_course->unique_id )}}" class="crse-cate font-poppins">{{$each_enrollment->enroll_course->short_caption}}</a>
                                                     <div class="auth1lnkprce">
                                                         <p class="cr1fot">By <a href="{{route('view_profile', $each_enrollment->creator->unique_id )}}">{{$each_enrollment->creator->name}} {{$each_enrollment->creator->last_name}}</a></p>
-                                                        <div class="prce142 font-poppins">{{auth()->user()->getAmountForView($each_enrollment->enroll_course->price->amount)['data']['currency'] }}  {{$each_enrollment->enroll_course->price->amount}}</div>
+                                                        <div class="prce142 font-poppins">{{auth()->user()->getAmountForView($each_enrollment->enroll_course->price->amount)['data']['currency'] }}  {{number_format($each_enrollment->enroll_course->price->amount)}}</div>
                                                     </div>
                                                 </div>
                                             </div>

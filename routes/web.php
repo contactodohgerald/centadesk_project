@@ -68,7 +68,7 @@ Route::post('/register_user', [RegistrationController::class, 'registerUsers'])-
 
 //account activation
 Route::get('/account_activation/{userId}', [AccountActivationController::class, 'accountActivationPage'])->name('account_activation');
-Route::post('/activate_account/{typeOfCode}/{userId}', [AccountActivationController::class, 'verifyAndActivateAccount'])->name('activate_account');
+Route::post('/activate_accounts/{typeOfCode}/{userId}', [AccountActivationController::class, 'verifyAndActivateAccount'])->name('activate_accounts');
 Route::get('/send_account_activation_code/{userId}/{type_of_code}', [AccountActivationController::class, 'sendActivationCode'])->name('send_account_activation_code');
 
 //password reset link page
@@ -248,7 +248,7 @@ Route::get('/complain_page', [ComplainController::class, 'complainPage'])->name(
 Route::post('/create_complain', [ComplainController::class, 'createComplain'])->name('create_complain');
 
 Route::get('/complain_list', [ComplainHandleController::class, 'complainListForAdmin'])->name('complain_list');
-Route::post('/activate_account', [ComplainHandleController::class, 'activateUserAccount'])->name('activate_account');
+Route::post('/activate_account/{option?}', [ComplainHandleController::class, 'activateUserAccount'])->name('activate_account');
 Route::post('/ignore_request', [ComplainHandleController::class, 'ignoreAccountActivateRequest'])->name('ignore_request');
 
 //add roles area

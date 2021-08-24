@@ -8,6 +8,7 @@ use App\Http\Controllers\Ticket\TicketController;
 use App\Model\Review;
 use App\Model\courseEnrollment;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Model\live_stream_model;
 use Illuminate\Support\Facades\Artisan;
@@ -37,50 +38,47 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
-    {
-        $user = auth()->user();
-
-        $condition = [
+    public function index(){
+        $user = Auth::user();
+               
+        $course = $this->course_model->getAllCourse([
             ['status', 'confirmed']
-        ];
-        $course = $this->course_model->getAllCourse($condition);
-        $condition = [
+        ]);
+      
+        // return 'null';
+        $live_streams = $this->live_stream->get_all([
             ['deleted_at', null],
             ['status', 'live'],
-        ];
-        // return 'null';
-        $live_streams = $this->live_stream->get_all($condition);
+        ]);
 
-        foreach ($course as $each_course){
+        if(count($course) > 0){
+            foreach ($course as $each_course){
 
-            $each_course->user;
-
-            $each_course->price;
-
-            $each_course->category;
-
-            $conditions = [
-                ['course_unique_id', $each_course->unique_id ]
-            ];
-            $reviews = $this->review->getAllReviews($conditions);
-            $each_course->reviews = $reviews;
-            $each_course->count_review = $this->calculateRatings($reviews);
-
+                $each_course->user;
+    
+                $each_course->price;
+    
+                $each_course->category;
+    
+                $reviews = $this->review->getAllReviews([
+                    ['course_unique_id', $each_course->unique_id]
+                ]);
+                $each_course->reviews = $reviews;
+                $each_course->count_review = $this->calculateRatings($reviews);
+    
+            }
         }
-
-        $condition = [
+      //  return $course;
+        $instructors = $this->user->getAllUsers([
             ['status', 'active'],
             ['user_type', 'teacher'],
-        ];
-        $instructors = $this->user->getAllUsers($condition);
+        ]);
 
         foreach ($instructors as $each_instructors){
 
-            $conditions = [
+            $course_model = $this->course_model->getAllCourse([
                 ['user_id', $each_instructors->unique_id],
-            ];
-            $course_model = $this->course_model->getAllCourse($conditions);
+            ]);
             $each_instructors->count_course = $course_model->count();
 
             $enrolled = $this->courseEnrollment->getAllEnrolls([

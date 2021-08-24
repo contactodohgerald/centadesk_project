@@ -97,7 +97,7 @@ $explore= 'active';
                                                 <span class="vdt14">{{$each_course->views}} views</span>
                                                 <span class="vdt14">{{$each_course->created_at->diffForHumans()}}</span>
                                             </div>
-                                            <a href="{{route('view_course', $each_course->unique_id )}}" class="crse14s font-poppins">{{$each_course->name}}</a>
+                                            <a style="height: 50px" href="{{route('view_course', $each_course->unique_id )}}" class="crse14s font-poppins">{{substr(ucfirst($each_course->name), 0, 40)}} {{ (strlen($each_course->name) > 40 )?'...':''}}</a>
                                             <a href="javascript:;" class="crse-cate font-poppins">{{$each_course->category->name}}</a>
                                             <div class="auth1lnkprce">
                                                 <p class="cr1fot">By <a class="text-capitalize" href="{{route('view_profile', $each_course->user->unique_id )}}">{{$each_course->user->name}} {{$each_course->user->last_name}}</a></p>

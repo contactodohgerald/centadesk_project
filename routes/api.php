@@ -46,6 +46,8 @@ Route::post('/confirm_withdrawal_payment', [TransactionController::class, 'markW
 
 Route::post('/delete_transaction', [TransactionController::class, 'deleteTransactions'])->name('delete_transaction');
 
+Route::post('/comfirm_transaction', [TransactionController::class, 'comfirmTransactions'])->name('comfirm_transaction');
+
 Route::post('/comfirm_user', [UserController::class, 'comfirmUser'])->name('comfirm_user');
 
 Route::post('/delete_withdraw', [WithdrawalController::class, 'deleteWithdraws'])->name('delete_withdraw');

@@ -165,7 +165,9 @@ $title = 'Centadesk | Teach, Learn and Earn';
                                     <a href="{{ route('course-details', $each_courses->unique_id) }}"><i class="fas fa-user"></i> {{ count($each_courses->courseEnrollment) }} Students</a>
                                  </div>
                                  <div class="yl-course-tilte-head yl-headline ul-li">
-                                    <h3><a href="{{ route('course-details', $each_courses->unique_id) }}"> {{substr(ucfirst($each_courses->name), 0, 40)}} {{ (strlen($each_courses->name) > 40 )?'...':''}}</a></h3>
+                                    <h3 style="height: 50px">
+                                       <a href="{{ route('course-details', $each_courses->unique_id) }}"> {{substr(ucfirst($each_courses->name), 0, 40)}} {{ (strlen($each_courses->name) > 40 )?'...':''}}</a>
+                                    </h3>
                                     <ul>{{ $each_courses->count_reviews }}
                                        @for ($i = 1; $i <= $each_courses->count_reviews; $i++)
                                        <li><i class="fas fa-star"></i></li>

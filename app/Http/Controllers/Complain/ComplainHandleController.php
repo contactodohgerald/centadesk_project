@@ -30,13 +30,14 @@ class ComplainHandleController extends Controller
         ]);
 
         foreach ($complains as $each_complains){
-
             $each_complains->users;
-
         }
-      
-        return view('dashboard.all_compalins', ['complains'=>$complains]);
 
+        $data = [
+            'complains'=>$complains,
+        ];
+     
+        return view('dashboard.all_compalins', $data);
     }
 
     protected function Validator($request){
@@ -47,29 +48,32 @@ class ComplainHandleController extends Controller
 
     }
 
-    public function activateUserAccount(Request $request){
+    public function activateUserAccount(Request $request, $option = null){
 
         try{
             $this->Validator($request);//validate fields
 
-            $condition = [
-                ['unique_id', $request->unique_id]
-            ];
-
-            $complain = $this->accountResolve->getSingleOfComplain($condition);
-
-            $conditions = [
-                ['unique_id', $complain->user_unique_id]
-            ];
-
-            $user = $this->user->getSingleUser($conditions);
-
-            if ($user === null || $user === ''){
-
-                return redirect('/complain_list')->with('error_message', 'Account Could Not Be Activated, Please Try At A Later Time');
-
+            if($option === null){
+                $complain = $this->accountResolve->getSingleOfComplain([
+                    ['unique_id', $request->unique_id]
+                ]);
             }else{
+                $complain = $this->accountResolve->getSingleOfComplain([
+                    ['user_email', $request->unique_id]
+                ]);
+            }
 
+            if($complain == null){
+                return redirect()->back()->with('error_message', 'This user account is not up for activation');
+            }
+            
+            $user = $this->user->getSingleUser([
+                ['email', $complain->user_email]
+            ]);
+         
+            if ($user === null || $user === ''){
+                return redirect()->back()->with('error_message', 'Account Could Not Be Activated, Please Try At A Later Time');
+            }else{
                 $user->status = 'active';
 
                 if ($user->save()){
@@ -82,22 +86,16 @@ class ComplainHandleController extends Controller
                     $message = 'We the entire team of '.$app_name.' is please to announce to you that your '.$app_name.' account has been activated, we hope your stay and experience on our platform is as smooth and hassle free as possible. Login in to your '.$app_name.' to start enjoying unlimited offers';
 
                     //write a function that sends the user an email upon account activation
-                    $this->sendMails("Account Activation", $message, $app_name, $this->base_url, $user->email);
-
-                    return redirect('/complain_list')->with('success_message', 'Account Was Activated Successfully');
-
+                    $this->sendMails("Account Activation", $message, $app_name, $this->base_url, $user);
+                    return redirect()->back()->with('success_message', 'Account Was Activated Successfully');
                 }else{
-
-                    return redirect('/complain_list')->with('error_message', 'An Error occurred, Please try Again Later');
-
+                    return redirect()->back()->with('error_message', 'An Error occurred, Please try Again Later');
                 }
-
             }
-
         }catch (Exception $exception){
 
             $errorsArray = $exception->getMessage();
-            return  redirect('/complain_list')->with('error_message', $errorsArray);
+            return  redirect()->back()->with('error_message', $errorsArray);
 
         }
 
