@@ -24,14 +24,6 @@
 				</div>
 				<div class="row">
 					<div class="col-md-12">
-						<br>
-						<h4 class="text-danger">
-							<div class="pull-right">
-								<button class="btn btn-danger" id="delete_gallery">Delete Gallery/Event</button>
-							</div>
-						</h4>
-					</div>
-					<div class="col-md-12">
 						<div class="my_courses_tabs">
 							<ul class="nav nav-pills my_crse_nav" id="pills-tab" role="tablist">
 								<li class="nav-item">
@@ -88,6 +80,12 @@
 					</div>
 				</div>
 			</div>
+		</div>
+
+		<div style="position: fixed; bottom: 20px; right: 30px; z-index: 200;">
+			<button type="button" class="btn btn-danger" id="delete_gallery" title="Select Gallery(s) to be comfirmed by ticking the checkbox on each row and then click this button to delete">
+				Delete Gallery/Event(s)
+			</button>
 		</div>
 
 		@include('layouts.footer')

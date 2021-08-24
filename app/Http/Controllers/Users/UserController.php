@@ -38,7 +38,7 @@ class UserController extends Controller
         live_stream_model $liveStream,
         courseEnrollment $courseEnrollment
     ) {
-        $this->middleware('auth');
+        $this->middleware('auth',  ['except' => ['comfirmUser', 'update_user_details', 'upload_cover_photo', 'soft_delete']]);
         $this->kycVerification = $kycVerification;
         $this->appSettings = $appSettings;
         $this->course_model = $course_model;
@@ -56,8 +56,7 @@ class UserController extends Controller
      *
      * @return array
      */
-    public function profile()
-    {
+    public function profile(){
         $user = Auth::user();
 
         $condition = [
@@ -155,8 +154,7 @@ class UserController extends Controller
         return view('dashboard.profile', ['user' => $user]);
     }
 
-    protected function Validator($request)
-    {
+    protected function Validator($request){
 
         $this->validator = Validator::make($request->all(), [
             'account_name' => 'required',
@@ -165,8 +163,7 @@ class UserController extends Controller
         ]);
     }
 
-    function bankAccountUpdate(Request $request)
-    {
+    function bankAccountUpdate(Request $request){
 
         $data = $request->all();
 
@@ -191,8 +188,7 @@ class UserController extends Controller
         }
     }
 
-    function walletAddressUpdate(Request $request)
-    {
+    function walletAddressUpdate(Request $request){
 
         $data = $request->all();
 
@@ -220,8 +216,7 @@ class UserController extends Controller
      * @param Request $request
      * @return array
      */
-    public function update_user_details(Request $request)
-    {
+    public function update_user_details(Request $request){
         $user = $request->user();
 
         try {
@@ -292,8 +287,7 @@ class UserController extends Controller
      *
      * @return array
      */
-    public function upload_cover_photo(Request $request)
-    {
+    public function upload_cover_photo(Request $request){
         $user = $request->user();
 
         try {
@@ -342,8 +336,7 @@ class UserController extends Controller
         }
     }
 
-    function uploadUserCAC()
-    {
+    function uploadUserCAC(){
 
         return view('dashboard.upload_cac');
     }
@@ -514,8 +507,7 @@ class UserController extends Controller
         return $validator;
     }
 
-    public function comfirmUser(Request $request)
-    {
+    public function comfirmUser(Request $request){
         try {
 
             $validation = $this->handleDeleteValidations($request->all());

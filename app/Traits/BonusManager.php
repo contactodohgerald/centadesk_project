@@ -1,7 +1,7 @@
 <?php
   namespace App\Traits;
 
-use App\User;
+use App\Models\User;
 use App\Model\Bonus;
 use App\Traits\Generics;
 use App\Http\Controllers\Controller;

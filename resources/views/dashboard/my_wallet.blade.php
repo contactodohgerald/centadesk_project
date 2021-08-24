@@ -58,7 +58,7 @@ $users = auth()->user();
 								<div class="card_dash1">
 									<div class="card_dash_center">
 										<i class="uil uil-money-bill"></i>
-										<h1><b>{{number_format($userDetails->calculateTotalAmount('withdrawal', 'processing'))}} ({{$userDetails->getBalanceForView()['data']['currency']}})</b></h1>
+										<h1><b>{{number_format($userDetails->calculateTotalAmount('withdrawal', 'pending'))}} ({{$userDetails->getBalanceForView()['data']['currency']}})</b></h1>
 										<p class="font-poppins">Total Pending Withdraw Balance</p>
 									</div>
 								</div>
@@ -323,6 +323,9 @@ $users = auth()->user();
 								</div>
 							</div>
 							<div style="position: fixed; bottom: 20px; right: 30px; z-index: 200">
+								@if($users->privilegeChecker('view_restricted_roles'))
+								<button type="button" class="btn btn-danger" id="comfirmTransactionBtn" title="Select Transaction(s) to be comfirm by ticking the checkbox on each row and then click this button to delete">Comfirm Transaction(s)</button>
+								@endif
 								<button type="button" class="btn btn-danger" id="deleteTransactionBtn" title="Select Transaction(s) to be deleted by ticking the checkbox on each row and then click this button to delete">Delete Transaction(s)</button>
 							</div>
 						</div>

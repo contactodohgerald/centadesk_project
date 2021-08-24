@@ -65,17 +65,16 @@ class CourseEnrollmentController extends Controller
 
         // get course details for each user enrollment
         // $enrolled_courses = [];
-
+        
         foreach ($enrollments as $each_enrollments) {
             // print_r($each_enrollments->toArray());
            $each_enrollments->enroll_course;
 
            $each_enrollments->creator;
-           $each_enrollments->course->price;
-        //    $each_enrollments->price = $each_enrollments->enroll_course->price;
+           $each_enrollments->enroll_course->price;
 
         }
- //return $enrollments;
+       
         return view('dashboard.enrolled_courses', ['enrollments'=>$enrollments]);
 
 

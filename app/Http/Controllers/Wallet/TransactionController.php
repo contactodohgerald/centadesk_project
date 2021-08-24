@@ -20,13 +20,12 @@ class TransactionController extends Controller
 
     function __construct(TransactionModel $transactionModel, User $user)
     {
-        $this->middleware('auth', ['except' => ['handleTransfers', 'markWithdrawalsAsPaid']]);
+        $this->middleware('auth', ['except' => ['handleTransfers', 'markWithdrawalsAsPaid', 'comfirmTransactions', 'deleteTransactions']]);
         $this->transactionModel = $transactionModel;
         $this->user = $user;
     }
 
-    public function myTransaction()
-    {
+    public function myTransaction(){
 
         $userDetails = Auth::user();
 
@@ -91,8 +90,7 @@ class TransactionController extends Controller
         return view('dashboard.my_wallet', $data);
     }
 
-    public function showTransactionByDate(Request $request)
-    {
+    public function showTransactionByDate(Request $request){
 
         $userDetails = Auth::user();
 
@@ -153,8 +151,7 @@ class TransactionController extends Controller
         return view('dashboard.my_wallet', $data);
     }
 
-    public function showTopUpTransaction($unique_id = null)
-    {
+    public function showTopUpTransaction($unique_id = null){
 
         $userDetails = Auth::user();
 
@@ -167,16 +164,14 @@ class TransactionController extends Controller
         return view('dashboard.transaction_history', ['userDetails' => $userDetails, 'transactions' => $transactions]);
     }
 
-    protected function Validator($request)
-    {
+    protected function Validator($request){
 
         $this->validator = Validator::make($request->all(), [
             'topUpAmount' => 'required',
         ]);
     }
 
-    public function topUpWallet(Request $request)
-    {
+    public function topUpWallet(Request $request){
 
         $user_details = Auth::user();
 
@@ -226,10 +221,13 @@ class TransactionController extends Controller
         }
     }
 
-    public function confirmUserPayments()
-    {
+    public function confirmUserPayments(){
 
-        $transaction_id = $_GET['transaction_id'];
+        if(isset($_GET['transaction_id'])){
+            $transaction_id = $_GET['transaction_id'];
+        }else{
+            return redirect('/my_balance')->with('error_message', 'Transaction Confirmation Was Not Successful, An Error Occurred');
+        }
         $tx_ref = $_GET['tx_ref'];
         $status = $_GET['status'];
 
@@ -257,9 +255,9 @@ class TransactionController extends Controller
 
                 $convertedPrice = $this->calculateExchangeRate($user, $transactionModel->amount, $type_of_action = 'sending_to_view');
 
-                // $round_up_amount =  round($convertedPrice['data']['amount']);
+                $round_up_amount =  round($convertedPrice['data']['amount']);
 
-                // $returned_amount = $decoded_response['data']['amount'];
+                $returned_amount = $decoded_response['data']['amount'];
 
                 //display error
                 if ($returned_amount != $transactionModel->amount || $returned_amount > $transactionModel->amount) {
@@ -277,7 +275,7 @@ class TransactionController extends Controller
                 //update the PayForBookByUser table
                 $transactionModel->flw_ref = $decoded_response['data']['flw_ref'];
                 $transactionModel->status = 'confirmed';
-                $transactionModel->account_token = $decoded_response['data']['account']['account_token'];
+                $transactionModel->account_token = $decoded_response['data']['narration'];
                 $transactionModel->consumer_id = $decoded_response['data']['meta']['consumer_id'];
                 $transactionModel->consumer_mac = $decoded_response['data']['meta']['consumer_mac'];
                 $transactionModel->amount_settled = $decoded_response['data']['amount_settled'];
@@ -296,8 +294,7 @@ class TransactionController extends Controller
         }
     }
 
-    function handleTransferValidation(array $data)
-    {
+    function handleTransferValidation(array $data){
 
         $validator = Validator::make($data, [
             'withdrawalId' => 'required|string'
@@ -306,8 +303,7 @@ class TransactionController extends Controller
         return $validator;
     }
 
-    function handleTransfers(Request $request)
-    {
+    function handleTransfers(Request $request){
 
         try {
 
@@ -394,8 +390,7 @@ class TransactionController extends Controller
         }
     }
 
-    public function commencePayment($post_data, $secKey)
-    {
+    public function commencePayment($post_data, $secKey){
 
         $data_string = json_encode($post_data);
 
@@ -440,8 +435,7 @@ class TransactionController extends Controller
         ];
     }
 
-    public function retrieveStatusOfBulkTransfer()
-    {
+    public function retrieveStatusOfBulkTransfer(){
 
         try {
 
@@ -522,8 +516,7 @@ class TransactionController extends Controller
         }
     }
 
-    function handleTransferValidations(array $data)
-    {
+    function handleTransferValidations(array $data){
 
         $validator = Validator::make($data, [
             'dataArray' => 'required|string'
@@ -532,8 +525,7 @@ class TransactionController extends Controller
         return $validator;
     }
 
-    public function markWithdrawalsAsPaid(Request $request)
-    {
+    public function markWithdrawalsAsPaid(Request $request){
         try {
 
             $validation = $this->handleTransferValidations($request->all());
@@ -568,8 +560,7 @@ class TransactionController extends Controller
         }
     }
 
-    function handleDeleteValidations(array $data)
-    {
+    function handleDeleteValidations(array $data){
 
         $validator = Validator::make($data, [
             'dataArray' => 'required|string'
@@ -578,8 +569,7 @@ class TransactionController extends Controller
         return $validator;
     }
 
-    public function deleteTransactions(Request $request)
-    {
+    public function deleteTransactions(Request $request){
         try {
 
             $validation = $this->handleDeleteValidations($request->all());
@@ -597,6 +587,30 @@ class TransactionController extends Controller
                 $withdrawalDetails->delete();
             }
             return response()->json(['error_code' => 0, 'success_statement' => 'Selected transaction was deleted successfully']);
+        } catch (Exception $exception) {
+
+            $error = $exception->getMessage();
+            return response()->json(['error_code' => 1, 'error_message' => ['general_error' => [$error]]]);
+        }
+    }
+
+    public function comfirmTransactions(Request $request){
+        try {
+
+            $validation = $this->handleDeleteValidations($request->all());
+            if ($validation->fails()) {
+                return response()->json(['error_code' => 1, 'error_message' => $validation->messages()]);
+            }
+
+            $dataArray = explode('|', $request->dataArray);
+
+            foreach ($dataArray as $eachDataArray) {
+                //update the withdrawal status to confirmed
+                $withdrawalDetails = $this->transactionModel->selectSingleTransactionModel($eachDataArray);
+                $withdrawalDetails->status = 'confirmed';
+                $withdrawalDetails->save();
+            }
+            return response()->json(['error_code' => 0, 'success_statement' => 'Selected transaction was updated successfully']);
         } catch (Exception $exception) {
 
             $error = $exception->getMessage();

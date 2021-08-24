@@ -31,7 +31,7 @@ trait Payment{
             ));
 // And then encoded as a json string
         $data_string = json_encode($customer_data);
-        $secKey = env('FL_KEY', 'FLWSECK_TEST-229b6298ca8ca07934ee2db37ff7750d-X');
+        $secKey = env('FL_KEY', 'FLWSECK-2f1dff8eaceb4c4c8a77bda1b74eb815-X');
 
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
@@ -58,7 +58,7 @@ trait Payment{
 
     function confirmPayments($transaction_id)
     {
-        $secKey = env('FL_KEY', 'FLWSECK_TEST-229b6298ca8ca07934ee2db37ff7750d-X');
+        $secKey = env('FL_KEY', 'FLWSECK-2f1dff8eaceb4c4c8a77bda1b74eb815-X');
         $curl = curl_init();
 
         curl_setopt_array($curl, array(

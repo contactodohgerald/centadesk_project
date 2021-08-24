@@ -23,6 +23,25 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
+                        
+						@if(Session::has('success_message'))
+                            <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+                                <i class="fa fa-envelope-o mr-2"></i>
+                                {{ Session::get('success_message') }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                        @elseif(Session::has('error_message'))
+                            <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+                                <i class="fa fa-envelope-o mr-2"></i>
+                                {{ Session::get('error_message') }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                        @endif
+                        
                         <div class="my_courses_tabs">
                             <ul class="nav nav-pills my_crse_nav" id="pills-tab" role="tablist">
                                 <li class="nav-item">
@@ -37,6 +56,9 @@
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" id="pills-inactive-students-tab" data-toggle="pill" href="#pills-admin" role="tab" aria-controls="pills-active-students" aria-selected="false"><i class="uil uil-user-circle"></i>Admin</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-inactive-students-tab" data-toggle="pill" href="#pills-resolve" role="tab" aria-controls="pills-active-students" aria-selected="false"><i class="uil uil-user-circle"></i>Resolve Complain</a>
                                 </li>
                             </ul>
                             <div class="tab-content" id="pills-tabContent">
@@ -552,13 +574,95 @@
                                         {!! $admin->links() !!}
                                     </div>
                                 </div>
+                                <div class="tab-pane fade" id="pills-resolve" role="tabpanel">
+                                    <div class="table-responsive mt-30">
+                                        <table class="table ucp-table">
+                                            <thead class="thead-s">
+                                                <tr>
+                                                    <th class="text-center" scope="col">
+                                                        S / No
+                                                    </th>
+                                                    @if(auth()->user()->privilegeChecker('view_restricted_roles'))
+                                                    <th class="text-center">
+                                                        <input onclick="checkAll()" type="checkbox" class="mainCheckBox" />
+                                                    </th>
+                                                    @endif
+                                                    <th class="text-center" scope="col">
+                                                        Name
+                                                    </th>
+                                                    <th class="text-center" scope="col">
+                                                        Email
+                                                    </th>
+                                                    <th class="text-center" scope="col">
+                                                        User Type
+                                                    </th>
+                                                    <th class="text-center" scope="col">
+                                                        Status
+                                                    </th>
+                                                    <th class="text-center" scope="col">
+                                                        Action
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if(count($all) > 0) @php $count
+                                                = 1; @endphp @foreach($all as $k
+                                                => $e)
+                                                <tr>
+                                                    <td class="text-center" scope="col">
+                                                        {{ $count }}
+                                                    </td>
+                                                    @if(auth()->user()->privilegeChecker('view_restricted_roles'))
+                                                    <td class="
+                                                            text-center
+                                                            sorting_1
+                                                        ">
+                                                        <input type="checkbox" class="
+                                                                smallCheckBox
+                                                            " value="{{$e->unique_id}}" />
+                                                    </td>
+                                                    @endif
+                                                    <td class="
+                                                            text-center
+                                                            cell-ta
+                                                            text-capitalize
+                                                        ">
+                                                        {{$e->name}}
+                                                        {{$e->last_name}}
+                                                    </td>
+                                                    <td class="
+                                                            text-center
+                                                            cell-ta
+                                                        ">
+                                                        {{$e->email}}
+                                                    </td>
+                                                    <td class="
+                                                            text-center
+                                                            cell-ta
+                                                            text-capitalize
+                                                        ">
+                                                        {{$e->user_type}}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <button class="btn btn-{{($e->status === 'active')?'success':'primary'}}">
+                                                            {{$e->status}}
+                                                        </button>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <a href="javascript:void(0)" item_id="{{$e->email}}" onclick="bringOutModalMain('.activate_account'); addUniqueIdToInputField(this)" title="Activate Account" class="gray-s"><i class="uil uil-thumbs-up"></i></a>
+                                                    </td>
+                                                </tr>
+                                                @php $count++ @endphp
+                                                @endforeach @endif
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="d-flex justify-content-center">
+                                        {!! $all->links() !!}
+                                    </div>
+                                </div>
                             </div>
-                            <div style="
-                                    position: fixed;
-                                    bottom: 20px;
-                                    right: 30px;
-                                    z-index: 200;
-                                ">
+                            <div style="position: fixed; bottom: 20px; right: 30px; z-index: 200;">
                                 <button type="button" class="btn btn-danger" id="comfirmUser" title="Select User(s) to be comfirmed by ticking the checkbox on each row and then click this button to delete">
                                     Confirm User(s)
                                 </button>
@@ -599,6 +703,34 @@
             </div>
         </div>
         <!-- Body End -->
+
+        <!-- The Modal -->
+        <div class="modal zoomInUp activate_account" id="myModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="text-dark night-text">Activate Account</h4>
+                        <button type="button" class="close" data-dismiss="modal" onclick="removeModalMains('.activate_account')">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h3 class="text-center">Are You Sure You Want To Activate This Account?</h3>
+                            </div>
+                            <input type="hidden" name="unique_id" class="delete_id form-control">
+                        </div>
+                    </div>
+                    <div class="modal-footer no-border">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="removeModalMains('.activate_account')">Close</button>
+                        <form method="POST" action="{{ route('activate_account', 'user_email') }}">
+                            @csrf
+                            <input type="hidden" name="unique_id" class="delete_id">
+                            <button type="submit" class="btn btn-primary">Continue</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="modal" id="switch_role_modal">
             <div class="modal-dialog">

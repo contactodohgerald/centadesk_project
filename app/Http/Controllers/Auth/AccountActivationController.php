@@ -73,6 +73,7 @@ class AccountActivationController extends Controller
      */
     public function verifyAndActivateAccount(Request $request, $typeOfCode, $userId)
     {
+   
         //get the user object
         $userObject = $this->user::where([
             ['unique_id', '=', $userId]

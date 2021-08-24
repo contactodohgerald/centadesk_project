@@ -37,6 +37,7 @@ class ReferralController extends Controller
         $this->selectEarningFromDownlines('referred_id', 'user_referral_id', $userDetails->unique_id, [$userDetails], [], 0);
 
         $data['referral_earnings'] = session('array_of_downlines');
+       
         return view('dashboard.referral_earnings',  $data);
     }
 

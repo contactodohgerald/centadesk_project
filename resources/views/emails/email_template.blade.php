@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <!--  <title>Email Template Base</title>-->
+    <title>Account Activation</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style type="text/css">
         /**
@@ -106,7 +107,7 @@
 
 <!-- start preheader -->
 <div class="preheader" style="display: none; max-width: 0; max-height: 0; overflow: hidden; font-size: 1px; line-height: 1px; color: #fff; opacity: 0;">
-    A preheader is the short summary text that follows the subject line when an email is viewed in the inbox.
+    Hello {{$details['user_name']}}, we are please to inform you that your account has been activated!
 </div>
 <!-- end preheader -->
 
@@ -125,7 +126,7 @@
                 <tr>
                     <td align="center" valign="top" style="padding: 36px 24px;">
                         <a href="{{$details['base_url']}}" target="_blank" style="display: inline-block;">
-                            <img src="{{$details['base_url'].'/dashboard/images/logo.svg'}}" alt="Logo" border="0" width="48" style="display: block; width: 48px; max-width: 48px; min-width: 48px;">
+                            <img src="https://centadesk.com/front_end/img/logo-main.png" alt="Logo" border="0" width="48" style="display: block; width: 48px; max-width: 48px; min-width: 48px;">
                         </a>
                     </td>
                 </tr>

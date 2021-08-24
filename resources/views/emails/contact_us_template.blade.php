@@ -125,7 +125,7 @@
                 <tr>
                     <td align="center" valign="top" style="padding: 36px 24px;">
                         <a href="{{$details['base_url']}}" target="_blank" style="display: inline-block;">
-                            <img src="{{$details['base_url'].'/dashboard/images/logo.svg'}}" alt="Logo" border="0" width="48" style="display: block; width: 48px; max-width: 48px; min-width: 48px;">
+                            <img src="https://centadesk.com/front_end/img/logo-main.png" alt="Logo" border="0" width="48" style="display: block; width: 48px; max-width: 48px; min-width: 48px;">
                         </a>
                     </td>
                 </tr>

@@ -47,7 +47,11 @@ $title = 'Courses | Choose course categories. Make money while learning, teachin
 
                                             {{-- <h3><a href="{{ route('course-details', $each_course_list->unique_id) }}">{{substr(ucfirst($each_course_list->name), 0, 40)}} {{ (strlen($each_course_list->name) > 40 )?'...':''}}</a></h3> --}}
 
-                                            <h3><a href="{{ route('course-details', $each_course_list->unique_id) }}"> <p class="over-flow">{{ucfirst($each_course_list->name)}}</p> </a></h3>
+                                            <h3 style="height: 60px">
+                                                <a href="{{ route('course-details', $each_course_list->unique_id) }}"> 
+                                                    <p class="over-flow">{{ucfirst($each_course_list->name)}}</p> 
+                                                </a>
+                                            </h3>
 
 
                                             <ul>{{ $each_course_list->count_reviews }}
@@ -115,7 +119,9 @@ $title = 'Courses | Choose course categories. Make money while learning, teachin
                                             <a href="{{ route('course-details', $each_course->unique_id) }}"><i class="fas fa-user"></i> {{ count($each_course->courseEnrollment) }} Students</a>
                                         </div>
                                         <div class="yl-course-tilte-head yl-headline ul-li">
-                                            <h3 style="height: 56px;"><a href="{{ route('course-details', $each_course->unique_id) }}">{{substr(ucfirst($each_course->name), 0, 40)}} {{ (strlen($each_course->name) > 40 )?'...':''}}</a></h3>
+                                            <h3 style="height: 50px;">
+                                                <a href="{{ route('course-details', $each_course->unique_id) }}">{{substr(ucfirst($each_course->name), 0, 40)}} {{ (strlen($each_course->name) > 40 )?'...':''}}</a>
+                                            </h3>
                                             <ul>{{ $each_course->count_reviews }}
                                                 @for ($i = 1; $i <= $each_course->count_reviews; $i++)
                                                     <li><i class="fas fa-star"></i></li>

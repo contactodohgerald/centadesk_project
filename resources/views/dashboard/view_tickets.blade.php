@@ -1,6 +1,6 @@
 @php
 	$pageTitle = 'Support Tickets';
-	$Course = 'active';
+	$ticketA = 'active';
 @endphp
 @include('layouts.head')
 

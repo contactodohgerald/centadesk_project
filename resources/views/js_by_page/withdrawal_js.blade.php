@@ -252,8 +252,43 @@
             }
         }
 
-    })
+    })  
+    //delete selected withdraw
+    $('#comfirmTransactionBtn').on('click', async function comfirmSelectedTopUp(a) {
 
+        let retVal = confirm('Do you wish to continue?');
+        if(retVal === true){
+            $(a).text('Loading...').attr({'disabled':true});
+            let selected = $(".smallCheckBox");
+            let dataArray = [];
+            for(let i = 0; i < selected.length; i++){
+                if($(selected[i]).is(':checked')){
+
+                    dataArray.push($(selected[i]).val());
+                }
+            }
+
+            if(dataArray.length == 0){
+                $(a).text('Comfirm Transaction(s)').attr({'disabled':false});
+                errorDisplay('Please select at least one Transaction to continue');
+                return;
+            }
+
+            let postData = await postRequest(baseUrl+"api/comfirm_transaction", {dataArray:dataArray.join('|')});
+            let {error_code, success_statement, error_message} = postData;
+            if(error_code == 0){
+                $(a).text('Comfirm Transaction(s)').attr({'disabled':false});
+                showValidatorToaster(success_statement, 'success');
+                setTimeout(function () {
+                    location.reload();
+                }, 1000)
+            }else {
+                $(a).text('Comfirm Transaction(s)').attr({'disabled':false});
+                showValidatorToaster(error_message, 'warning');
+            }
+        }
+
+    })
 
     //comfirm selected user
     $('#comfirmUser').on('click', async function comfirmUser(a) {

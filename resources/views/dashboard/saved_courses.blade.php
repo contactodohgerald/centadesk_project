@@ -1,7 +1,7 @@
 ﻿@php
 $users = auth()->user();
 $pageTitle = 'Saved Courses Area';
-$saveCourse = 'active';
+$Course = 'active';
 @endphp
 @include('layouts.head')
 
@@ -69,7 +69,9 @@ $saveCourse = 'active';
                                             </div>
                                             <input type="hidden" class="saved_course_id" value="{{$each_saved_courses->unique_id}}">
                                             <input type="hidden" class="user_unique_id" value="{{auth()->user()->unique_id}}">
-                                            <a href="{{route('view_course', $each_saved_courses->courses->unique_id )}}" class="crse14s title900 font-poppins"><b>{{$each_saved_courses->courses->name}}</b></a>
+                                            <a href="{{route('view_course', $each_saved_courses->courses->unique_id )}}" class="crse14s title900 font-poppins">
+                                                <b>{{substr(ucfirst($each_saved_courses->courses->name), 0, 40)}} {{ (strlen($each_saved_courses->courses->name) > 40 )?'...':''}}</b>
+                                            </a>
                                             <a href="{{route('view_course', $each_saved_courses->courses->unique_id )}}" class="crse-cate font-poppins">{{$each_saved_courses->courses->short_caption}}</a>
                                             <div class="auth1lnkprce">
                                                 <p class="cr1fot text-capitalize">By <a href="{{route('view_profile', $each_saved_courses->courses->user->unique_id )}}">{{$each_saved_courses->users->name}} {{$each_saved_courses->users->last_name}}</a></p>

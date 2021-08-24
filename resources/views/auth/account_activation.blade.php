@@ -33,7 +33,7 @@
                     @if (session('error'))
                         <p class="alert alert-warning">{{session('error')}}</p>
                     @endif  
-                    <form method="POST" action="{{route('activate_account', ['account-activation', $user_id])}}">
+                    <form method="POST" action="{{route('activate_accounts', ['account-activation', $user_id])}}">
                         @csrf
 
                         <div class="ui search focus mt-15">

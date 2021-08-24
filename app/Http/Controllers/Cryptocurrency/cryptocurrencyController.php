@@ -13,6 +13,7 @@ use App\Model\paymentAddress;
 use App\Model\TransactionModel;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\PaymentAddress\PaymentAddressController;
 
 class cryptocurrencyController extends Controller
@@ -96,8 +97,6 @@ class cryptocurrencyController extends Controller
                 throw new Exception($this->errorMsgs(15)['msg']);
             }
 
-
-
             if (key((array)$response) == 'message') {
                 // if its a problem with xpub, probably maxed out its limit.
                 if (current((array)$response) == 'Problem with xpub') {
@@ -137,9 +136,11 @@ class cryptocurrencyController extends Controller
 
     public function create_transaction(Request $request)
     {
-        $user = auth()->user();
+        $user = Auth::user();
         $user_unique_id = $user->unique_id;
         $user_full_name = $user->name . ' ' . $user->last_name;
+
+        $user_preferred_currency = $user->getBalanceForView()['data']['currency'];
 
         $txn_id =  $this->createUniqueId('transaction_models', 'unique_id');
         $inputed_amount = $request->topUpAmount;
@@ -171,7 +172,7 @@ class cryptocurrencyController extends Controller
             $request->country = $user->country;
             $request->customer = $user_full_name;
             $request->biller_name = $user_full_name;
-            $request->currency = 'USD';
+            $request->currency = $user_preferred_currency;
             $request->reference = $txn_id;
            // $request->amount = $this->getAmountForDatabase($inputed_amount)['data']['amount'];
             $request->amount = $inputed_amount;

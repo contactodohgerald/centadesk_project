@@ -225,9 +225,7 @@
                                         >
                                             <h3 align="center">Welcome To {{ucfirst($settings->company_name)}}</h3>
                                             <div align="center">
-                                                <img
-                                                        src="https://centadesk.com/front_end/img/logo-main.png"
-                                                        style="width: 100px"
+                                                <img src="https://centadesk.com/front_end/img/logo-main.png" style="width: 100px"
                                                 />
                                             </div>
                                         </div>

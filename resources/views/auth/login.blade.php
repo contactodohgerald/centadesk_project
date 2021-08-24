@@ -72,13 +72,10 @@
                             <div class="inline field">
                                 <div class="ui checkbox mncheck">
                                     <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
+                                    <label class="form-check-label text-danger" for="remember">Remember Me</label>
                                 </div>
                             </div>
                         </div>
-
 
                         <button class="login-btn" type="submit">Sign In</button>
                     </form>
