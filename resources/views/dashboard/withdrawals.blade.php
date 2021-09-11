@@ -1,8 +1,8 @@
 ﻿@php
-	$pageTitle = 'Funds Withdrawals Area';
-	$Withdrawal = 'active';
-	$users = auth()->user();
-	$user_type = $users->user_type;
+$pageTitle = 'Funds Withdrawals Area';
+$Withdrawal = 'active';
+$users = auth()->user();
+$user_type = $users->user_type;
 @endphp
 @include('layouts.head')
 
@@ -12,7 +12,8 @@
 	<!-- Header End -->
 
 	<!-- Left Sidebar Start -->
-	@include('layouts.sidebar')
+	@extends('layouts.sidebar')
+	@section('content')
 	<!-- Left Sidebar End -->
 
 	<!-- Body Start -->
@@ -36,22 +37,22 @@
 										<h1><b>{{number_format($userDetails->balance)}} ({{$userDetails->getBalanceForView()['data']['currency']}})</b></h1>
 									</div>
 									@if(Session::has('success_message'))
-										<div class="alert alert-success alert-dismissible fade show text-center" role="alert">
-											<i class="fa fa-envelope-o mr-2"></i>
-											{{ Session::get('success_message') }}
-											<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-												<span aria-hidden="true">×</span>
-											</button>
-										</div>
+									<div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+										<i class="fa fa-envelope-o mr-2"></i>
+										{{ Session::get('success_message') }}
+										<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+											<span aria-hidden="true">×</span>
+										</button>
+									</div>
 									@endif
 									@if(Session::has('error_message'))
-										<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
-											<i class="fa fa-envelope-o mr-2"></i>
-											{{ Session::get('error_message') }}
-											<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-												<span aria-hidden="true">×</span>
-											</button>
-										</div>
+									<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+										<i class="fa fa-envelope-o mr-2"></i>
+										{{ Session::get('error_message') }}
+										<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+											<span aria-hidden="true">×</span>
+										</button>
+									</div>
 									@endif
 
 									<form action="{{route('make_withdrawal')}}" method="post">
@@ -64,12 +65,12 @@
 
 												@error('amount')
 												<span class="invalid-feedback" role="alert">
-												 <strong>{{ $message }}</strong>
+													<strong>{{ $message }}</strong>
 												</span>
 												@enderror
 											</div>
 										</div>
-										<button class="save_btn" type="submit">Request For Withdrawal</button>
+										<button class="save_btn float-right" type="submit">Request For Withdrawal</button>
 									</form>
 								</div>
 							</div>
@@ -84,23 +85,23 @@
 							<h5>Filter With Date</h5>
 							<div class="row">
 								<div class="form-group col-sm-4">
-									<input type="date" class="form-control" required placeholder="Start Date" name="start_date" >
+									<input type="date" class="form-control" required placeholder="Start Date" name="start_date">
 									@error('start_date')
 									<span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
+										<strong>{{ $message }}</strong>
+									</span>
 									@enderror
 								</div>
 								<div class="form-group  col-sm-4">
-									<input class="form-control" type="date" required placeholder="End Date" name="end_date" >
+									<input class="form-control" type="date" required placeholder="End Date" name="end_date">
 									@error('start_date')
 									<span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
+										<strong>{{ $message }}</strong>
+									</span>
 									@enderror
 								</div>
 								<div class="form-group  col-sm-4">
-									<button  class="btn btn-info" type="submit">Proceed</button>
+									<button class="btn btn-info" type="submit">Proceed</button>
 								</div>
 								<hr style="color: #fff;" size="10">
 							</div>
@@ -130,226 +131,226 @@
 									<div class="table-responsive mt-30">
 										<table class="table ucp-table">
 											<thead class="thead-s">
-											<tr>
-												<th class="text-center" scope="col">S / N</th>
-												<th class="text-center">
-													<input onclick="checkAll()" type="checkbox" class="mainCheckBox" />
-												</th>
-												<th class="text-center" scope="col">Amount ({{auth()->user()->getBalanceForView()['data']['currency']}})</th>
-												<th class="text-center" scope="col">Bank Name</th>
-												<th class="text-center" scope="col">Account Number</th>
-												<th class="text-center" scope="col">Account Name</th>
-												@if($users->privilegeChecker('view_restricted_roles'))
-												<th class="text-center" scope="col">Email</th>
-												@endif
-												<th class="text-center" scope="col">Action Type</th>
-												<th class="text-center" scope="col">Status</th>
-												<th class="text-center" scope="col">Withdrawal Date</th>
-												<th class="text-center" scope="col">Action</th>
-											</tr>
+												<tr>
+													<th class="text-center" scope="col">S / N</th>
+													<th class="text-center">
+														<input onclick="checkAll()" type="checkbox" class="mainCheckBox" />
+													</th>
+													<th class="text-center" scope="col">Amount ({{auth()->user()->getBalanceForView()['data']['currency']}})</th>
+													<th class="text-center" scope="col">Bank Name</th>
+													<th class="text-center" scope="col">Account Number</th>
+													<th class="text-center" scope="col">Account Name</th>
+													@if($users->privilegeChecker('view_restricted_roles'))
+													<th class="text-center" scope="col">Email</th>
+													@endif
+													<th class="text-center" scope="col">Action Type</th>
+													<th class="text-center" scope="col">Status</th>
+													<th class="text-center" scope="col">Withdrawal Date</th>
+													<th class="text-center" scope="col">Action</th>
+												</tr>
 											</thead>
 											<tbody>
 												@if(count($transaction) > 0)
 												@php $count = 1; @endphp
-												@foreach($transaction  as $k => $each_transaction)
-													<tr>
-														<td class="text-center" scope="col">{{$count}}</td>
-														<td class="text-center sorting_1">
-															<input type="checkbox" class="smallCheckBox" value="{{$each_transaction->unique_id}}">
-														</td>
-														<td class="text-center cell-ta">{{number_format($each_transaction->amount)}}</td>
-														<td class="text-center cell-ta">{{$each_transaction->users->bank_code}}</td>
-														<td class="text-center cell-ta">{{$each_transaction->users->account_number}}</td>
-														<td class="text-center cell-ta">{{$each_transaction->users->account_name}}</td>
-														@if($users->privilegeChecker('view_restricted_roles'))
-															<td class="text-center cell-ta">{{$each_transaction->users->email}}</td>
-														@endif
-														<td class="text-center cell-ta">{{$each_transaction->action_type}}</td>
-														@php if($each_transaction->status === 'confirmed'){
-																$status = 'Confirmed';
-																$labelColor = 'success';
-															}else if($each_transaction->status === 'pending'){
-																$status = 'Pending';
-																$labelColor = 'warning';
-															}else if($each_transaction->status === 'processing'){
-																$status = 'Processing';
-																$labelColor = 'warning';
-															}else if($each_transaction->status === 'failed'){
-																$status = 'Failed';
-																$labelColor = 'danger';
-															}
-														@endphp
-														<td class="text-center">
-															<button class="btn btn-{{$labelColor}}">{{$status}}</button>
-														</td>
-														<td class="text-center cell-ta">{{$each_transaction->created_at->diffForHumans()}}</td>
-														<td class="text-center">
-															<a href="{{ route('view-withdrawal-invoice', $each_transaction->unique_id ) }}" title="View" class="gray-s"><i class="uil uil-eye"></i></a>
-														</td>
-													</tr>
-													@php $count++ @endphp
+												@foreach($transaction as $k => $each_transaction)
+												<tr>
+													<td class="text-center" scope="col">{{$count}}</td>
+													<td class="text-center sorting_1">
+														<input type="checkbox" class="smallCheckBox" value="{{$each_transaction->unique_id}}">
+													</td>
+													<td class="text-center cell-ta">{{number_format($each_transaction->amount)}}</td>
+													<td class="text-center cell-ta">{{$each_transaction->users->bank_code}}</td>
+													<td class="text-center cell-ta">{{$each_transaction->users->account_number}}</td>
+													<td class="text-center cell-ta">{{$each_transaction->users->account_name}}</td>
+													@if($users->privilegeChecker('view_restricted_roles'))
+													<td class="text-center cell-ta">{{$each_transaction->users->email}}</td>
+													@endif
+													<td class="text-center cell-ta">{{$each_transaction->action_type}}</td>
+													@php if($each_transaction->status === 'confirmed'){
+													$status = 'Confirmed';
+													$labelColor = 'success';
+													}else if($each_transaction->status === 'pending'){
+													$status = 'Pending';
+													$labelColor = 'warning';
+													}else if($each_transaction->status === 'processing'){
+													$status = 'Processing';
+													$labelColor = 'warning';
+													}else if($each_transaction->status === 'failed'){
+													$status = 'Failed';
+													$labelColor = 'danger';
+													}
+													@endphp
+													<td class="text-center">
+														<button class="btn btn-{{$labelColor}}">{{$status}}</button>
+													</td>
+													<td class="text-center cell-ta">{{$each_transaction->created_at->diffForHumans()}}</td>
+													<td class="text-center">
+														<a href="{{ route('view-withdrawal-invoice', $each_transaction->unique_id ) }}" title="View" class="gray-s"><i class="uil uil-eye"></i></a>
+													</td>
+												</tr>
+												@php $count++ @endphp
 												@endforeach
 												@else
-													<tr>
-														<td colspan="11" class="text-center ">No Records Found</td>
-													</tr>
+												<tr>
+													<td colspan="11" class="text-center ">No Records Found</td>
+												</tr>
 												@endif
 											</tbody>
 										</table>
 									</div>
-                                    <div class="d-flex justify-content-center">
-                                        {!! $transaction->links() !!}
-                                    </div>
+									<div class="d-flex justify-content-center">
+										{!! $transaction->links() !!}
+									</div>
 								</div>
 								<div class="tab-pane fade" id="pills-my-purchases" role="tabpanel">
 									<div class="table-responsive mt-30">
 										<table class="table ucp-table">
 											<thead class="thead-s">
-											<tr>
-												<th class="text-center" scope="col">S / N</th>
-												<th class="text-center">
-													<input onclick="checkAll()" type="checkbox" class="mainCheckBox" />
-												</th>
-												<th class="text-center" scope="col">Amount ({{auth()->user()->getBalanceForView()['data']['currency']}})</th>
-												<th class="text-center" scope="col">Bank Name</th>
-												<th class="text-center" scope="col">Account Number</th>
-												<th class="text-center" scope="col">Account Name</th>
-												@if($users->privilegeChecker('view_restricted_roles'))
+												<tr>
+													<th class="text-center" scope="col">S / N</th>
+													<th class="text-center">
+														<input onclick="checkAll()" type="checkbox" class="mainCheckBox" />
+													</th>
+													<th class="text-center" scope="col">Amount ({{auth()->user()->getBalanceForView()['data']['currency']}})</th>
+													<th class="text-center" scope="col">Bank Name</th>
+													<th class="text-center" scope="col">Account Number</th>
+													<th class="text-center" scope="col">Account Name</th>
+													@if($users->privilegeChecker('view_restricted_roles'))
 													<th class="text-center" scope="col">Email</th>
-												@endif
-												<th class="text-center" scope="col">Action Type</th>
-												<th class="text-center" scope="col">Status</th>
-												<th class="text-center" scope="col">Withdrawal Date</th>
-												<th class="text-center" scope="col">Action</th>
-											</tr>
+													@endif
+													<th class="text-center" scope="col">Action Type</th>
+													<th class="text-center" scope="col">Status</th>
+													<th class="text-center" scope="col">Withdrawal Date</th>
+													<th class="text-center" scope="col">Action</th>
+												</tr>
 											</thead>
 											<tbody>
-											@if(count($pending_transaction) > 0)
+												@if(count($pending_transaction) > 0)
 												@php $count = 1; @endphp
-												@foreach($pending_transaction  as $k => $each_pending_transaction)
-													<tr>
-														<td class="text-center" scope="col">{{$count}}</td>
-														<td class="text-center sorting_1">
-															<input type="checkbox" class="smallCheckBox" value="{{$each_pending_transaction->unique_id}}">
-														</td>
-														<td class="text-center cell-ta">{{number_format($each_pending_transaction->amount)}}</td>
-														<td class="text-center cell-ta">{{$each_pending_transaction->users->bank_code}}</td>
-														<td class="text-center cell-ta">{{$each_pending_transaction->users->account_number}}</td>
-														<td class="text-center cell-ta">{{$each_pending_transaction->users->account_name}}</td>
-														@if($users->privilegeChecker('view_restricted_roles'))
-															<td class="text-center cell-ta">{{$each_pending_transaction->users->email}}</td>
-														@endif
-														<td class="text-center cell-ta">{{$each_pending_transaction->action_type}}</td>
-														@php if($each_pending_transaction->status === 'confirmed'){
-																$status = 'Confirmed';
-																$labelColor = 'success';
-															}else if($each_pending_transaction->status === 'pending'){
-																$status = 'Pending';
-																$labelColor = 'warning';
-															}else if($each_pending_transaction->status === 'processing'){
-																$status = 'Processing';
-																$labelColor = 'warning';
-															}else if($each_pending_transaction->status === 'failed'){
-																$status = 'Failed';
-																$labelColor = 'danger';
-															}
-														@endphp
-														<td class="text-center">
-															<button class="btn btn-{{$labelColor}}">{{$status}}</button>
-														</td>
-														<td class="text-center cell-ta">{{$each_pending_transaction->created_at->diffForHumans()}}</td>
-														<td class="text-center">
-															<a href="{{ route('view-withdrawal-invoice', $each_pending_transaction->unique_id ) }}" title="View" class="gray-s"><i class="uil uil-eye"></i></a>
-														</td>
-													</tr>
-													@php $count++ @endphp
+												@foreach($pending_transaction as $k => $each_pending_transaction)
+												<tr>
+													<td class="text-center" scope="col">{{$count}}</td>
+													<td class="text-center sorting_1">
+														<input type="checkbox" class="smallCheckBox" value="{{$each_pending_transaction->unique_id}}">
+													</td>
+													<td class="text-center cell-ta">{{number_format($each_pending_transaction->amount)}}</td>
+													<td class="text-center cell-ta">{{$each_pending_transaction->users->bank_code}}</td>
+													<td class="text-center cell-ta">{{$each_pending_transaction->users->account_number}}</td>
+													<td class="text-center cell-ta">{{$each_pending_transaction->users->account_name}}</td>
+													@if($users->privilegeChecker('view_restricted_roles'))
+													<td class="text-center cell-ta">{{$each_pending_transaction->users->email}}</td>
+													@endif
+													<td class="text-center cell-ta">{{$each_pending_transaction->action_type}}</td>
+													@php if($each_pending_transaction->status === 'confirmed'){
+													$status = 'Confirmed';
+													$labelColor = 'success';
+													}else if($each_pending_transaction->status === 'pending'){
+													$status = 'Pending';
+													$labelColor = 'warning';
+													}else if($each_pending_transaction->status === 'processing'){
+													$status = 'Processing';
+													$labelColor = 'warning';
+													}else if($each_pending_transaction->status === 'failed'){
+													$status = 'Failed';
+													$labelColor = 'danger';
+													}
+													@endphp
+													<td class="text-center">
+														<button class="btn btn-{{$labelColor}}">{{$status}}</button>
+													</td>
+													<td class="text-center cell-ta">{{$each_pending_transaction->created_at->diffForHumans()}}</td>
+													<td class="text-center">
+														<a href="{{ route('view-withdrawal-invoice', $each_pending_transaction->unique_id ) }}" title="View" class="gray-s"><i class="uil uil-eye"></i></a>
+													</td>
+												</tr>
+												@php $count++ @endphp
 												@endforeach
 												@else
-													<tr>
-														<td colspan="11" class="text-center ">No Records Found</td>
-													</tr>
-											@endif
+												<tr>
+													<td colspan="11" class="text-center ">No Records Found</td>
+												</tr>
+												@endif
 											</tbody>
 										</table>
 									</div>
-                                    <div class="d-flex justify-content-center">
-                                        {!! $pending_transaction->links() !!}
-                                    </div>
+									<div class="d-flex justify-content-center">
+										{!! $pending_transaction->links() !!}
+									</div>
 								</div>
 								<div class="tab-pane fade" id="pills-upcoming-courses" role="tabpanel">
 									<div class="table-responsive mt-30">
 										<table class="table ucp-table">
 											<thead class="thead-s">
-											<tr>
-												<th class="text-center" scope="col">S / N</th>
-												<th class="text-center">
-													<input onclick="checkAll()" type="checkbox" class="mainCheckBox" />
-												</th>
-												<th class="text-center" scope="col">Amount ({{auth()->user()->getBalanceForView()['data']['currency']}})</th>
-												<th class="text-center" scope="col">Bank Name</th>
-												<th class="text-center" scope="col">Account Number</th>
-												<th class="text-center" scope="col">Account Name</th>
-												@if($users->privilegeChecker('view_restricted_roles'))
+												<tr>
+													<th class="text-center" scope="col">S / N</th>
+													<th class="text-center">
+														<input onclick="checkAll()" type="checkbox" class="mainCheckBox" />
+													</th>
+													<th class="text-center" scope="col">Amount ({{auth()->user()->getBalanceForView()['data']['currency']}})</th>
+													<th class="text-center" scope="col">Bank Name</th>
+													<th class="text-center" scope="col">Account Number</th>
+													<th class="text-center" scope="col">Account Name</th>
+													@if($users->privilegeChecker('view_restricted_roles'))
 													<th class="text-center" scope="col">Email</th>
-												@endif
-												<th class="text-center" scope="col">Action Type</th>
-												<th class="text-center" scope="col">Status</th>
-												<th class="text-center" scope="col">Withdrawal Date</th>
-												<th class="text-center" scope="col">Action</th>
-											</tr>
+													@endif
+													<th class="text-center" scope="col">Action Type</th>
+													<th class="text-center" scope="col">Status</th>
+													<th class="text-center" scope="col">Withdrawal Date</th>
+													<th class="text-center" scope="col">Action</th>
+												</tr>
 											</thead>
 											<tbody>
-											@if(count($successful_transaction) > 0)
+												@if(count($successful_transaction) > 0)
 												@php $count = 1; @endphp
-												@foreach($successful_transaction  as $k => $each_successful_transaction)
-													<tr>
-														<td class="text-center" scope="col">{{$count}}</td>
-														<td class="text-center sorting_1">
-															<input type="checkbox" class="smallCheckBox" value="{{$each_successful_transaction->unique_id}}">
-														</td>
-														<td class="text-center cell-ta">{{number_format($each_successful_transaction->amount)}}</td>
-														<td class="text-center cell-ta">{{$each_successful_transaction->users->bank_code}}</td>
-														<td class="text-center cell-ta">{{$each_successful_transaction->users->account_number}}</td>
-														<td class="text-center cell-ta">{{$each_successful_transaction->users->account_name}}</td>
-														@if($users->privilegeChecker('view_restricted_roles'))
-															<td class="text-center cell-ta">{{$each_successful_transaction->users->email}}</td>
-														@endif
-														<td class="text-center cell-ta">{{$each_successful_transaction->action_type}}</td>
-														@php if($each_successful_transaction->status === 'confirmed'){
-																$status = 'Confirmed';
-																$labelColor = 'success';
-															}else if($each_successful_transaction->status === 'pending'){
-																$status = 'Pending';
-																$labelColor = 'warning';
-															}else if($each_successful_transaction->status === 'processing'){
-																$status = 'Processing';
-																$labelColor = 'warning';
-															}else if($each_successful_transaction->status === 'failed'){
-																$status = 'Failed';
-																$labelColor = 'danger';
-															}
-														@endphp
-														<td class="text-center">
-															<button class="btn btn-{{$labelColor}}">{{$status}}</button>
-														</td>
-														<td class="text-center cell-ta">{{$each_successful_transaction->created_at->diffForHumans()}}</td>
-														<td class="text-center">
-															<a href="{{ route('view-withdrawal-invoice', $each_successful_transaction->unique_id ) }}" title="View" class="gray-s"><i class="uil uil-eye"></i></a>
-														</td>
-													</tr>
-													@php $count++ @endphp
+												@foreach($successful_transaction as $k => $each_successful_transaction)
+												<tr>
+													<td class="text-center" scope="col">{{$count}}</td>
+													<td class="text-center sorting_1">
+														<input type="checkbox" class="smallCheckBox" value="{{$each_successful_transaction->unique_id}}">
+													</td>
+													<td class="text-center cell-ta">{{number_format($each_successful_transaction->amount)}}</td>
+													<td class="text-center cell-ta">{{$each_successful_transaction->users->bank_code}}</td>
+													<td class="text-center cell-ta">{{$each_successful_transaction->users->account_number}}</td>
+													<td class="text-center cell-ta">{{$each_successful_transaction->users->account_name}}</td>
+													@if($users->privilegeChecker('view_restricted_roles'))
+													<td class="text-center cell-ta">{{$each_successful_transaction->users->email}}</td>
+													@endif
+													<td class="text-center cell-ta">{{$each_successful_transaction->action_type}}</td>
+													@php if($each_successful_transaction->status === 'confirmed'){
+													$status = 'Confirmed';
+													$labelColor = 'success';
+													}else if($each_successful_transaction->status === 'pending'){
+													$status = 'Pending';
+													$labelColor = 'warning';
+													}else if($each_successful_transaction->status === 'processing'){
+													$status = 'Processing';
+													$labelColor = 'warning';
+													}else if($each_successful_transaction->status === 'failed'){
+													$status = 'Failed';
+													$labelColor = 'danger';
+													}
+													@endphp
+													<td class="text-center">
+														<button class="btn btn-{{$labelColor}}">{{$status}}</button>
+													</td>
+													<td class="text-center cell-ta">{{$each_successful_transaction->created_at->diffForHumans()}}</td>
+													<td class="text-center">
+														<a href="{{ route('view-withdrawal-invoice', $each_successful_transaction->unique_id ) }}" title="View" class="gray-s"><i class="uil uil-eye"></i></a>
+													</td>
+												</tr>
+												@php $count++ @endphp
 												@endforeach
 												@else
-													<tr>
-														<td colspan="11" class="text-center ">No Records Found</td>
-													</tr>
-											@endif
+												<tr>
+													<td colspan="11" class="text-center ">No Records Found</td>
+												</tr>
+												@endif
 											</tbody>
 										</table>
 									</div>
-                                    <div class="d-flex justify-content-center">
-                                        {!! $successful_transaction->links() !!}
-                                    </div>
+									<div class="d-flex justify-content-center">
+										{!! $successful_transaction->links() !!}
+									</div>
 								</div>
 							</div>
 							<div style="position: fixed; bottom: 20px; right: 30px; z-index: 200">
@@ -365,9 +366,8 @@
 			</div>
 		</div>
 
-		@include('layouts.footer')
-
+		@stop
 	</div>
 	<!-- Body End -->
 
-@include('layouts.e_script')
+	@include('layouts.e_script')

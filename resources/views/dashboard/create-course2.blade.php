@@ -1,6 +1,6 @@
 @php
-    $pageTitle = 'Create Course';
-    $Course = 'active';
+$pageTitle = 'Create Course';
+$Course = 'active';
 @endphp
 @include('layouts.head')
 
@@ -10,7 +10,8 @@
     <!-- Header End -->
 
     <!-- Left Sidebar Start -->
-    @include('layouts.sidebar')
+    @extends('layouts.sidebar')
+    @section('content')
     <!-- Left Sidebar End -->
 
     <!-- Body Start -->
@@ -165,8 +166,7 @@
                 </div>
             </div>
         </div>
-
-        @include('layouts.footer')
+        @stop
     </div>
     <!-- Body End -->
 

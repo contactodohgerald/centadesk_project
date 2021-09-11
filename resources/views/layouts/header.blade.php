@@ -17,7 +17,7 @@ $site_logo = $appSettings->getSingleModel();
     </div>
     <!-- ajax loader -->
 
-<header class="header clearfix">
+<header class="header fixed-top">
     <button type="button" id="toggleMenu" class="toggle_menu">
         <i class='uil uil-bars'></i>
     </button>

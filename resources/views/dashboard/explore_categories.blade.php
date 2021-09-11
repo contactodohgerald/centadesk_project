@@ -1,21 +1,22 @@
 ﻿@php
-	$pageTitle = 'Explore Category';
-	$explore= 'active';
+$pageTitle = 'Explore Category';
+$explore= 'active';
 @endphp
 @include('layouts.head')
 
 <body>
-	<!-- Header Start -->
-	@include('layouts.header')
-	<!-- Header End -->
+    <!-- Header Start -->
+    @include('layouts.header')
+    <!-- Header End -->
 
-	<!-- Left Sidebar Start -->
-	@include('layouts.sidebar')
-	<!-- Left Sidebar End -->
+    <!-- Left Sidebar Start -->
+    @extends('layouts.sidebar')
+    @section('content')
+    <!-- Left Sidebar End -->
     @php $link = auth()->user()->returnLink() @endphp
 
-	<!-- Body Start -->
-	<div class="wrapper">
+    <!-- Body Start -->
+    <div class="wrapper">
         <div class="sa4d25">
             <div class="container-fluid">
                 <div class="row">
@@ -43,13 +44,13 @@
                         <div class="_14d25">
                             <div class="row">
                                 @if($course->count() > 0)
-                                    @foreach($course  as $each_course)
-                                    <div class="col-lg-3 col-md-4">
+                                @foreach($course as $each_course)
+                                <div class="col-lg-3 col-md-4">
                                     <div class="fcrse_1 mt-30">
                                         <a href="{{route('view_course', $each_course->unique_id )}}" class="fcrse_img">
                                             <img src="{{asset($link.'course-img/'.$each_course->cover_image)}}" alt="">
                                             <div class="course-overlay">
-<!--                                                <div class="badge_seller">Bestseller</div>-->
+                                                <!--                                                <div class="badge_seller">Bestseller</div>-->
                                                 <div class="crse_reviews">
                                                     <i class="uil uil-star"></i>{{$each_course->count_review}}
                                                 </div>
@@ -63,9 +64,9 @@
                                             <div class="eps_dots more_dropdown">
                                                 <a href="#"><i class="uil uil-ellipsis-v"></i></a>
                                                 <div class="dropdown-content">
-<!--                                                    <span><i class='uil uil-share-alt'></i>Share</span>-->
+                                                    <!--                                                    <span><i class='uil uil-share-alt'></i>Share</span>-->
                                                     <span onclick="saveCourse('{{$each_course->unique_id}}', '{{auth()->user()->unique_id}}') "><i class="uil uil-heart"></i>Save</span>
-<!--                                                    <span><i class='uil uil-ban'></i>Not Interested</span>
+                                                    <!--                                                    <span><i class='uil uil-ban'></i>Not Interested</span>
                                                     <span><i class="uil uil-windsock"></i>Report</span>-->
                                                 </div>
                                             </div>
@@ -82,7 +83,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                    @endforeach
+                                @endforeach
                                 @endif
                                 <div class="col-md-12">
                                     <div class="main-loader mt-50">
@@ -100,9 +101,8 @@
             </div>
         </div>
 
-		@include('layouts.footer')
+        @stop
+    </div>
+    <!-- Body End -->
 
-	</div>
-	<!-- Body End -->
-
-@include('layouts.e_script')
+    @include('layouts.e_script')

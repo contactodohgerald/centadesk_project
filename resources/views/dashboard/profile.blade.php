@@ -11,7 +11,8 @@ $profile = 'active';
     <!-- Header End -->
 
     <!-- Left Sidebar Start -->
-    @include('layouts.sidebar')
+    @extends('layouts.sidebar')
+    @section('content')
     <!-- Left Sidebar End -->
 
     @php $link = auth()->user()->returnLink() @endphp
@@ -310,7 +311,7 @@ $profile = 'active';
                 </div>
             </div>
         </div>
-        @include('layouts.footer')
+        @stop
 
     </div>
 

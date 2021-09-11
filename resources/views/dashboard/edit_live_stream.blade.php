@@ -11,7 +11,8 @@ $live = 'active';
     <!-- Header End -->
 
     <!-- Left Sidebar Start -->
-    @include('layouts.sidebar')
+    @extends('layouts.sidebar')
+    @section('content')
     <!-- Left Sidebar End -->
     <!-- Body Start -->
     <div class="wrapper">
@@ -47,12 +48,12 @@ $live = 'active';
                                                 <div class="group-form">
                                                     <div class="row">
                                                         <div class="col-md-6">
-                                                    <label class="text-dark night-text">Streaming Software<span class="text-danger">*</span></label>
-                                                    <input class="_dlor1" type="text" name="software" placeholder="What software will you use" value="{{ $live_stream->software }}">
+                                                            <label class="text-dark night-text">Streaming Software<span class="text-danger">*</span></label>
+                                                            <input class="_dlor1" type="text" name="software" placeholder="What software will you use" value="{{ $live_stream->software }}">
                                                         </div>
                                                         <div class="col-md-6">
-                                                    <label class="text-dark night-text">Passcode</label>
-                                                    <input class="_dlor1" type="text" name="passcode" placeholder="" value="{{ $live_stream->passcode }}">
+                                                            <label class="text-dark night-text">Passcode</label>
+                                                            <input class="_dlor1" type="text" name="passcode" placeholder="" value="{{ $live_stream->passcode }}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -102,26 +103,25 @@ $live = 'active';
                                                                     @else @endif value="private">Private</option>
                                                             </select>
                                                         </div>
-                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="group-form">
-                                                    <div class="row">
-                                                        <div class="col-md-6">
-                                                            <label class="text-dark night-text">Date Scheduled<span class="text-danger">*</span> </label>
-                                                            <input class="_dlor1" type="date" name="date_to_start" placeholder="Paste in the link to your live stream" value="{{ $live_stream->date_to_start }}">
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <label class="text-dark night-text">Time To Start<span class="text-danger">*</span> </label>
-                                                            <input class="_dlor1" type="time" name="time_to_start" placeholder="Paste in the link to your live stream" value="{{ $live_stream->time_to_start }}">
-                                                            <button class="_6tf7s" type="" value="1">GMT+1</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                            <button class="_145d1 edit_live_stream_btn">
-                                                <i class='uil uil-video '></i>Update Stream</button>
                                         </div>
+                                        <div class="group-form">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label class="text-dark night-text">Date Scheduled<span class="text-danger">*</span> </label>
+                                                    <input class="_dlor1" type="date" name="date_to_start" placeholder="Paste in the link to your live stream" value="{{ $live_stream->date_to_start }}">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="text-dark night-text">Time To Start<span class="text-danger">*</span> </label>
+                                                    <input class="_dlor1" type="time" name="time_to_start" placeholder="Paste in the link to your live stream" value="{{ $live_stream->time_to_start }}">
+                                                    <button class="_6tf7s" type="" value="1">GMT+1</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </form>
+                                        <button class="_145d1 edit_live_stream_btn">
+                                            <i class='uil uil-video '></i>Update Stream</button>
                                     </div>
                                 </div>
                             </div>
@@ -129,29 +129,29 @@ $live = 'active';
                     </div>
                 </div>
             </div>
-
-            @include('layouts.footer')
         </div>
-        <!-- Body End -->
+        @stop
+    </div>
+    <!-- Body End -->
 
-        @include('layouts.e_script')
-        <script>
-            $(document).ready(function() {
-                // process form for creating live stream
-                $('.edit_live_stream_btn').click(async function(e) {
-                    e.preventDefault();
-                    let data = [];
-                    // basic info
-                    let edit_live_stream = $('.edit_live_stream_form').serializeArray();
-                    // console.log(edit_live_stream);
-                    // return;
+    @include('layouts.e_script')
+    <script>
+        $(document).ready(function() {
+            // process form for creating live stream
+            $('.edit_live_stream_btn').click(async function(e) {
+                e.preventDefault();
+                let data = [];
+                // basic info
+                let edit_live_stream = $('.edit_live_stream_form').serializeArray();
+                // console.log(edit_live_stream);
+                // return;
 
-                    // append to form data object
-                    let form_data = set_form_data(edit_live_stream);
-                    let returned = await ajaxRequest('/live/edit', form_data);
-                    // console.log(returned);return;
-                    validator(returned, '/live_stream/edit/{{ Request::segment(3) }}');
-                });
-
+                // append to form data object
+                let form_data = set_form_data(edit_live_stream);
+                let returned = await ajaxRequest('/live/edit', form_data);
+                // console.log(returned);return;
+                validator(returned, '/live_stream/edit/{{ Request::segment(3) }}');
             });
-        </script>
+
+        });
+    </script>

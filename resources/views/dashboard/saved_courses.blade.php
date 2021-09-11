@@ -11,7 +11,8 @@ $Course = 'active';
     <!-- Header End -->
 
     <!-- Left Sidebar Start -->
-    @include('layouts.sidebar')
+    @extends('layouts.sidebar')
+    @section('content')
     <!-- Left Sidebar End -->
 
     @php $link = auth()->user()->returnLink() @endphp
@@ -25,13 +26,8 @@ $Course = 'active';
                         <div class="section3125 hstry142">
                             <div class="grp_titles pt-0">
                                 <div class="ht_title">
-                                    <span class="vdt14">{{count($saved_courses)}} Saved Course(s)</span>
+                                    <span class="vdt14">{{count($saved_courses)}} Saved Course(s) <a href="javascript:;" class="rmv-btn font-poppins" onclick="deleteSavedCourse(this, 'all')"><i class='uil uil-trash-alt'></i>Remove all Saved Courses</a></span>
                                 </div>
-                            </div>
-                            <div class="tb_145">
-                                <div class="wtch125">
-                                </div>
-                                <a href="javascript:;" class="rmv-btn font-poppins" onclick="deleteSavedCourse(this, 'all')"><i class='uil uil-trash-alt'></i>Remove all Saved Courses</a>
                             </div>
                         </div>
                     </div>
@@ -39,7 +35,7 @@ $Course = 'active';
                         <div class="_14d25 mb-20">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <h4 class="mhs_title font-poppins">Courses i saved</h4>
+                                    <h4 class="mhs_title font-poppins">Saved Courses</h4>
                                     @if (count($saved_courses) > 0)
                                     @foreach($saved_courses as $k => $each_saved_courses)
                                     <div class="fcrse_1 mt-30">
@@ -82,17 +78,10 @@ $Course = 'active';
                                     </div>
                                     @endforeach
                                     @else
-                                    <div class="fcrse_1 mt-30">
-                                        <div class="fcrse_1 mt-30 text-center">
-                                            {{-- <div class="alert alert-success text-center"> --}}
-                                            <p>
-                                            <h6>
-                                                No Saved Courses. Browse through our list of Courses and add to your Saved Libary.
-                                            </h6>
-                                            </p>
-                                            {{-- </div> --}}
+                                    <div class="text-center">
+                                        <div class="alert alert-danger" style="padding: 20px; font-weight:bold">
+                                            No Saved Courses. Browse through our list of Courses and add to your Saved Libary.
                                         </div>
-                                        {{-- <div class="alert alert-success text-center">No Saved Courses, Browse through our list of Courses and add to your Saved Libary</div> --}}
                                     </div>
                                     @endif
                                 </div>
@@ -103,8 +92,7 @@ $Course = 'active';
             </div>
         </div>
 
-        @include('layouts.footer')
-
+        @stop
     </div>
     <!-- Body End -->
 

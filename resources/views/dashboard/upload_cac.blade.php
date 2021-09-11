@@ -1,20 +1,21 @@
 ﻿@php
-	$pageTitle = 'KYC Verification';
-	$explore= 'active';
+$pageTitle = 'KYC Verification';
+$explore= 'active';
 @endphp
 @include('layouts.head')
 
 <body>
-	<!-- Header Start -->
-	@include('layouts.header')
-	<!-- Header End -->
+    <!-- Header Start -->
+    @include('layouts.header')
+    <!-- Header End -->
 
-	<!-- Left Sidebar Start -->
-	@include('layouts.sidebar')
-	<!-- Left Sidebar End -->
+    <!-- Left Sidebar Start -->
+    @extends('layouts.sidebar')
+    @section('content')
+    <!-- Left Sidebar End -->
 
-	<!-- Body Start -->
-	<div class="wrapper">
+    <!-- Body Start -->
+    <div class="wrapper">
         <div class="sa4d25">
             <div class="container-fluid">
                 <div class="row">
@@ -28,26 +29,26 @@
                             <img src="{{asset('dashboard/images/verified-account.svg')}}" alt="">
                             <div class="verification_form">
                                 @if(Session::has('success_message'))
-                                    <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
-                                        <i class="fa fa-envelope-o mr-2"></i>
-                                        {{ Session::get('success_message') }}
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">×</span>
-                                        </button>
-                                    </div>
+                                <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+                                    <i class="fa fa-envelope-o mr-2"></i>
+                                    {{ Session::get('success_message') }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
                                 @elseif(Session::has('error_message'))
-                                    <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
-                                        <i class="fa fa-envelope-o mr-2"></i>
-                                        {{ Session::get('error_message') }}
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">×</span>
-                                        </button>
-                                    </div>
+                                <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+                                    <i class="fa fa-envelope-o mr-2"></i>
+                                    {{ Session::get('error_message') }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
                                 @endif
                                 <h4>KYC Verification</h4>
                                 <div class="alert alert-success text-center">We'll send you an email upon successful verification</div>
-                                    <form method="POST" action="{{route('update_cac_file')}}" enctype="multipart/form-data">
-                                        @csrf
+                                <form method="POST" action="{{route('update_cac_file')}}" enctype="multipart/form-data">
+                                    @csrf
                                     <div class="part_input mt-30 lbel25">
                                         <label class="text-dark night-text">Upload Passport* <small>(jpg, png, jpeg)</small></label>
                                         <div class="input-group">
@@ -58,7 +59,7 @@
                                         </div>
                                     </div>
                                     <div class="part_input mt-30 lbel25">
-                                        <label class="text-dark night-text">Upload Document*  <small>(jpg, png, jpeg, pdf, doc)</small></label>
+                                        <label class="text-dark night-text">Upload Document* <small>(jpg, png, jpeg, pdf, doc)</small></label>
                                         <div class="alert alert-success text-center">Please provide a means of identification, it could be a Valid National id card, Voters Card, Diver's Licence, International Passport</div>
                                         <div class="input-group">
                                             <div class="custom-file">
@@ -76,9 +77,8 @@
             </div>
         </div>
 
-		@include('layouts.footer')
+        @stop
+    </div>
+    <!-- Body End -->
 
-	</div>
-	<!-- Body End -->
-
-@include('layouts.e_script')
+    @include('layouts.e_script')

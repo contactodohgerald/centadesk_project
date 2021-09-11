@@ -11,33 +11,34 @@ $ticket = 'active';
     <!-- Header End -->
 
     <!-- Left Sidebar Start -->
-    @include('layouts.sidebar')
+    @extends('layouts.sidebar')
+    @section('content')
     <!-- Left Sidebar End -->
-	<!-- Body Start -->
-	<div class="wrapper">
-		<div class="sa4d25">
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-lg-12">
-						<h2 class="st_title"><i class="uil uil-comment-info-alt text-capitalize"></i> Send a Ticket</h2>
+    <!-- Body Start -->
+    <div class="wrapper">
+        <div class="sa4d25">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h2 class="st_title"><i class="uil uil-comment-info-alt text-capitalize"></i> Send a Ticket</h2>
                         <div class="row" id="errorHold"></div>
-						<div class="row mt-20">
-							<div class="col-lg-8 col-md-8">
+                        <div class="row mt-20">
+                            <div class="col-lg-8 col-md-8">
                                 <form action="" class="create_ticket_form">
                                     @csrf
-								<div class="ui search focus">
-									<div class="ui left icon input swdh11 swdh19">
-										<input class="prompt srch_explore" type="text" name="title" value=""  placeholder="Title of your ticket">
-									</div>
-								</div>
-								<div class="ui search focus mt-30">
-									<div class="ui form swdh30">
-										<div class="field">
-											<textarea rows="10" name="message" placeholder="Describe your issue or share your ideas..."></textarea>
-										</div>
-									</div>
-								</div>
-                                <button class="save_btn create_ticket_btn" type="submit">Send Ticket</button>
+                                    <div class="ui search focus">
+                                        <div class="ui left icon input swdh11 swdh19">
+                                            <input class="prompt srch_explore" type="text" name="title" value="" placeholder="Title of your ticket">
+                                        </div>
+                                    </div>
+                                    <div class="ui search focus mt-30">
+                                        <div class="ui form swdh30">
+                                            <div class="field">
+                                                <textarea rows="10" name="message" placeholder="Describe your issue or share your ideas..."></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="save_btn create_ticket_btn" type="submit">Send Ticket</button>
 
                                 </form>
                             </div>
@@ -46,34 +47,36 @@ $ticket = 'active';
                                     <table class="table ucp-table">
                                         <thead class="thead-s">
                                             <tr>
-                                                <th class="" scope="col"><h4>Previous Tickets</h4></th>
+                                                <th class="" scope="col">
+                                                    <h4>Previous Tickets</h4>
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @if (!$tickets->isEmpty())
-                                                @foreach ($tickets as $e)
-                                                    <tr>
-                                                        <td class="text-capitalize">
-                                                            <a href="/ticket/reply/{{ $e->unique_id}}">{{ $e->title }}</a>
-                                                            <p style="font-size: 14px" class="lead text-warning">{{ $e->created_at }}</p>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
+                                            @foreach ($tickets as $e)
+                                            <tr>
+                                                <td class="text-capitalize">
+                                                    <a href="/ticket/reply/{{ $e->unique_id}}">{{ $e->title }}</a>
+                                                    <p style="font-size: 14px" class="lead text-warning">{{ $e->created_at }}</p>
+                                                </td>
+                                            </tr>
+                                            @endforeach
                                             @else
-                                                <tr>
-                                                    <td>No Records Found</td>
-                                                </tr>
+                                            <tr>
+                                                <td>No Records Found</td>
+                                            </tr>
                                             @endif
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-						</div>
-					</div>
-				</div>
-			</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-            @include('layouts.footer')
+            @stop
         </div>
         <!-- Body End -->
 

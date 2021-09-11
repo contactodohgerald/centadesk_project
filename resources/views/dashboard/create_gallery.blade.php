@@ -1,27 +1,28 @@
 @php
-	$pageTitle = 'Create Gallery/Event';
-	$gallery = 'active';
+$pageTitle = 'Create Gallery/Event';
+$gallery = 'active';
 @endphp
 @include('layouts.head')
 
 <body>
-	<!-- Header Start -->
-	@include('layouts.header')
-	<!-- Header End -->
+    <!-- Header Start -->
+    @include('layouts.header')
+    <!-- Header End -->
 
-	<!-- Left Sidebar Start -->
-	@include('layouts.sidebar')
-	<!-- Left Sidebar End -->
+    <!-- Left Sidebar Start -->
+    @extends('layouts.sidebar')
+    @section('content')
+    <!-- Left Sidebar End -->
 
-	<!-- Body Start -->
-	<div class="wrapper">
-		<div class="sa4d25">
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-lg-12">
-						<h2 class="st_title"><i class='uil uil-newspaper'></i> Create Blog</h2>
-						<div class="row">
-							<div class="col-lg-8 offset-2">
+    <!-- Body Start -->
+    <div class="wrapper">
+        <div class="sa4d25">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h2 class="st_title"><i class='uil uil-newspaper'></i> Create Blog</h2>
+                        <div class="row">
+                            <div class="col-lg-8 offset-2">
                                 <div class="row  mt-5">
                                     <div class="col-lg-12">
                                         <div class="ui search focus mt-30">
@@ -37,7 +38,7 @@
                                         <div class="view_all_dt">
                                             <div class="view_img_left">
                                                 <div id="" class="view__img ">
-                                                    <img id="thumbnail_cover_img" src="{{ asset('dashboard/images/courses/add_img.jpg') }}"  alt="your image" />
+                                                    <img id="thumbnail_cover_img" src="{{ asset('dashboard/images/courses/add_img.jpg') }}" alt="your image" />
                                                 </div>
                                             </div>
                                             <div class="view_img_right">
@@ -61,17 +62,15 @@
                                         <button class="save_btn add-new-gallery" id="add-new-gallery" type="submit">Save Changes</button>
                                     </div>
                                 </div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-		@include('layouts.footer')
+        @stop
+    </div>
+    <!-- Body End -->
 
-	</div>
-	<!-- Body End -->
-
-@include('layouts.e_script')
-
+    @include('layouts.e_script')

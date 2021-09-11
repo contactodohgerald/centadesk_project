@@ -58,7 +58,7 @@ class RegistrationController extends Controller
                 ['user_referral_id', $request->referred_id]
             ]);
             
-            if(count($user) > 0){
+            // if(count($user) > 0){
 
                 event(new Registered($user = $this->create($request->all())));
 
@@ -74,9 +74,9 @@ class RegistrationController extends Controller
                 }else{
                     throw new \Exception($createConfirmationCode['error']);
                 }
-            }else{
-                return Redirect::back()->with('error', 'Please provide a valid Refrral Id');
-            }
+            // }else{
+            //     return Redirect::back()->with('error', 'Please provide a valid Refrral Id');
+            // }
         }catch(\Exception $exception){
             return Redirect::back()->with('error',$exception->getMessage());
         }
@@ -86,11 +86,11 @@ class RegistrationController extends Controller
 
         $validator = Validator::make($data, [
             'email'=>'required|email|unique:users',
-            'password'=>'required|confirmed|min:6|max:10',
+            'password'=>'required|confirmed|min:6',
             'name'=>'required|string|max:255',
             'last_name'=>'required|string|max:255',
-            'user_type'=>'required',
-            'referred_id'=>'required',
+            'user_type'=>'required'
+            //'referred_id'=>'required',
         ]);
 
         return $validator;

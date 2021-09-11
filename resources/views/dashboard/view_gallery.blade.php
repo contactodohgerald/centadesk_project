@@ -1,6 +1,6 @@
 @php
-	$pageTitle = 'Gallery/Event List Area';
-	$gallery = 'active';
+$pageTitle = 'Gallery/Event List Area';
+$gallery = 'active';
 @endphp
 @include('layouts.head')
 
@@ -10,7 +10,8 @@
 	<!-- Header End -->
 
 	<!-- Left Sidebar Start -->
-	@include('layouts.sidebar')
+	@extends('layouts.sidebar')
+	@section('content')
 	<!-- Left Sidebar End -->
 
 	<!-- Body Start -->
@@ -35,42 +36,42 @@
 									<div class="table-responsive mt-30">
 										<table class="table ucp-table">
 											<thead class="thead-s">
-											<tr>
-												<th class="text-center" scope="col">S / N</th>
-												<th class="text-center">
-													<input onclick="checkAll()" type="checkbox" class="mainCheckBox" />
-												</th>
-												<th class="text-center" scope="col">Title</th>
-												<th class="text-center" scope="col">Image</th>
-												<th class="text-center" scope="col">Created Date</th>
-												<th class="text-center" scope="col">Action</th>
-											</tr>
+												<tr>
+													<th class="text-center" scope="col">S / N</th>
+													<th class="text-center">
+														<input onclick="checkAll()" type="checkbox" class="mainCheckBox" />
+													</th>
+													<th class="text-center" scope="col">Title</th>
+													<th class="text-center" scope="col">Image</th>
+													<th class="text-center" scope="col">Created Date</th>
+													<th class="text-center" scope="col">Action</th>
+												</tr>
 											</thead>
 											<tbody>
-                                                @if(count($galleryModel) > 0)
-                                                    @php $count = 1; @endphp
-                                                    @foreach($galleryModel as $each_gallery)
-                                                        <tr>
-                                                            <td class="text-center" scope="col">{{$count}}</td>
-                                                            <td class="text-center sorting_1">
-                                                                <input type="checkbox" class="smallCheckBox" value="{{$each_gallery->unique_id}}">
-                                                            </td>
-                                                            <td class="text-center cell-ta">{{$each_gallery->gallery_title}}</td>
-                                                            <td class="text-center cell-ta">
-                                                                <div class="img"><img src="{{asset('storage/gallery_image/'.$each_gallery->gallery_image)}}" alt="{{$each_gallery->gallery_title}}" width="50" height="50"></div>
-                                                            </td>
-                                                            <td class="text-center cell-ta">{{$each_gallery->created_at->diffForHumans()}}</td>
-                                                            <td class="text-center">
-                                                                <a href="{{asset('storage/gallery_image/'.$each_gallery->gallery_image)}}" target="_blank" title="View" class="gray-s"><i class="uil uil-adjust"></i></a>
-                                                            </td>
-                                                        </tr>
-                                                        @php $count++ @endphp
-                                                    @endforeach
-                                                @else
-                                                    <tr>
-                                                        <td colspan="8" class="text-center ">No Records Found</td>
-                                                    </tr>
-                                                @endif
+												@if(count($galleryModel) > 0)
+												@php $count = 1; @endphp
+												@foreach($galleryModel as $each_gallery)
+												<tr>
+													<td class="text-center" scope="col">{{$count}}</td>
+													<td class="text-center sorting_1">
+														<input type="checkbox" class="smallCheckBox" value="{{$each_gallery->unique_id}}">
+													</td>
+													<td class="text-center cell-ta">{{$each_gallery->gallery_title}}</td>
+													<td class="text-center cell-ta">
+														<div class="img"><img src="{{asset('storage/gallery_image/'.$each_gallery->gallery_image)}}" alt="{{$each_gallery->gallery_title}}" width="50" height="50"></div>
+													</td>
+													<td class="text-center cell-ta">{{$each_gallery->created_at->diffForHumans()}}</td>
+													<td class="text-center">
+														<a href="{{asset('storage/gallery_image/'.$each_gallery->gallery_image)}}" target="_blank" title="View" class="gray-s"><i class="uil uil-adjust"></i></a>
+													</td>
+												</tr>
+												@php $count++ @endphp
+												@endforeach
+												@else
+												<tr>
+													<td colspan="8" class="text-center ">No Records Found</td>
+												</tr>
+												@endif
 											</tbody>
 										</table>
 									</div>
@@ -88,9 +89,8 @@
 			</button>
 		</div>
 
-		@include('layouts.footer')
-
+		@stop
 	</div>
 	<!-- Body End -->
 
-@include('layouts.e_script')
+	@include('layouts.e_script')

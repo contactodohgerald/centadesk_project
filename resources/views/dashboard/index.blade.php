@@ -37,17 +37,19 @@ $home = 'active';
     @include('layouts.header')
     <!-- Header End -->
     <!-- Left Sidebar Start -->
-    @include('layouts.sidebar')
+
+    @extends('layouts.sidebar')
+    @section('content')
     <!-- Left Sidebar End -->
     @php $link = auth()->user()->returnLink() @endphp
     <!-- Body Start -->
 	<div class="wrapper">
 		<div class="sa4d25">
 			<div class="container-fluid">
-				<div class="row">
+				<div class="row d-flex justify-content-center">
                     @if(auth()->user()->cac_verification_status === 'no' && auth()->user()->user_type === 'teacher')
-                    <div class="col-xl-6 col-lg-6">
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <div class="col-xl-9 col-lg-9">
+                        <div class="alert alert-danger alert-dismissible fade show" style="text-align: center; padding:20px" role="alert">
                             <i class="fa fa-envelope-o mr-2"></i>
                             Please upload a means of identification for KYC verification
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -57,12 +59,11 @@ $home = 'active';
                     </div>
                     @endif
                     <div class="col-xl-12 col-lg-12 mb-30">
-
                         <div class="section3126">
                             @if(auth()->user()->user_type === 'teacher' || auth()->user()->user_type === 'student')
                                 <div class="row">
                                     @if(auth()->user()->yearly_subscription_status === 'no')
-                                    <div class="col-md-6 offset-md-3 col-lg-6 offset-lg-3" id="account_activation_date_counter" style="display: none">
+                                    <!-- <div class="col-md-6 offset-md-3 col-lg-6 offset-lg-3" id="account_activation_date_counter" style="display: none">
                                         <div class="value_props">
                                             <div class="row">
                                                 <input type="hidden" id="counter_date" class="form-control" value="{{ auth()->user()->account_activation_date_counter}}">
@@ -80,9 +81,9 @@ $home = 'active';
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     @else
-                                    <div class="col-md-6 offset-md-3 col-lg-6 offset-lg-3" id="subscription_date_counter" style="display: none">
+                                    <!-- <div class="col-md-6 offset-md-3 col-lg-6 offset-lg-3" id="subscription_date_counter" style="display: none">
                                         <div class="value_props">
                                             <div class="row">
                                                 <input type="hidden" id="date_counter" class="form-control" value="{{ auth()->user()->subscription_date_counter}}">
@@ -100,7 +101,7 @@ $home = 'active';
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     @endif
                                 </div>
                             @endif
@@ -210,8 +211,8 @@ $home = 'active';
                                     </div>
                                 </div>
                             @else
-                            <div class="row">
-                                <div class="col-md-6">
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-md-5">
                                     <div class="value_props">
                                         <div class="row">
                                             <div class="col-xl-4 col-lg-4 col-md-4">
@@ -228,7 +229,7 @@ $home = 'active';
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-5">
                                     <div class="value_props">
                                         <div class="row">
                                             <div class="col-xl-4 col-lg-4 col-md-4">
@@ -305,7 +306,7 @@ $home = 'active';
                                             <a style="height: 50px" href="{{route('view_course', $each_course->unique_id )}}" class="crse14s font-poppins">{{substr(ucfirst($each_course->name), 0, 40)}} {{ (strlen($each_course->name) > 40 )?'...':''}}</a>
                                             <a href="javascript:;" class="crse-cate font-poppins">{{$each_course->category->name}}</a>
                                             <div class="auth1lnkprce">
-                                                <p class="cr1fot text-capitalize">By <a href="{{route('view_profile', $each_course->user->unique_id )}}">{{$each_course->user->name}} {{$each_course->user->last_name}}</a></p>
+                                                <p class="cr1fot text-capitalize"><a href="{{route('view_profile', $each_course->user->unique_id )}}">{{$each_course->user->name}} {{$each_course->user->last_name}}</a></p>
                                                 <div class="prce142 font-poppins">{{auth()->user()->getAmountForView($each_course->price->amount)['data']['currency'] }} {{number_format($each_course->price->amount)}}</div>
                                             </div>
                                         </div>
@@ -418,8 +419,8 @@ $home = 'active';
             </div>
         </div>
     </div>
+    @stop
 
-    @include('layouts.footer')
     </div>
     <!-- Body End -->
 

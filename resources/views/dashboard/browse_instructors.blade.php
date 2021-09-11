@@ -1,20 +1,21 @@
 ﻿@php
-	$pageTitle = 'Browse Instructors Area';
-	$instructor = 'active';
+$pageTitle = 'Browse Instructors Area';
+$instructor = 'active';
 @endphp
 @include('layouts.head')
 
 <body>
-<!-- Header Start -->
-@include('layouts.header')
-<!-- Header End -->
+    <!-- Header Start -->
+    @include('layouts.header')
+    <!-- Header End -->
 
-<!-- Left Sidebar Start -->
-@include('layouts.sidebar')
-<!-- Left Sidebar End -->
+    <!-- Left Sidebar Start -->
+    @extends('layouts.sidebar')
+    @section('content')
+    <!-- Left Sidebar End -->
 
-	<!-- Body Start -->
-	<div class="wrapper">
+    <!-- Body Start -->
+    <div class="wrapper">
         <div class="sa4d25">
             <div class="container-fluid">
                 <div class="row">
@@ -37,18 +38,18 @@
                         <div class="_14d25">
                             <div class="row">
                                 @if(count($instructors) > 0)
-                                    @foreach($instructors as $each_instructors)
-                                        @if($each_instructors->unique_id == auth()->user()->unique_id)
-                                            @continue
-                                        @endif
-                                        <div class="col-xl-3 col-lg-4 col-md-6">
-                                            <div class="fcrse_1 mt-30">
-                                                <div class="tutor_img">
+                                @foreach($instructors as $each_instructors)
+                                @if($each_instructors->unique_id == auth()->user()->unique_id)
+                                @continue
+                                @endif
+                                <div class="col-xl-3 col-lg-4 col-md-6">
+                                    <div class="fcrse_1 mt-30">
+                                        <div class="tutor_img">
                                             <a href="{{route('view_profile', $each_instructors->unique_id )}}">
                                                 <img src="{{asset('storage/profile/'.$each_instructors->profile_image)}}" alt="{{env('APP_NAME')}}">
                                             </a>
                                         </div>
-                                                <div class="tutor_content_dt">
+                                        <div class="tutor_content_dt">
                                             <div class="tutor150">
                                                 <a href="{{route('view_profile', $each_instructors->unique_id )}}" class="tutor_name text-capitalize font-poppins">{{$each_instructors->name}} {{$each_instructors->last_name}}</a>
                                                 @if ($each_instructors->verified_badge == 'yes')
@@ -69,9 +70,9 @@
                                                 <span class="vdt15">{{$each_instructors->count_course}} Courses</span>
                                             </div>
                                         </div>
-                                            </div>
-                                        </div>
-                                    @endforeach
+                                    </div>
+                                </div>
+                                @endforeach
                                 <div class="col-md-12">
                                     <div class="main-loader mt-50">
                                         <div class="spinner">
@@ -82,9 +83,10 @@
                                     </div>
                                 </div>
                                 @else
-                                    <div class="col-lg-12 col-xl-12 col-md-12">
-                                        <div class="alert alert-success text-center">No Instructor Was Returned</div>
-                                    </div>
+                                <div class="col-lg-12 col-xl-12 col-md-12">
+                                    <br> <br>
+                                    <div class="alert alert-danger text-center" style="padding: 20px; text-transform:capitalize; font-weight:bold">Sorry!!! No Instructor was found...</div>
+                                </div>
                                 @endif
                             </div>
                         </div>
@@ -93,8 +95,8 @@
             </div>
         </div>
 
-		@include('layouts.footer')
-	</div>
-	<!-- Body End -->
+        @stop
+    </div>
+    <!-- Body End -->
 
-@include('layouts.e_script')
+    @include('layouts.e_script')

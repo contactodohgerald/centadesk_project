@@ -1,35 +1,36 @@
 ﻿@php
-	$pageTitle = 'Create Blog';
-	$blogs = 'active';
+$pageTitle = 'Create Blog';
+$blogs = 'active';
 @endphp
 @include('layouts.head')
 
 <body>
-	<!-- Header Start -->
-	@include('layouts.header')
-	<!-- Header End -->
+    <!-- Header Start -->
+    @include('layouts.header')
+    <!-- Header End -->
 
-	<!-- Left Sidebar Start -->
-	@include('layouts.sidebar')
-	<!-- Left Sidebar End -->
+    <!-- Left Sidebar Start -->
+    @extends('layouts.sidebar')
+    @section('content')
+    <!-- Left Sidebar End -->
 
-	<!-- Body Start -->
-	<div class="wrapper">
-		<div class="sa4d25">
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-lg-12">
-						<h2 class="st_title"><i class='uil uil-newspaper'></i> Create Blog</h2>
-						<div class="row">
-							<div class="col-lg-8 offset-2">
+    <!-- Body Start -->
+    <div class="wrapper">
+        <div class="sa4d25">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h2 class="st_title"><i class='uil uil-newspaper'></i> Create Blog</h2>
+                        <div class="row">
+                            <div class="col-lg-8 offset-2">
                                 <div class="row  mt-5">
                                     <div class="col-lg-12">
                                         <label class="text-dark night-text" for="tags">Blog Tags</label>
-                                        <select name="tags" class="ui hj145 dropdown cntry152 prompt srch_explore tags-select2" id="tags" >
+                                        <select name="tags" class="ui hj145 dropdown cntry152 prompt srch_explore tags-select2" id="tags">
                                             @if(count($blogTagModel) > 0)
-                                                @foreach($blogTagModel as $gg => $each_tags)
-                                                    <option value="{{$each_tags->unique_id}}">{{$each_tags->tag_name}}</option>
-                                                @endforeach
+                                            @foreach($blogTagModel as $gg => $each_tags)
+                                            <option value="{{$each_tags->unique_id}}">{{$each_tags->tag_name}}</option>
+                                            @endforeach
                                             @endif
                                         </select>
                                     </div>
@@ -47,7 +48,7 @@
                                         <div class="view_all_dt">
                                             <div class="view_img_left">
                                                 <div id="" class="view__img ">
-                                                    <img id="thumbnail_cover_img" src="{{ asset('dashboard/images/courses/add_img.jpg') }}"  alt="your image" />
+                                                    <img id="thumbnail_cover_img" src="{{ asset('dashboard/images/courses/add_img.jpg') }}" alt="your image" />
                                                 </div>
                                             </div>
                                             <div class="view_img_right">
@@ -85,17 +86,15 @@
                                         <button class="save_btn add-new-blog" id="add-new-blogs" type="submit">Save Changes</button>
                                     </div>
                                 </div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-		@include('layouts.footer')
+        @stop
+    </div>
+    <!-- Body End -->
 
-	</div>
-	<!-- Body End -->
-
-@include('layouts.e_script')
-
+    @include('layouts.e_script')

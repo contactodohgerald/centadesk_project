@@ -1,20 +1,21 @@
 ﻿@php
-	$pageTitle = 'KYCVerifications Area';
-	$KYC = 'active';
+$pageTitle = 'KYCVerifications Area';
+$KYC = 'active';
 @endphp
 @include('layouts.head')
 
 <body>
-<!-- Header Start -->
-@include('layouts.header')
-<!-- Header End -->
+    <!-- Header Start -->
+    @include('layouts.header')
+    <!-- Header End -->
 
-<!-- Left Sidebar Start -->
-@include('layouts.sidebar')
-<!-- Left Sidebar End -->
+    <!-- Left Sidebar Start -->
+    @extends('layouts.sidebar')
+    @section('content')
+    <!-- Left Sidebar End -->
 
-@php $link = auth()->user()->returnLink() @endphp
-@php $base_url = auth()->user()->returnBaseUrl() @endphp
+    @php $link = auth()->user()->returnLink() @endphp
+    @php $base_url = auth()->user()->returnBaseUrl() @endphp
 
     <!-- Body Start -->
     <div class="wrapper _bg4586">
@@ -34,11 +35,11 @@
                             <div class="row justify-content-center">
                                 <div class="col-xl-6 col-lg-6 col-md-6">
                                     <div class="strttech120">
-                                    <h4>View User Passport</h4>
-                                    <a href="https://docs.google.com/viewer?url={{$base_url.$link.'cac-passport/'.$kyc->passport_cac}}" target="_blank">
-                                        <button class="Get_btn">View Passport</button>
-                                    </a>
-                                </div>
+                                        <h4>View User Passport</h4>
+                                        <a href="https://docs.google.com/viewer?url={{$base_url.$link.'cac-passport/'.$kyc->passport_cac}}" target="_blank">
+                                            <button class="Get_btn">View Passport</button>
+                                        </a>
+                                    </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6">
                                     <div class="strttech120">
@@ -55,7 +56,7 @@
             </div>
         </div>
 
-    @include('layouts.footer')
-</div>
-<!-- Body End -->
-@include('layouts.e_script')
+        @stop
+    </div>
+    <!-- Body End -->
+    @include('layouts.e_script')
