@@ -1,7 +1,7 @@
 ﻿@php
 $users = auth()->user();
-	$pageTitle = 'Wallet Area';
-	$Wallet = 'active';
+$pageTitle = 'Wallet Area';
+$Wallet = 'active';
 @endphp
 @include('layouts.head')
 
@@ -11,7 +11,8 @@ $users = auth()->user();
 	<!-- Header End -->
 
 	<!-- Left Sidebar Start -->
-	@include('layouts.sidebar')
+	@extends('layouts.sidebar')
+	@section('content')
 	<!-- Left Sidebar End -->
 
 	<!-- Body Start -->
@@ -25,21 +26,21 @@ $users = auth()->user();
 					<div class="col-md-12">
 
 						@if(Session::has('success_message'))
-							<div class="alert alert-success alert-dismissible fade show text-center" role="alert">
-								<i class="fa fa-envelope-o mr-2"></i>
-								{{ Session::get('success_message') }}
-								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-									<span aria-hidden="true">×</span>
-								</button>
-							</div>
+						<div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+							<i class="fa fa-envelope-o mr-2"></i>
+							{{ Session::get('success_message') }}
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true">×</span>
+							</button>
+						</div>
 						@elseif(Session::has('error_message'))
-							<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
-								<i class="fa fa-envelope-o mr-2"></i>
-								{{ Session::get('error_message') }}
-								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-									<span aria-hidden="true">×</span>
-								</button>
-							</div>
+						<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+							<i class="fa fa-envelope-o mr-2"></i>
+							{{ Session::get('error_message') }}
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true">×</span>
+							</button>
+						</div>
 						@endif
 
 						@if($users->privilegeChecker('view_restricted_roles'))
@@ -65,18 +66,18 @@ $users = auth()->user();
 							</div>
 						</div>
 						@else
-							<div class="card_dash1">
-								<div class="card_dash_left1">
-									<i class="uil uil-money-bill"></i>
-									<h1><b>{{number_format($userDetails->balance)}} ({{$userDetails->getBalanceForView()['data']['currency']}})</b></h1>
-								</div>
-								<div class="card_dash_right1">
-									<button class="create_btn_dash" onclick="bringOutModalMain('.btc_topup_modal')">TopUp with Bitcoin</button>
-								</div>
-								<div class="card_dash_right1 mr-2">
-									<button class="create_btn_dash" onclick="bringOutModalMain('.accountTopUp')">TopUp with Flutterwave</button>
-								</div>
+						<div class="card_dash1">
+							<div class="card_dash_left1">
+								<i class="uil uil-money-bill"></i>
+								<h1><b>{{number_format($userDetails->balance)}} ({{$userDetails->getBalanceForView()['data']['currency']}})</b></h1>
 							</div>
+							<div class="card_dash_right1">
+								<button class="create_btn_dash" onclick="bringOutModalMain('.btc_topup_modal')">TopUp with Bitcoin</button>
+							</div>
+							<div class="card_dash_right1 mr-2">
+								<button class="create_btn_dash" onclick="bringOutModalMain('.accountTopUp')">TopUp with Flutterwave</button>
+							</div>
+						</div>
 						@endif
 
 					</div>
@@ -88,23 +89,23 @@ $users = auth()->user();
 							<h5>Filter With Date</h5>
 							<div class="row">
 								<div class="form-group col-sm-4">
-									<input type="date" class="form-control" required placeholder="Start Date" name="start_date" >
+									<input type="date" class="form-control" required placeholder="Start Date" name="start_date">
 									@error('start_date')
 									<span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
+										<strong>{{ $message }}</strong>
+									</span>
 									@enderror
 								</div>
 								<div class="form-group  col-sm-4">
-									<input class="form-control" type="date" required placeholder="End Date" name="end_date" >
+									<input class="form-control" type="date" required placeholder="End Date" name="end_date">
 									@error('start_date')
 									<span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
+										<strong>{{ $message }}</strong>
+									</span>
 									@enderror
 								</div>
 								<div class="form-group  col-sm-4">
-									<button  class="btn btn-info" type="submit">Proceed</button>
+									<button class="btn btn-info" type="submit">Proceed</button>
 								</div>
 								<hr style="color: #fff;" size="10">
 							</div>
@@ -130,196 +131,196 @@ $users = auth()->user();
 									<div class="table-responsive mt-30">
 										<table class="table ucp-table">
 											<thead class="thead-s">
-											<tr>
-												<th class="text-center" scope="col">S / N</th>
-												<th class="text-center">
-													<input onclick="checkAll()" type="checkbox" class="mainCheckBox" />
-												</th>
-												@if($users->privilegeChecker('view_restricted_roles'))
-												<th class="text-center" scope="col">Email</th>
-												@endif
-												<th class="text-center" scope="col">Amount ({{$userDetails->getBalanceForView()['data']['currency']}})</th>
-												<th class="text-center" scope="col">Action Type</th>
-												<th class="text-center" scope="col">Status</th>
-												<th class="text-center" scope="col">Date Created</th>
-												<th class="text-center" scope="col">Action</th>
-											</tr>
+												<tr>
+													<th class="text-center" scope="col">S / N</th>
+													<th class="text-center">
+														<input onclick="checkAll()" type="checkbox" class="mainCheckBox" />
+													</th>
+													@if($users->privilegeChecker('view_restricted_roles'))
+													<th class="text-center" scope="col">Email</th>
+													@endif
+													<th class="text-center" scope="col">Amount ({{$userDetails->getBalanceForView()['data']['currency']}})</th>
+													<th class="text-center" scope="col">Action Type</th>
+													<th class="text-center" scope="col">Status</th>
+													<th class="text-center" scope="col">Date Created</th>
+													<th class="text-center" scope="col">Action</th>
+												</tr>
 											</thead>
 											<tbody>
-											@if(count($transaction) > 0)
+												@if(count($transaction) > 0)
 												@php $count = 1; @endphp
-												@foreach($transaction  as $k => $each_transaction)
-													<tr>
-														<td class="text-center" scope="col">{{$count}}</td>
-														<td class="text-center sorting_1">
-															<input type="checkbox" class="smallCheckBox" value="{{$each_transaction->unique_id}}">
-														</td>
-														@if($users->privilegeChecker('view_restricted_roles'))
-															<td class="text-center cell-ta">{{$each_transaction->users->email}}</td>
-														@endif
-														<td class="text-center cell-ta">{{number_format($each_transaction->amount)}}</td>
-														<td class="text-center cell-ta">{{($each_transaction->action_type == 'top_up')?'Top Up':$each_transaction->action_type}}</td>
-														@php if($each_transaction->status === 'confirmed'){
-																$status = 'Confirmed';
-																$labelColor = 'success';
-															}else if($each_transaction->status === 'pending'){
-																$status = 'Pending';
-																$labelColor = 'warning';
-															}else if($each_transaction->status === 'processing'){
-																$status = 'Processing';
-																$labelColor = 'warning';
-															}else if($each_transaction->status === 'failed'){
-																$status = 'Failed';
-																$labelColor = 'danger';
-															}
-														@endphp
-														<td class="text-center">
-															<button class="btn btn-{{$labelColor}}">{{$status}}</button>
-														</td>
-														<td class="text-center cell-ta">{{$each_transaction->created_at}}</td>
-														<td class="text-center">
-															<a target="_blank" href="{{route('transaction_history', $each_transaction->unique_id)}}" title="View" class="gray-s"><i class="uil uil-eye"></i></a>
-														</td>
-													</tr>
-													@php $count++ @endphp
+												@foreach($transaction as $k => $each_transaction)
+												<tr>
+													<td class="text-center" scope="col">{{$count}}</td>
+													<td class="text-center sorting_1">
+														<input type="checkbox" class="smallCheckBox" value="{{$each_transaction->unique_id}}">
+													</td>
+													@if($users->privilegeChecker('view_restricted_roles'))
+													<td class="text-center cell-ta">{{$each_transaction->users->email}}</td>
+													@endif
+													<td class="text-center cell-ta">{{number_format($each_transaction->amount)}}</td>
+													<td class="text-center cell-ta">{{($each_transaction->action_type == 'top_up')?'Top Up':$each_transaction->action_type}}</td>
+													@php if($each_transaction->status === 'confirmed'){
+													$status = 'Confirmed';
+													$labelColor = 'success';
+													}else if($each_transaction->status === 'pending'){
+													$status = 'Pending';
+													$labelColor = 'warning';
+													}else if($each_transaction->status === 'processing'){
+													$status = 'Processing';
+													$labelColor = 'warning';
+													}else if($each_transaction->status === 'failed'){
+													$status = 'Failed';
+													$labelColor = 'danger';
+													}
+													@endphp
+													<td class="text-center">
+														<button class="btn btn-{{$labelColor}}">{{$status}}</button>
+													</td>
+													<td class="text-center cell-ta">{{$each_transaction->created_at}}</td>
+													<td class="text-center">
+														<a target="_blank" href="{{route('transaction_history', $each_transaction->unique_id)}}" title="View" class="gray-s"><i class="uil uil-eye"></i></a>
+													</td>
+												</tr>
+												@php $count++ @endphp
 												@endforeach
-											@endif
+												@endif
 											</tbody>
 										</table>
 									</div>
-                                    <div class="d-flex justify-content-center">
-                                        {!! $transaction->links() !!}
-                                    </div>
+									<div class="d-flex justify-content-center">
+										{!! $transaction->links() !!}
+									</div>
 								</div>
 								<div class="tab-pane fade" id="pills-upcoming-courses" role="tabpanel">
 									<div class="table-responsive mt-30">
 										<table class="table ucp-table">
 											<thead class="thead-s">
-											<tr>
-												<th class="text-center" scope="col">S / N</th>
-												<th class="text-center">
-													<input onclick="checkAll()" type="checkbox" class="mainCheckBox" />
-												</th>
-												@if($users->privilegeChecker('view_restricted_roles'))
+												<tr>
+													<th class="text-center" scope="col">S / N</th>
+													<th class="text-center">
+														<input onclick="checkAll()" type="checkbox" class="mainCheckBox" />
+													</th>
+													@if($users->privilegeChecker('view_restricted_roles'))
 													<th class="text-center" scope="col">Email</th>
-												@endif
-												<th class="text-center" scope="col">Amount ({{$userDetails->getBalanceForView()['data']['currency']}})</th>
-												<th class="text-center" scope="col">Action Type</th>
-												<th class="text-center" scope="col">Status</th>
-												<th class="text-center" scope="col">Date Created</th>
-												<th class="text-center" scope="col">Action</th>
-											</tr>
+													@endif
+													<th class="text-center" scope="col">Amount ({{$userDetails->getBalanceForView()['data']['currency']}})</th>
+													<th class="text-center" scope="col">Action Type</th>
+													<th class="text-center" scope="col">Status</th>
+													<th class="text-center" scope="col">Date Created</th>
+													<th class="text-center" scope="col">Action</th>
+												</tr>
 											</thead>
 											<tbody>
-											@if(count($successful_transaction) > 0)
+												@if(count($successful_transaction) > 0)
 												@php $count = 1; @endphp
-												@foreach($successful_transaction  as $k => $each_successful_transaction)
-													<tr>
-														<td class="text-center" scope="col">{{$count}}</td>
-														<td class="text-center sorting_1">
-															<input type="checkbox" class="smallCheckBox" value="{{$each_successful_transaction->unique_id}}">
-														</td>
-														@if($users->privilegeChecker('view_restricted_roles'))
-															<td class="text-center cell-ta">{{$each_successful_transaction->users->email}}</td>
-														@endif
-														<td class="text-center cell-ta">{{number_format($each_successful_transaction->amount)}}</td>
-														<td class="text-center cell-ta">{{$each_successful_transaction->action_type}}</td>
-														@php if($each_successful_transaction->status === 'confirmed'){
-																$status = 'Confirmed';
-																$labelColor = 'success';
-															}else if($each_successful_transaction->status === 'pending'){
-																$status = 'Pending';
-																$labelColor = 'warning';
-															}else if($each_successful_transaction->status === 'processing'){
-																$status = 'Processing';
-																$labelColor = 'warning';
-															}else if($each_successful_transaction->status === 'failed'){
-																$status = 'Failed';
-																$labelColor = 'danger';
-															}
-														@endphp
-														<td class="text-center">
-															<button class="btn btn-{{$labelColor}}">{{$status}}</button>
-														</td>
-														<td class="text-center cell-ta">{{$each_successful_transaction->created_at}}</td>
-														<td class="text-center">
-															<a target="_blank" href="{{route('transaction_history', $each_successful_transaction->unique_id)}}" title="View" class="gray-s"><i class="uil uil-eye"></i></a>
-														</td>
-													</tr>
-													@php $count++ @endphp
+												@foreach($successful_transaction as $k => $each_successful_transaction)
+												<tr>
+													<td class="text-center" scope="col">{{$count}}</td>
+													<td class="text-center sorting_1">
+														<input type="checkbox" class="smallCheckBox" value="{{$each_successful_transaction->unique_id}}">
+													</td>
+													@if($users->privilegeChecker('view_restricted_roles'))
+													<td class="text-center cell-ta">{{$each_successful_transaction->users->email}}</td>
+													@endif
+													<td class="text-center cell-ta">{{number_format($each_successful_transaction->amount)}}</td>
+													<td class="text-center cell-ta">{{$each_successful_transaction->action_type}}</td>
+													@php if($each_successful_transaction->status === 'confirmed'){
+													$status = 'Confirmed';
+													$labelColor = 'success';
+													}else if($each_successful_transaction->status === 'pending'){
+													$status = 'Pending';
+													$labelColor = 'warning';
+													}else if($each_successful_transaction->status === 'processing'){
+													$status = 'Processing';
+													$labelColor = 'warning';
+													}else if($each_successful_transaction->status === 'failed'){
+													$status = 'Failed';
+													$labelColor = 'danger';
+													}
+													@endphp
+													<td class="text-center">
+														<button class="btn btn-{{$labelColor}}">{{$status}}</button>
+													</td>
+													<td class="text-center cell-ta">{{$each_successful_transaction->created_at}}</td>
+													<td class="text-center">
+														<a target="_blank" href="{{route('transaction_history', $each_successful_transaction->unique_id)}}" title="View" class="gray-s"><i class="uil uil-eye"></i></a>
+													</td>
+												</tr>
+												@php $count++ @endphp
 												@endforeach
-											@endif
+												@endif
 											</tbody>
 										</table>
 									</div>
-                                    <div class="d-flex justify-content-center">
-                                        {!! $successful_transaction->links() !!}
-                                    </div>
+									<div class="d-flex justify-content-center">
+										{!! $successful_transaction->links() !!}
+									</div>
 								</div>
 								<div class="tab-pane fade" id="pills-my-purchases" role="tabpanel">
 									<div class="table-responsive mt-30">
 										<table class="table ucp-table">
 											<thead class="thead-s">
-											<tr>
-												<th class="text-center" scope="col">S / N</th>
-												<th class="text-center">
-													<input onclick="checkAll()" type="checkbox" class="mainCheckBox" />
-												</th>
-												@if($users->privilegeChecker('view_restricted_roles'))
+												<tr>
+													<th class="text-center" scope="col">S / N</th>
+													<th class="text-center">
+														<input onclick="checkAll()" type="checkbox" class="mainCheckBox" />
+													</th>
+													@if($users->privilegeChecker('view_restricted_roles'))
 													<th class="text-center" scope="col">Email</th>
-												@endif
-												<th class="text-center" scope="col">Amount ({{$userDetails->getBalanceForView()['data']['currency']}})</th>
-												<th class="text-center" scope="col">Action Type</th>
-												<th class="text-center" scope="col">Status</th>
-												<th class="text-center" scope="col">Date Created</th>
-												<th class="text-center" scope="col">Action</th>
-											</tr>
+													@endif
+													<th class="text-center" scope="col">Amount ({{$userDetails->getBalanceForView()['data']['currency']}})</th>
+													<th class="text-center" scope="col">Action Type</th>
+													<th class="text-center" scope="col">Status</th>
+													<th class="text-center" scope="col">Date Created</th>
+													<th class="text-center" scope="col">Action</th>
+												</tr>
 											</thead>
 											<tbody>
-											@if(count($pending_transaction) > 0)
+												@if(count($pending_transaction) > 0)
 												@php $count = 1; @endphp
-												@foreach($pending_transaction  as $k => $each_pending_transaction)
-													<tr>
-														<td class="text-center" scope="col">{{$count}}</td>
-														<td class="text-center sorting_1">
-															<input type="checkbox" class="smallCheckBox" value="{{$each_pending_transaction->unique_id}}">
-														</td>
-														@if($users->privilegeChecker('view_restricted_roles'))
-															<td class="text-center cell-ta">{{$each_pending_transaction->users->email}}</td>
-														@endif
-														<td class="text-center cell-ta">{{number_format($each_pending_transaction->amount)}}</td>
-														<td class="text-center cell-ta">{{$each_pending_transaction->action_type}}</td>
-														@php if($each_pending_transaction->status === 'confirmed'){
-																$status = 'Confirmed';
-																$labelColor = 'info';
-															}else if($each_pending_transaction->status === 'pending'){
-																$status = 'Pending';
-																$labelColor = 'warning';
-															}else if($each_pending_transaction->status === 'processing'){
-																$status = 'Processing';
-																$labelColor = 'warning';
-															}else if($each_pending_transaction->status === 'failed'){
-																$status = 'Failed';
-																$labelColor = 'danger';
-															}
-														@endphp
-														<td class="text-center">
-															<button class="btn btn-{{$labelColor}}">{{$status}}</button>
-														</td>
-														<td class="text-center cell-ta">{{$each_pending_transaction->created_at}}</td>
-														<td class="text-center">
-															<a target="_blank" href="{{route('transaction_history', $each_pending_transaction->unique_id)}}" title="View" class="gray-s"><i class="uil uil-eye"></i></a>
-														</td>
-													</tr>
-													@php $count++ @endphp
+												@foreach($pending_transaction as $k => $each_pending_transaction)
+												<tr>
+													<td class="text-center" scope="col">{{$count}}</td>
+													<td class="text-center sorting_1">
+														<input type="checkbox" class="smallCheckBox" value="{{$each_pending_transaction->unique_id}}">
+													</td>
+													@if($users->privilegeChecker('view_restricted_roles'))
+													<td class="text-center cell-ta">{{$each_pending_transaction->users->email}}</td>
+													@endif
+													<td class="text-center cell-ta">{{number_format($each_pending_transaction->amount)}}</td>
+													<td class="text-center cell-ta">{{$each_pending_transaction->action_type}}</td>
+													@php if($each_pending_transaction->status === 'confirmed'){
+													$status = 'Confirmed';
+													$labelColor = 'info';
+													}else if($each_pending_transaction->status === 'pending'){
+													$status = 'Pending';
+													$labelColor = 'warning';
+													}else if($each_pending_transaction->status === 'processing'){
+													$status = 'Processing';
+													$labelColor = 'warning';
+													}else if($each_pending_transaction->status === 'failed'){
+													$status = 'Failed';
+													$labelColor = 'danger';
+													}
+													@endphp
+													<td class="text-center">
+														<button class="btn btn-{{$labelColor}}">{{$status}}</button>
+													</td>
+													<td class="text-center cell-ta">{{$each_pending_transaction->created_at}}</td>
+													<td class="text-center">
+														<a target="_blank" href="{{route('transaction_history', $each_pending_transaction->unique_id)}}" title="View" class="gray-s"><i class="uil uil-eye"></i></a>
+													</td>
+												</tr>
+												@php $count++ @endphp
 												@endforeach
-											@endif
+												@endif
 											</tbody>
 										</table>
 									</div>
-                                    <div class="d-flex justify-content-center">
-                                        {!! $pending_transaction->links() !!}
-                                    </div>
+									<div class="d-flex justify-content-center">
+										{!! $pending_transaction->links() !!}
+									</div>
 								</div>
 							</div>
 							<div style="position: fixed; bottom: 20px; right: 30px; z-index: 200">
@@ -334,32 +335,31 @@ $users = auth()->user();
 			</div>
 		</div>
 
-		@include('layouts.footer')
-
+		@stop
 	</div>
 
 	<!-- Body End -->
 
-@include('layouts.e_script')
-<script>
-    $(document).ready(function() {
+	@include('layouts.e_script')
+	<script>
+		$(document).ready(function() {
 
-        // process form for creating live stream
-        $('.btc_topup_btn').click(async function(e) {
-            e.preventDefault();
-            let data = [];
-            // basic info
-            let btc_topup = $('.btc_topup_form').serializeArray();
-            // console.log(btc_topup);
-            // return;
+			// process form for creating live stream
+			$('.btc_topup_btn').click(async function(e) {
+				e.preventDefault();
+				let data = [];
+				// basic info
+				let btc_topup = $('.btc_topup_form').serializeArray();
+				// console.log(btc_topup);
+				// return;
 
-            // append to form data object
-            let form_data = set_form_data(btc_topup);
-            let returned = await ajaxRequest('/top_up_btc', form_data);
-            // console.log(returned.ref_id);return;
-            removeModalMains('.btc_topup_modal')
-            validator(returned,'/wallet/bitcoin/gateway/'+returned.ref_id);
-        });
+				// append to form data object
+				let form_data = set_form_data(btc_topup);
+				let returned = await ajaxRequest('/top_up_btc', form_data);
+				// console.log(returned.ref_id);return;
+				removeModalMains('.btc_topup_modal')
+				validator(returned, '/wallet/bitcoin/gateway/' + returned.ref_id);
+			});
 
-    });
-</script>
+		});
+	</script>

@@ -1,8 +1,8 @@
 @php
-	$pageTitle = 'Funds Withdrawals Area';
-	$Withdrawal = 'active';
-	$users = auth()->user();
-	$user_type = $users->user_type;
+$pageTitle = 'Funds Withdrawals Area';
+$Withdrawal = 'active';
+$users = auth()->user();
+$user_type = $users->user_type;
 @endphp
 @include('layouts.head')
 
@@ -12,7 +12,8 @@
 	<!-- Header End -->
 
 	<!-- Left Sidebar Start -->
-	@include('layouts.sidebar')
+	@extends('layouts.sidebar')
+	@section('content')
 	<!-- Left Sidebar End -->
 
 	<!-- Body Start -->
@@ -39,71 +40,72 @@
 								<div class="tab-pane fade show active" id="pills-my-courses" role="tabpanel">
 									<div class="table-responsive mt-30">
 										<table class="table ucp-table">
-											<thead class="thead-s" >
-											<tr>
-												<th class="text-center table_th" scope="col">S / N</th>
-												<th class="text-center table_th" scope="col">Description</th>
-												<th class="text-center table_th" scope="col">No of Downlines</th>
-                                                <th class="text-center table_th" scope="col">Percentage Earning</th>
-											</tr>
+											<thead class="thead-s">
+												<tr>
+													<th class="text-center table_th" scope="col">S / N</th>
+													<th class="text-center table_th" scope="col">Description</th>
+													<th class="text-center table_th" scope="col">No of Downlines</th>
+													<th class="text-center table_th" scope="col">Percentage Earning</th>
+												</tr>
 											</thead>
 
 
 											<tbody>
 												@if(count($referral_earnings) > 0)
 												@php $count = 1; @endphp
-                                                @php $countAdd = 0 @endphp
-												@foreach($referral_earnings  as $k => $eachEarningArray)
-													<tr class=" downline_opener" title="Click to view details" style="cursor:pointer;">
-														<td class="text-center" scope="col">{{$k}}</td>
-														<td class="text-center cell-ta">{{$k}} <sup>{{auth()->user()->returnSurfix($k)}}</sup> - Downlines</td>
-														<td class="text-center cell-ta">{{count($eachEarningArray)}}</td>
-                                                        <td class="text-center cell-ta">{{$eachEarningArray[0]->bonus_details[0]->percentage}}%</td>
-													</tr>
+												@php $countAdd = 0 @endphp
+												@foreach($referral_earnings as $k => $eachEarningArray)
+												<tr class=" downline_opener" title="Click to view details" style="cursor:pointer;">
+													<td class="text-center" scope="col">{{$k}}</td>
+													<td class="text-center cell-ta">{{$k}} <sup>{{auth()->user()->returnSurfix($k)}}</sup> - Downlines</td>
+													<td class="text-center cell-ta">{{count($eachEarningArray)}}</td>
+													<td class="text-center cell-ta">{{$eachEarningArray[0]->bonus_details[0]->percentage}}%</td>
+												</tr>
 
-                                                        <tr class="hidden downlines">
-                                                            <td class="text-center" colspan="4" scope="col">
-                                                                <table class="table ucp-table">
-                                                                    <thead class="thead-s">
-                                                                        <tr>
-                                                                            <th class="text-center" scope="col">S / N</th>
-                                                                            <th class="text-center" scope="col">Full Name</th>
-                                                                            <th class="text-center" scope="col">Email</th>
-                                                                            <th class="text-center" scope="col">Number of Referral Earnings From Downline</th>
-                                                                            <th class="text-center" scope="col">Total Amount Spent</th>
-                                                                            <th class="text-center" scope="col">Total Amount Earned By Referrer</th>
-                                                                            <th class="text-center" scope="col"></th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
+												<tr class="hidden downlines">
+													<td class="text-center" colspan="4" scope="col">
+														<table class="table ucp-table">
+															<thead class="thead-s">
+																<tr>
+																	<th class="text-center" scope="col">S / N</th>
+																	<th class="text-center" scope="col">Full Name</th>
+																	<th class="text-center" scope="col">Email</th>
+																	<th class="text-center" scope="col">Number of Referral Earnings From Downline</th>
+																	<th class="text-center" scope="col">Total Amount Spent</th>
+																	<th class="text-center" scope="col">Total Amount Earned By Referrer</th>
+																	<th class="text-center" scope="col"></th>
+																</tr>
+															</thead>
+															<tbody>
 
-                                                                        @foreach($eachEarningArray as $l => $eachDownlineArray)
-                                                                        <tr>
+																@foreach($eachEarningArray as $l => $eachDownlineArray)
+																<tr>
 
-                                                                            <td class="text-center cell-ta" scope="col">{{$countAdd}}</td>
-                                                                            <td class="text-center cell-ta" scope="col">{{$eachDownlineArray->name}}</td>
-                                                                            <td class="text-center cell-ta" scope="col">{{$eachDownlineArray->email}}</td>
-                                                                            <td class="text-center cell-ta" scope="col">{{count($eachDownlineArray->bonus_details)}}</td>
-                                                                            <td class="text-center cell-ta" scope="col">{{auth()->user()->getAmountForView($eachDownlineArray->bonus_details->sum('amount_paid'))['data']['currency']}} {{number_format($eachDownlineArray->bonus_details->sum('amount'))}} </td>
-                                                                            <td class="text-center cell-ta" scope="col">{{auth()->user()->getAmountForView($eachDownlineArray->bonus_details->sum('amount'))['data']['currency']}}
-                                                                            {{number_format($eachDownlineArray->bonus_details->sum('amount'))}}</td>
+																	<td class="text-center cell-ta" scope="col">{{$countAdd}}</td>
+																	<td class="text-center cell-ta" scope="col">{{$eachDownlineArray->name}}</td>
+																	<td class="text-center cell-ta" scope="col">{{$eachDownlineArray->email}}</td>
+																	<td class="text-center cell-ta" scope="col">{{count($eachDownlineArray->bonus_details)}}</td>
+																	<td class="text-center cell-ta" scope="col">{{auth()->user()->getAmountForView($eachDownlineArray->bonus_details->sum('amount_paid'))['data']['currency']}} {{number_format($eachDownlineArray->bonus_details->sum('amount'))}} </td>
+																	<td class="text-center cell-ta" scope="col">{{auth()->user()->getAmountForView($eachDownlineArray->bonus_details->sum('amount'))['data']['currency']}}
+																		{{number_format($eachDownlineArray->bonus_details->sum('amount'))}}
+																	</td>
 
-                                                                            <td class="text-center cell-ta" scope="col">
-                                                                                <a href="{{route('referral_details', [auth()->user()->unique_id, $eachDownlineArray->unique_id])}}">Details</a>
-                                                                            </td>
-                                                                        </tr>
-                                                                        @php $countAdd++ @endphp
-                                                                        @endforeach
-                                                                    </tbody>
-                                                                </table>
-                                                            </td>
-                                                        </tr>
-													@php $count++ @endphp
+																	<td class="text-center cell-ta" scope="col">
+																		<a href="{{route('referral_details', [auth()->user()->unique_id, $eachDownlineArray->unique_id])}}">Details</a>
+																	</td>
+																</tr>
+																@php $countAdd++ @endphp
+																@endforeach
+															</tbody>
+														</table>
+													</td>
+												</tr>
+												@php $count++ @endphp
 												@endforeach
 												@else
-													<tr>
-														<td colspan="8" class="text-center ">No Records Found</td>
-													</tr>
+												<tr>
+													<td colspan="8" class="text-center ">No Records Found</td>
+												</tr>
 												@endif
 											</tbody>
 										</table>
@@ -117,15 +119,14 @@
 			</div>
 		</div>
 
-		@include('layouts.footer')
-
+		@stop
 	</div>
 	<!-- Body End -->
 
-@include('layouts.e_script')
-<style>
-    .table_th{
-        background-color:#007bff !important;
-        color:white !important;
-    }
-</style>
+	@include('layouts.e_script')
+	<style>
+		.table_th {
+			background-color: #007bff !important;
+			color: white !important;
+		}
+	</style>

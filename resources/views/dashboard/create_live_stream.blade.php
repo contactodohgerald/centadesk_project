@@ -11,7 +11,8 @@ $live_stream = 'active';
     <!-- Header End -->
 
     <!-- Left Sidebar Start -->
-    @include('layouts.sidebar')
+    @extends('layouts.sidebar')
+    @section('content')
     <!-- Left Sidebar End -->
     <!-- Body Start -->
     <div class="wrapper">
@@ -47,12 +48,12 @@ $live_stream = 'active';
                                                 <div class="group-form">
                                                     <div class="row">
                                                         <div class="col-md-6">
-                                                    <label class="text-dark night-text">Streaming Software<span class="text-danger">*</span></label>
-                                                    <input class="_dlor1" type="text" name="software" placeholder="What software will you use" value="">
+                                                            <label class="text-dark night-text">Streaming Software<span class="text-danger">*</span></label>
+                                                            <input class="_dlor1" type="text" name="software" placeholder="What software will you use" value="">
                                                         </div>
                                                         <div class="col-md-6">
-                                                    <label class="text-dark night-text">Passcode</label>
-                                                    <input class="_dlor1" type="text" name="passcode" placeholder="" value="">
+                                                            <label class="text-dark night-text">Passcode</label>
+                                                            <input class="_dlor1" type="text" name="passcode" placeholder="" value="">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -111,8 +112,7 @@ $live_stream = 'active';
                     </div>
                 </div>
             </div>
-
-            @include('layouts.footer')
+            @stop
         </div>
         <!-- Body End -->
 

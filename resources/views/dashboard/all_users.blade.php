@@ -7,7 +7,8 @@
     <!-- Header End -->
 
     <!-- Left Sidebar Start -->
-    @include('layouts.sidebar')
+    @extends('layouts.sidebar')
+    @section('content')    
     <!-- Left Sidebar End -->
 
     <!-- Body Start -->
@@ -936,4 +937,5 @@
             });
         </script>
     </div>
+    @stop
 </body>

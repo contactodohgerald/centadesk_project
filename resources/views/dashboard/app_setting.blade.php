@@ -10,7 +10,8 @@ $Setting = 'active';
     <!-- Header End -->
 
     <!-- Left Sidebar Start -->
-    @include('layouts.sidebar')
+    @extends('layouts.sidebar')
+    @section('content')
     <!-- Left Sidebar End -->
 
     <!-- Body Start -->
@@ -233,31 +234,33 @@ $Setting = 'active';
             </div>
         </div>
 
-        @include('layouts.footer')
-
+        @stop
     </div>
     <!-- Body End -->
 
     @include('layouts.e_script')
 
     <script>
-        $(document).ready(function () {
-        $('.enroll_percent_btn').click(async function(e) {
-            e.preventDefault();
-            let enroll_percent_form = $('.enroll_percent_form').serializeArray();
-            let form_data = set_form_data(enroll_percent_form);
-            let returned = await ajaxRequest('/update_course_percent', form_data);
-            // console.log(returned);
-            // return;
-            validator(returned,'/app_settings_page');
-        });
+        $(document).ready(function() {
+            $('.enroll_percent_btn').click(async function(e) {
+                e.preventDefault();
+                let enroll_percent_form = $('.enroll_percent_form').serializeArray();
+                let form_data = set_form_data(enroll_percent_form);
+                let returned = await ajaxRequest('/update_course_percent', form_data);
+                // console.log(returned);
+                // return;
+                validator(returned, '/app_settings_page');
+            });
 
-            $('.upload_img_btn').click(async function (e) {
+            $('.upload_img_btn').click(async function(e) {
                 e.preventDefault();
                 let data = [];
                 let user_img = $('#site_logo').prop('files')[0];
                 let user_img_form = $('.site_logo_form').serializeArray();
-                let img_data = {name:"site_logo", value:user_img};
+                let img_data = {
+                    name: "site_logo",
+                    value: user_img
+                };
 
                 user_img_form.forEach(e => {
                     data.push(e);

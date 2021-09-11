@@ -7,7 +7,8 @@
     <!-- Header End -->
 
     <!-- Left Sidebar Start -->
-    @include('layouts.sidebar')
+    @extends('layouts.sidebar')
+    @section('content')
     <!-- Left Sidebar End -->
     <!-- Body Start -->
     <div class="wrapper">
@@ -26,10 +27,7 @@
                                 <h1>Jump Into Course Creation</h1>
                             </div>
                             <div class="card_dash_right1">
-                                <button
-                                    class="create_btn_dash"
-                                    onclick="window.location.href = 'create-course';"
-                                >
+                                <button class="create_btn_dash" onclick="window.location.href = 'create-course';">
                                     Create Your Course
                                 </button>
                             </div>
@@ -43,19 +41,9 @@
                         <br />
                         <h4 class="text-danger">
                             @if(auth()->user()->privilegeChecker('view_restricted_roles'))
-                            <div class="pull-right fix-at-point"  style="position: fixed; bottom: 20px; right: 30px; z-index: 200">
-                                <a
-                                    class="btn btn-danger"
-                                    onclick="activateCoursesStatus(this)"
-                                    href="javascript:;"
-                                    >Confirm Courses Status</a
-                                >
-                                <a
-                                    class="btn btn-danger"
-                                    onclick="deleteCourse(this)"
-                                    href="javascript:;"
-                                    >Delete Course</a
-                                >
+                            <div class="pull-right fix-at-point" style="position: fixed; bottom: 20px; right: 30px; z-index: 200">
+                                <a class="btn btn-danger" onclick="activateCoursesStatus(this)" href="javascript:;">Confirm Courses Status</a>
+                                <a class="btn btn-danger" onclick="deleteCourse(this)" href="javascript:;">Delete Course</a>
                             </div>
                             @endif
                         </h4>
@@ -75,7 +63,7 @@
                                                 <tr>
                                                     <th class="text-center" scope="col"> Item No.</th>
                                                     @if(auth()->user()->privilegeChecker('view_restricted_roles'))
-                                                    <th class="text-center"> <input onclick="checkAll()" type="checkbox" class="mainCheckBox"/>
+                                                    <th class="text-center"> <input onclick="checkAll()" type="checkbox" class="mainCheckBox" />
                                                     </th>
                                                     @endif
                                                     <th class="text-center" scope="col">Title</th>
@@ -96,49 +84,47 @@
 
                                                 @if (!$courses->isEmpty())
                                                 @foreach ($courses as $e)
-                                                    <tr>
-                                                        <td class="text-center">
-                                                            {{ $loop->iteration }}
-                                                        </td>
-                                                        @if(auth()->user()->privilegeChecker('view_restricted_roles'))
-                                                        <td class="text-center sorting_1"><input type="checkbox" class="smallCheckBox" value="{{$e->unique_id}}"/>
-                                                        </td>
+                                                <tr>
+                                                    <td class="text-center">
+                                                        {{ $loop->iteration }}
+                                                    </td>
+                                                    @if(auth()->user()->privilegeChecker('view_restricted_roles'))
+                                                    <td class="text-center sorting_1"><input type="checkbox" class="smallCheckBox" value="{{$e->unique_id}}" />
+                                                    </td>
+                                                    @endif
+                                                    <td class="text-center">{{ $e->name }}</td>
+                                                    <td class="text-center">
+                                                        <a href="#">{{ $e->category->name }}</a>
+                                                    </td>
+                                                    <td class="text-center">{{ $e->created_at }}</td>
+                                                    <td class="text-center">{{ $e->views }}</td>
+                                                    <td class="text-center">{{ $e->likes }}</td>
+                                                    <td class="text-center">
+                                                        @if ($e->is_bestseller == 'yes')
+                                                        <p class="text-success">Yes</p>
+                                                        @else
+                                                        <p class="text-danger">No</p>
                                                         @endif
-                                                        <td class="text-center">{{ $e->name }}</td>
-                                                        <td class="text-center">
-                                                            <a href="#">{{ $e->category->name }}</a>
-                                                        </td>
-                                                        <td class="text-center">{{ $e->created_at }}</td>
-                                                        <td class="text-center">{{ $e->views }}</td>
-                                                        <td class="text-center">{{ $e->likes }}</td>
-                                                        <td class="text-center">
-                                                            @if ($e->is_bestseller == 'yes')
-                                                                <p class="text-success">Yes</p>
-                                                            @else
-                                                                <p class="text-danger">No</p>
-                                                            @endif
-                                                        </td>
+                                                    </td>
+                                                    @if(auth()->user()->privilegeChecker('view_restricted_roles'))
+                                                    <td class="text-center">{{ $e->user->name }} {{ $e->user->last_name }}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        {{ $e->user->email }}
+                                                    </td>
+                                                    @endif
+                                                    <td class=" text-center text-capitalize">
+                                                        <b class="course_active">{{ $e->status }}</b>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <a href="/view_course/{{ $e->unique_id }}" title="View" class="cursor-pointer gray-s"><i class="uil uil-adjust"></i></a>
+                                                        <a href="/edit-course/{{ $e->unique_id }}" title="Edit" class="cursor-pointer gray-s"><i class="uil uil-edit-alt"></i></a>
+                                                        <a id="{{ $e->unique_id }}" title="Delete" class="cursor-pointer gray-s deleteCourseModal "><i class=" uil uil-trash-alt"></i></a>
                                                         @if(auth()->user()->privilegeChecker('view_restricted_roles'))
-                                                            <td class="text-center">{{ $e->user->name }} {{ $e->user->last_name }}
-                                                            </td>
-                                                            <td class="text-center">
-                                                                {{ $e->user->email }}
-                                                            </td>
+                                                        <a id="{{ $e->unique_id }}" title="Set Bestseller" class=" cursor-pointer gray-s setBestsellerModal"><i class=" uil uil-thumbs-up"></i></a>
                                                         @endif
-                                                        <td class=" text-center text-capitalize">
-                                                            <b class="course_active">{{ $e->status }}</b>
-                                                        </td>
-                                                        <td class="text-center">
-                                                            <a href="/view_course/{{ $e->unique_id }}" title="View" class="cursor-pointer gray-s"><i class="uil uil-adjust"></i></a>
-                                                            <a href="/edit-course/{{ $e->unique_id }}" title="Edit" class="cursor-pointer gray-s"><i class="uil uil-edit-alt"></i></a>
-                                                            <a id="{{ $e->unique_id }}" title="Delete" class="cursor-pointer gray-s deleteCourseModal " ><i class=" uil uil-trash-alt"></i
-                                                            ></a>
-                                                            @if(auth()->user()->privilegeChecker('view_restricted_roles'))
-                                                            <a id="{{ $e->unique_id }}" title="Set Bestseller" class=" cursor-pointer gray-s setBestsellerModal"><i class=" uil uil-thumbs-up"></i
-                                                            ></a>
-                                                            @endif
-                                                        </td>
-                                                    </tr>
+                                                    </td>
+                                                </tr>
                                                 @endforeach
                                                 @else
                                                 <tr>
@@ -157,7 +143,7 @@
                     </div>
                 </div>
             </div>
-            @include('layouts.footer')
+            @stop
         </div>
 
         <!-- The Modal -->
@@ -202,7 +188,7 @@
                         <h4 class="modal-title text-dark night-text">
                             Set Badge
                         </h4>
-                        <button type="button" class="close" data-dismiss="modal" onclick="removeModalMains('.set_bestseller_modal')" >&times;</button>
+                        <button type="button" class="close" data-dismiss="modal" onclick="removeModalMains('.set_bestseller_modal')">&times;</button>
                     </div>
                     <form class="set_bestseller_form">
                         @csrf
@@ -232,17 +218,17 @@
         @include('layouts.e_script')
 
         <script>
-            $(window).scroll(function () {
+            $(window).scroll(function() {
                 // $(".fix-at-point").css(
                 //     "top",
                 //     Math.max(0, 250 - $(this).scrollTop())
                 // );
 
             });
-            $(document).ready(function () {
+            $(document).ready(function() {
                 // set best seller starts
 
-                $(".setBestsellerModal").click(function (e) {
+                $(".setBestsellerModal").click(function(e) {
                     e.preventDefault();
                     append_id(
                         "set_bestseller_id",
@@ -253,7 +239,7 @@
                     bringOutModalMain(".set_bestseller_modal");
                 });
 
-                $(".set_bestseller_btn").click(async function (e) {
+                $(".set_bestseller_btn").click(async function(e) {
                     e.preventDefault();
                     let set_bestseller_form = $(
                         ".set_bestseller_form"
@@ -270,7 +256,7 @@
 
                 // set bestseller ends
 
-                $(".deleteCourseModal").click(function (e) {
+                $(".deleteCourseModal").click(function(e) {
                     e.preventDefault();
                     append_id(
                         "delete_course_id",
@@ -281,7 +267,7 @@
                     bringOutModalMain(".delete_course_modal");
                 });
 
-                $(".delete_course_btn").click(async function (e) {
+                $(".delete_course_btn").click(async function(e) {
                     e.preventDefault();
                     let delete_course_form = $(
                         ".delete_course_form"

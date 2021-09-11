@@ -1,7 +1,7 @@
 @php
-    $users = auth()->user();
-    $pageTitle = 'Create Course';
-    $Course = 'active';
+$users = auth()->user();
+$pageTitle = 'Create Course';
+$Course = 'active';
 @endphp
 @include('layouts.head')
 
@@ -11,7 +11,8 @@
     <!-- Header End -->
 
     <!-- Left Sidebar Start -->
-    @include('layouts.sidebar')
+    @extends('layouts.sidebar')
+    @section('content')
     <!-- Left Sidebar End -->
 
     <!-- Body Start -->
@@ -79,7 +80,7 @@
                                                                 <div class="ui search focus mt-30 lbel25">
                                                                     <label class="text-dark night-text">Category*</label>
                                                                 </div>
-                                                                <select name="category" class="ui hj145 dropdown cntry152 prompt srch_explore">
+                                                                <select name="category" class="ui hj145 dropdown cntry152 prompt srch_explore form-control">
                                                                     <option value="">Select</option>
                                                                     @foreach ($category as $e)
                                                                     <option value="{{ $e->unique_id }}">{{ $e->name }}</option>
@@ -109,7 +110,7 @@
                                                                 <div class="mt-30 lbel25">
                                                                     <label class="text-dark night-text">Select*</label>
                                                                 </div>
-                                                                <select name="pricing" class="ui hj145 dropdown cntry152 prompt srch_explore">
+                                                                <select name="pricing" class="ui hj145 dropdown cntry152 prompt srch_explore form-control">
                                                                     <option value="">-- Select Pricing For Course --</option>
                                                                     @foreach ($pricing as $e)
                                                                     <option value="{{ $e->unique_id }}">{{number_format($e->amount)}}</option>
@@ -168,8 +169,8 @@
                                                             <div class="view_all_dt">
                                                                 <div class="view_img_left">
                                                                     <div id="" class="view__img ">
-                                                                        <img id="thumbnail_cover_img" src="{{ asset('dashboard/images/courses/add_img.jpg') }}"  alt="your image" />
-																		{{-- <img src="images/courses/add_img.jpg" alt=""> --}}
+                                                                        <img id="thumbnail_cover_img" src="{{ asset('dashboard/images/courses/add_img.jpg') }}" alt="your image" />
+                                                                        {{-- <img src="images/courses/add_img.jpg" alt=""> --}}
                                                                     </div>
                                                                 </div>
                                                                 <div class="view_img_right">
@@ -188,7 +189,7 @@
                                                             <div class="view_all_dt">
                                                                 <div class="view_img_left">
                                                                     <div class="view__img ytube_video">
-                                                                        <img src="{{ asset('dashboard/images/courses/add_video.jpg') }}"  alt="your image" />
+                                                                        <img src="{{ asset('dashboard/images/courses/add_video.jpg') }}" alt="your image" />
                                                                     </div>
                                                                 </div>
                                                                 <div class="view_img_right">
@@ -223,18 +224,18 @@
                                                                         <div class="crse_content">
                                                                             <form class="download_urls">
 
-                                                                            <div id="" class="ui-accordion ui-widget ui-helper-reset">
-                                                                                <a href="javascript:void(0)" class="accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
-                                                                                    <div class="section-header-left">
-                                                                                        <span class="section-title-wrapper">
+                                                                                <div id="" class="ui-accordion ui-widget ui-helper-reset">
+                                                                                    <a href="javascript:void(0)" class="accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
+                                                                                        <div class="section-header-left">
+                                                                                            <span class="section-title-wrapper">
 
-                                                                                            <div class="ui left icon input swdh19">
-                                                                                                <input class="prompt srch_explore" type="text" placeholder="Enter course url" name="url" value="">
-                                                                                            </div>
-                                                                                        </span>
-                                                                                    </div>
-                                                                                </a>
-                                                                            </div>
+                                                                                                <div class="ui left icon input swdh19">
+                                                                                                    <input class="prompt srch_explore" type="text" placeholder="Enter course url" name="url" value="">
+                                                                                                </div>
+                                                                                            </span>
+                                                                                        </div>
+                                                                                    </a>
+                                                                                </div>
                                                                             </form>
                                                                             <!-- <div id="" class="ui-accordion ui-widget ui-helper-reset">
                                                                                 <a href="javascript:void(0)" class="accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
@@ -261,8 +262,8 @@
 
                                     </div>
                                     <div class="step-footer step-tab-pager">
-                                        <button data-direction="prev" class="btn btn-default steps_btn">PREVIOUS</button>
-                                        <button data-direction="next" class="btn btn-default steps_btn">Next</button>
+                                        <button data-direction="prev" class="btn btn-default steps_btn col-sm-2">PREVIOUS</button>
+                                        <button data-direction="next" class="btn btn-default steps_btn col-sm-2">NEXT</button>
                                         <button data-direction="finish" class="btn btn-default steps_btn create_course_btn">Submit for Review</button>
                                     </div>
                                 </div>
@@ -271,15 +272,14 @@
                     </div>
                 </div>
             </div>
-
-            @include('layouts.footer')
+            @stop
         </div>
         <!-- Body End -->
 
         @include('layouts.e_script')
 
         <script>
-            $(document).ready(function () {
+            $(document).ready(function() {
                 // initialize tinymce text editor
                 tinymce.init({
                     selector: 'textarea#course_desc',
@@ -288,18 +288,18 @@
                 });
 
                 // create image thumbnail on select
-                $('#cover_img').change(function (e) {
+                $('#cover_img').change(function(e) {
                     e.preventDefault();
                     let cover_img = $('#cover_img').prop('files')[0];
-                    display_img_thumbnail(this,'thumbnail_cover_img');
+                    display_img_thumbnail(this, 'thumbnail_cover_img');
                 });
 
                 // create youtube iframe when url is inputted
-                $('#cover_video').focusout(function (e) {
+                $('#cover_video').focusout(function(e) {
                     e.preventDefault();
                     let url = $(this).val();
                     let valid_url = youtube_regex(url);
-                    if(valid_url !== false){
+                    if (valid_url !== false) {
                         $('.ytube_video > *').remove();
                         let youtube_iframe = `<iframe width="100%"" src="https://www.youtube.com/embed/${valid_url}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
 
@@ -309,9 +309,9 @@
                 });
 
                 // create new inputs for download urls
-            $('.btn_add').click(function(e) {
-                e.preventDefault();
-                let new_url = `<div id="" class="ui-accordion ui-widget ui-helper-reset">
+                $('.btn_add').click(function(e) {
+                    e.preventDefault();
+                    let new_url = `<div id="" class="ui-accordion ui-widget ui-helper-reset">
                                     <a href="javascript:void(0)" class="accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
                                         <div class="section-header-left">
                                             <span class="section-title-wrapper">
@@ -323,56 +323,56 @@
                                         </div>
                                     </a>
                                 </div>`;
-                $(new_url).appendTo('.download_urls');
-            });
-
-            // process form for creating course
-            $('.create_course_btn').click(async function(e) {
-                e.preventDefault();
-                let data = [];
-                // basic info
-                let basic_info = $('.basic_info').serializeArray();
-                // console.log(basic_info); return;
-                basic_info.forEach(e => {
-                    data.push(e);
-                });
-                // tiny mce description
-                let desc = tinymce.get("course_desc").getContent();
-                data.push({
-                    name: "desc",
-                    value: desc
-                });
-                // file upload
-                let cover_img = $('#cover_img').prop('files')[0];
-                data.push({
-                    name: "cover_img",
-                    value: cover_img
+                    $(new_url).appendTo('.download_urls');
                 });
 
-                let cover_video = $('#cover_video').val();
-                let valid_url = youtube_regex(cover_video);
-                data.push({
-                    name: "cover_video",
-                    value: valid_url
-                });
-                // download urls
-                let url_array = [];
-                let url = $('.download_urls').serializeArray();
-                url.forEach(e => {
-                    url_array.push(e.value);
-                });
-                let url_joined = url_array.join('++',url_array);
-                data.push({
-                    name: "url",
-                    value: url_joined
-                });
+                // process form for creating course
+                $('.create_course_btn').click(async function(e) {
+                    e.preventDefault();
+                    let data = [];
+                    // basic info
+                    let basic_info = $('.basic_info').serializeArray();
+                    // console.log(basic_info); return;
+                    basic_info.forEach(e => {
+                        data.push(e);
+                    });
+                    // tiny mce description
+                    let desc = tinymce.get("course_desc").getContent();
+                    data.push({
+                        name: "desc",
+                        value: desc
+                    });
+                    // file upload
+                    let cover_img = $('#cover_img').prop('files')[0];
+                    data.push({
+                        name: "cover_img",
+                        value: cover_img
+                    });
 
-                // append to form data object
-                let form_data = set_form_data(data);
-                let returned = await ajaxRequest('create-course', form_data);
+                    let cover_video = $('#cover_video').val();
+                    let valid_url = youtube_regex(cover_video);
+                    data.push({
+                        name: "cover_video",
+                        value: valid_url
+                    });
+                    // download urls
+                    let url_array = [];
+                    let url = $('.download_urls').serializeArray();
+                    url.forEach(e => {
+                        url_array.push(e.value);
+                    });
+                    let url_joined = url_array.join('++', url_array);
+                    data.push({
+                        name: "url",
+                        value: url_joined
+                    });
+
+                    // append to form data object
+                    let form_data = set_form_data(data);
+                    let returned = await ajaxRequest('create-course', form_data);
                     // console.log(returned);
-                // return;
-                validator(returned, 'create-course');
-            });
+                    // return;
+                    validator(returned, 'create-course');
+                });
             });
         </script>

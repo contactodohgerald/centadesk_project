@@ -1,17 +1,18 @@
 @php
-	$pageTitle = 'All Categories';
-	$Categories = 'active';
+$pageTitle = 'All Categories';
+$Categories = 'active';
 @endphp
 @include('layouts.head')
 
 <body>
-    <!-- Header Start -->
-    @include('layouts.header')
-    <!-- Header End -->
+	<!-- Header Start -->
+	@include('layouts.header')
+	<!-- Header End -->
 
-    <!-- Left Sidebar Start -->
-    @include('layouts.sidebar')
-    <!-- Left Sidebar End -->
+	<!-- Left Sidebar Start -->
+	@extends('layouts.sidebar')
+	@section('content')
+	<!-- Left Sidebar End -->
 	<!-- Body Start -->
 	<div class="wrapper">
 		<div class="sa4d25">
@@ -37,21 +38,21 @@
 				<div class="row">
 					<div class="col-md-12">
 						@if(Session::has('success_message'))
-							<div class="alert alert-success alert-dismissible fade show text-center" role="alert">
-								<i class="fa fa-envelope-o mr-2"></i>
-								{{ Session::get('success_message') }}
-								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-									<span aria-hidden="true">×</span>
-								</button>
-							</div>
+						<div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+							<i class="fa fa-envelope-o mr-2"></i>
+							{{ Session::get('success_message') }}
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true">×</span>
+							</button>
+						</div>
 						@elseif(Session::has('error_message'))
-							<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
-								<i class="fa fa-envelope-o mr-2"></i>
-								{{ Session::get('error_message') }}
-								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-									<span aria-hidden="true">×</span>
-								</button>
-							</div>
+						<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+							<i class="fa fa-envelope-o mr-2"></i>
+							{{ Session::get('error_message') }}
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true">×</span>
+							</button>
+						</div>
 						@endif
 					</div>
 					<div class="col-md-12">
@@ -75,9 +76,9 @@
 												</tr>
 											</thead>
 											<tbody>
-											@if(count($categories) > 0)
+												@if(count($categories) > 0)
 												@php $count = 1; @endphp
-												@foreach($categories  as $k => $each_categories)
+												@foreach($categories as $k => $each_categories)
 												<tr>
 													<td class="text-center">{{$count}}</td>
 													<td class="text-center">{{ $each_categories->name }}</td>
@@ -87,14 +88,14 @@
 														<a href="{{route('edit_category', $each_categories->unique_id )}}" title="Edit" class="gray-s"><i class="uil uil-edit-alt"></i></a>
 														<a id="{{ $each_categories->unique_id }}" title="Delete" class="cursor-pointer gray-s deleteCourseModal"><i class="uil uil-trash-alt"></i></a>
 													</td>
-                                                </tr>
+												</tr>
 												@php $count++ @endphp
-                                                @endforeach
-                                                @else
+												@endforeach
+												@else
 												<tr>
 													<td colspan="8" class="text-center ">No Records Found</td>
-                                                </tr>
-                                                @endif
+												</tr>
+												@endif
 											</tbody>
 										</table>
 									</div>
@@ -137,31 +138,30 @@
 				</div>
 			</div>
 		</div>
-            @include('layouts.footer')
-        </div>
-        <!-- Body End -->
+		@stop
+	</div>
+	<!-- Body End -->
 
-@include('layouts.e_script')
-<script>
-    $(document).ready(function () {
+	@include('layouts.e_script')
+	<script>
+		$(document).ready(function() {
 
-        $('.deleteCourseModal').click(function(e) {
-            e.preventDefault();
-            append_id('delete_course_id', '.delete_course_form', '#delete_course_modal', this)
-            bringOutModalMain('.delete_course_modal')
-        });
+			$('.deleteCourseModal').click(function(e) {
+				e.preventDefault();
+				append_id('delete_course_id', '.delete_course_form', '#delete_course_modal', this)
+				bringOutModalMain('.delete_course_modal')
+			});
 
 
-    $('.delete_course_btn').click(async function(e) {
-        e.preventDefault();
-        let data = $('.delete_course_form').serializeArray();
-        // console.log(data);return;
-        let form_data = set_form_data(data);
-        let returned = await ajaxRequest('/delete_category/'+data[1].value, form_data);
-        // return;
-        validator(returned, '/view_category');
-    });
+			$('.delete_course_btn').click(async function(e) {
+				e.preventDefault();
+				let data = $('.delete_course_form').serializeArray();
+				// console.log(data);return;
+				let form_data = set_form_data(data);
+				let returned = await ajaxRequest('/delete_category/' + data[1].value, form_data);
+				// return;
+				validator(returned, '/view_category');
+			});
 
-    });
-</script>
-
+		});
+	</script>

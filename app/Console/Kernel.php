@@ -29,7 +29,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('confirm:payment')->daily();
         $schedule->command('confirm:dailytopup')->everyMinute();
         $schedule->command('confirm:user_transact_check')->daily();
-        $schedule->command('ban:user_account')->daily();
+        // $schedule->command('ban:user_account')->daily();
         $schedule->command('update:user_type_id')->daily();
     }
 

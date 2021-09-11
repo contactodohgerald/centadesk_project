@@ -1,6 +1,6 @@
 ﻿@php
-	$pageTitle = 'Blog List Area';
-	$blogs = 'active';
+$pageTitle = 'Blog List Area';
+$blogs = 'active';
 @endphp
 @include('layouts.head')
 
@@ -10,7 +10,8 @@
 	<!-- Header End -->
 
 	<!-- Left Sidebar Start -->
-	@include('layouts.sidebar')
+	@extends('layouts.sidebar')
+	@section('content')
 	<!-- Left Sidebar End -->
 
 	<!-- Body Start -->
@@ -43,54 +44,54 @@
 									<div class="table-responsive mt-30">
 										<table class="table ucp-table">
 											<thead class="thead-s">
-											<tr>
-												<th class="text-center" scope="col">S / N</th>
-												<th class="text-center">
-													<input onclick="checkAll()" type="checkbox" class="mainCheckBox" />
-												</th>
-												<th class="text-center" scope="col">Blog Title</th>
-												<th class="text-center" scope="col">Status</th>
-												<th class="text-center" scope="col">Views</th>
-												<th class="text-center" scope="col">Created Date</th>
-												<th class="text-center" scope="col">Action</th>
-											</tr>
+												<tr>
+													<th class="text-center" scope="col">S / N</th>
+													<th class="text-center">
+														<input onclick="checkAll()" type="checkbox" class="mainCheckBox" />
+													</th>
+													<th class="text-center" scope="col">Blog Title</th>
+													<th class="text-center" scope="col">Status</th>
+													<th class="text-center" scope="col">Views</th>
+													<th class="text-center" scope="col">Created Date</th>
+													<th class="text-center" scope="col">Action</th>
+												</tr>
 											</thead>
 											<tbody>
-                                                @if(count($blogModel) > 0)
-                                                    @php $count = 1; @endphp
-                                                        @foreach($blogModel as $hh => $each_blog)
-                                                            <tr>
-                                                                <td class="text-center" scope="col">{{$count}}</td>
-                                                                <td class="text-center sorting_1">
-                                                                    <input type="checkbox" class="smallCheckBox" value="{{$each_blog->unique_id}}">
-                                                                </td>
-                                                                <td class="text-center cell-ta">{{$each_blog->blog_title}}</td>
-                                                                <td class="text-center cell-ta">{{$each_blog->views}}</td>
-                                                                @php
-                                                                    if($each_blog->status === 'confirmed'){
-                                                                        $status = 'Confirmed';
-                                                                        $labelColor = 'success';
-                                                                    }else if($each_blog->status === 'pending'){
-                                                                        $status = 'Pending';
-                                                                        $labelColor = 'warning';
-                                                                    }
-                                                                @endphp
-                                                                <td class="text-center">
-                                                                    <button class="btn btn-{{$labelColor}}">{{$status}}</button>
-                                                                </td>
-                                                                <td class="text-center cell-ta">{{$each_blog->created_at->diffForHumans()}}</td>
-                                                                <td class="text-center">
-                                                                    <a href="{{route('blog-details', $each_blog->unique_id )}}" target="_blank" title="View" class="gray-s"><i class="uil uil-adjust"></i></a>
-                                                                    <a href="#" title="Delete" class="gray-s"><i class="uil uil-trash-alt"></i></a>
-                                                                </td>
-                                                            </tr>
-                                                            @php $count++ @endphp
-                                                        @endforeach
-                                                @else
-                                                    <tr>
-                                                        <td colspan="8" class="text-center ">No Records Found</td>
-                                                    </tr>
-                                                @endif
+												@if(count($blogModel) > 0)
+												@php $count = 1; @endphp
+												@foreach($blogModel as $hh => $each_blog)
+												<tr>
+													<td class="text-center" scope="col">{{$count}}</td>
+													<td class="text-center sorting_1">
+														<input type="checkbox" class="smallCheckBox" value="{{$each_blog->unique_id}}">
+													</td>
+													<td class="text-center cell-ta">{{$each_blog->blog_title}}</td>
+													<td class="text-center cell-ta">{{$each_blog->views}}</td>
+													@php
+													if($each_blog->status === 'confirmed'){
+													$status = 'Confirmed';
+													$labelColor = 'success';
+													}else if($each_blog->status === 'pending'){
+													$status = 'Pending';
+													$labelColor = 'warning';
+													}
+													@endphp
+													<td class="text-center">
+														<button class="btn btn-{{$labelColor}}">{{$status}}</button>
+													</td>
+													<td class="text-center cell-ta">{{$each_blog->created_at->diffForHumans()}}</td>
+													<td class="text-center">
+														<a href="{{route('blog-details', $each_blog->unique_id )}}" target="_blank" title="View" class="gray-s"><i class="uil uil-adjust"></i></a>
+														<a href="#" title="Delete" class="gray-s"><i class="uil uil-trash-alt"></i></a>
+													</td>
+												</tr>
+												@php $count++ @endphp
+												@endforeach
+												@else
+												<tr>
+													<td colspan="8" class="text-center ">No Records Found</td>
+												</tr>
+												@endif
 											</tbody>
 										</table>
 									</div>
@@ -102,9 +103,8 @@
 			</div>
 		</div>
 
-		@include('layouts.footer')
-
+		@stop
 	</div>
 	<!-- Body End -->
 
-@include('layouts.e_script')
+	@include('layouts.e_script')
